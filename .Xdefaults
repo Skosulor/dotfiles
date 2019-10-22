@@ -1,0 +1,110 @@
+
+
+!-------------------------------------------
+! XFT Settings gre
+     
+Xft.antialias:  true 
+Xft.autohint:   false 
+Xft.dpi:        96
+Xft.hinting:    true 
+Xft.hintstyle:  hintfull 
+Xft.lcdfilter:  lcddefault
+Xft.rgba:       rgb
+
+!-------------------------------------------
+! URXVT - Settings
+
+
+URxvt*termane: urxvt
+URxvt*depth:                        32
+URxvt*dynamicColors:                on
+URxvt*urgentOnBell:                 true
+URxvt*borderLess:                   false
+URxvt*scrollBar:                    false
+URxvt.internalBorder: 50
+URxvt.externalBorder: 0
+
+URxvt.externalBorderColor: #000000
+
+/* URxvt*font: xft:Inconsolata:Regular:pixelsize=14 */
+
+URxvt*font: xft:Hack:Regular:pixelsize=12
+
+URxvt*shading: 100
+URxvt*fading: 20
+!--------------------------------------------
+! URxvt Colors
+
+URxvt.colorIT:                       #b291af
+URxvt.colorBD:                       #6f6776
+URxvt.colorUL:                       #e9cfd3
+
+
+/* urxvt*background: rgba:1200/1200/1200/E800 */
+! urxvt*background: rgba:2500/2300/1700/E800
+urxvt*background: rgba:3100/2500/2500/E800
+
+
+! *background: #32302f */
+
+*foreground: #ffe9b3
+!*foreground: #ebdbb2
+
+! Black + DarkGrey
+*color0:  #282828
+*color8:  #928374
+! DarkRed + Red
+*color1:  #cc241d
+*color9:  #fb4934
+! DarkGreen + Green
+*color2:  #98971a
+*color10: #b8bb26
+! DarkYellow + Yellow
+*color3:  #d79921
+*color11: #fabd2f
+! DarkBlue + Blue
+*color4:  #458588
+*color12: #83a598
+! DarkMagenta + Magenta
+*color5:  #b16286
+*color13: #d3869b
+! DarkCyan + Cyan
+*color6:  #689d6a
+*color14: #8ec07c
+! LightGrey + White
+*color7:  #a89984
+*color15: #ebdbb2
+
+!--------------------------------------------
+! General Colors
+
+#include ".colors/color"
+
+!-------------------------------------------
+! Man pages colors
+
+/* *VT100.colorBDMode:                  true */
+/* *VT100.colorBD:                      red */
+/* *VT100.colorULMode:                  true */
+/* *VT100.colorUL:                      cyan */   
+/* *VT100.veryBoldColors:               6 */
+
+!-------------------------------------------
+! xclock
+
+/* xclock*majorColor:                  #9a875f */
+/* xclock*minorColor:                  #9a875f */
+/* xclock*minuteColor:                 #9a875f */
+/* xclock*hourColor:                   #9a875f */
+/* xclock*secondColor:                 #9a875f */
+
+!-------------------------------------------
+! rofi
+
+/* rofi.lines:                         2 */
+/* rofi.color-enabled:                 true */
+/* rofi.separator-style:               none */ 
+/* rofi.width:                         33 */
+/* rofi.line-padding:                  6 */
+/* rofi.hide-scrollbar:                True */
+/* rofi.columns:                       2 */
