@@ -263,10 +263,13 @@ gaps outer 0
 bindsym $mod+b exec --no-startup-id python ~/progStuff/pyStuff/barToggle.py
 #smart_gaps on
 
-#new_window pixel 2
+# new_window pixel 2
 for_window [class="URxvt"] border pixel 0
-for_window [class="URxvt"] border_radius 50
 # for_window [class="URxvt"] border_radius 50
+
+# Backlifght
+bindcode 232 exec xbacklight -dec 10
+bindcode 233 exec xbacklight -inc 10
 
 # Volume keys
 bindcode 123 exec --no-startup-id python ~/progStuff/pyStuff/volCtrl.py inc

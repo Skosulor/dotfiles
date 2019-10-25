@@ -53,10 +53,34 @@ function quickEdit(){
   fi
 }
 
-function getQuickMenu(){
-  echo -e "key layout\npower off\nreboot\nquick edit\nopen pdf\nkill process\nbluetooth\nnetwork" |
-    rofi -theme powermenu -lines 8 -width 10% -dmenu -p "Quick Menu" ;
+
+function manPage(){
+   page=$(echo what | rofi -theme powermenu -lines 0 -width 10% -dmenu -p "Man page");
+   urxvt -e man $page
 }
+
+function passMenu(){
+   domain=$(echo derp | rofi -theme powermenu -lines 0 -width 10% -dmenu -p "Domain");
+   pass=$(echo what | rofi -password -theme powermenu -lines 0 -width 10% -dmenu -p "pass");
+
+   python ~/progStuff/pyStuff/passGen.py $domain $pass
+}
+
+function screenLayout(){
+   layout=$(echo -e "away\nhome" | rofi -theme powermenu -lines 2 -width 10% -dmenu -p "Layout");
+  if [ "$layout" == "away" ]; then
+    exec .screenlayout/away.sh
+  elif [ "$layout" == "home" ]; then
+    exec .screenlayout/home.sh
+  fi
+}
+
+function getQuickMenu(){
+  echo -e "key layout\npower off\nreboot\nquick edit\nopen pdf\nkill process\nbluetooth\nnetwork\npass\nman pages\nwindow layout" |
+    rofi -theme powermenu -lines 11 -width 10% -dmenu -p "Quick Menu" ;
+}
+
+
 
 function utilities(){
   action=$( getQuickMenu )
@@ -90,6 +114,15 @@ function utilities(){
 
   elif [ "$action" == "network" ]; then
     networkmanager_dmenu;
+
+  elif [ "$action" == "pass" ]; then
+    passMenu;
+
+  elif [ "$action" == "man pages" ]; then
+    manPage;
+
+  elif [ "$action" == "window layout" ]; then
+    screenLayout;
 
   fi
 }

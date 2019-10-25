@@ -116,7 +116,7 @@ modules-center = taskW
 modules-right = pkg filesystem  volume battery network date
 
 wm-restack = i3
- 
+
 ;== Modules ========================================================
 
 [module/arch]
