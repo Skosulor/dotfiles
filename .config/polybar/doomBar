@@ -103,6 +103,14 @@ font-6 = "Cunia,Bold:pixelsize=11;4"
 font-7 = "Fantasque Sans Mono:pixelsize=14;3"
 ;==========================================================
 
+;separator = <
+tray-position = none
+tray-padding = 0
+tray-transparent = true
+tray-background = #99000000
+
+;==========================================================
+
 ;cursor-click = pointer
 ;cursor-scroll = ns-resize
 
@@ -113,7 +121,7 @@ font-7 = "Fantasque Sans Mono:pixelsize=14;3"
 
 modules-left = workspaces google github reddit facebook youtube
 modules-center = taskW
-modules-right = pkg filesystem  volume battery network date
+modules-right = kdeconnect pkg filesystem  volume battery network date
 
 wm-restack = i3
 
@@ -129,6 +137,13 @@ content-foreground = ${color.fg}
 click-left = rmenu_1
 click-right = rmenu_wi_1
 
+
+[module/kdeconnect]
+type = custom/script
+exec = "/home/ohman/progStuff/scripts/polybar-kdeconnect/polybar-kdeconnect.sh -d"
+tail = true
+
+
 [module/workspaces]
 type = internal/i3
 ;pin-workspaces = false
@@ -136,7 +151,6 @@ type = internal/i3
 ;enable-scroll = true
 format-padding = 0
 ;index-sort = true
-
 
 format = <label-state> <label-mode>
 index-sort = true

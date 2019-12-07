@@ -11,7 +11,7 @@
 
 set $mod Mod1
 
-# exec_always --no-startup-id killall compton
+# exec_always --no-startup-id killall picom
 
 # Font for window titles. Will also be used by the bar unless a different font
 # h
@@ -230,7 +230,7 @@ exec_always --no-startup-id . ~/.config/polybar/launch.sh
 
 #exec "setxkbmap -layout sv"
 
-#exec_always compton -f
+#exec_always picom -f
 hide_edge_borders both
 
 # exec --no-startup-id nm-applet
@@ -283,7 +283,7 @@ bindsym $mod+m exec --no-startup-id python ~/progStuff/pyStuff/mouseToggle.py
 #lock screen
 bindsym $mod+p exec --no-startup-id betterlockscreen -l "blur"
 
-exec_always compton --config ~/.config/compton.conf
+exec_always picom --config ~/.config/picom.conf
 exec xinput set-prop 12 282 1
 exec_always --no-startup-id ~/.bash_profile
 # exec wal -i ~/bgImages/bg14.jpg -a 90 --saturate 0.7

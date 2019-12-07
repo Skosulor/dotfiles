@@ -26,6 +26,7 @@
 
       ;; comments
       (:prefix ("c" . "code/comment")
+      :desc "Spellcheck word" "s" #'ispell-word
       :desc "comment box" "b" #'comment-box
       :desc "comment line" "l" #'comment-line
       :desc "comment & copy" "y" #'evilnc-copy-and-comment-lines

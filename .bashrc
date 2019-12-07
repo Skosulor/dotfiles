@@ -209,6 +209,8 @@ alias asdf="cht.sh --shell"
 alias bt="py ~/progStuff/pyStuff/bluetooth.py"
 alias jabjab="bt c jabra"
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias sshjanus='ssh -i ~/.ssh/ohmanandreas.key ohmanandreas@130.238.10.236'
+alias sshjuice='ssh -i ~/.ssh/ohmanandreas.key -L 3440:10.11.11.92:3000 ohmanandreas@130.238.10.236'
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

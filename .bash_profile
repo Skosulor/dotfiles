@@ -16,6 +16,8 @@ export PATH=$PATH:/home/ohman/.cargo/bin
 export PATH=$PATH:/home/ohman/.cabal/bin
 export IDF_PATH=~/progStuff/esp/esp-idf
 export TERM=xterm-256color
+export TERM='xterm-256color'
+export TERM='linux'
 
 # (cat ~/.cache/wal/sequences &)
 

@@ -3,6 +3,9 @@
 ;; Load .el files
 (load! "bindings")
 
+
+(setq-default hl-todo-mode 't)
+
 (setq dired-listing-switches
       "-alhX --group-directories-first")
 
