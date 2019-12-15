@@ -12,6 +12,7 @@
       ;; M-x
       (:desc "M-x" ";" #'counsel-M-x)
       (:desc "shell command" ":" #'shell-command)
+
       ;; help
       (:prefix ("h" . "help")
       :desc "Man pages" "m" #'man)
@@ -30,7 +31,8 @@
       :desc "comment box" "b" #'comment-box
       :desc "comment line" "l" #'comment-line
       :desc "comment & copy" "y" #'evilnc-copy-and-comment-lines
-      :desc "comment paragraph" "p" #'evilnc-comment-or-uncomment-paragraphs)
+      :desc "comment paragraph" "p" #'evilnc-comment-or-uncomment-paragraphs
+      :desc "rtags jump to definition" "D" #'rtags-find-symbol-at-point)
 
       ;; last buffer
       (:prefix ("TAB" . "workspace")
