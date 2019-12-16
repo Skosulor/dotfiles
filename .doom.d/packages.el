@@ -2,7 +2,6 @@
 ;;; .doom.d/packages.el
 
 (package! haskell-mode)
-
 (package! vterm)
 (package! evil-nerd-commenter)
 (package! dired-hacks)

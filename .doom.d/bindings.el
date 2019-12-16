@@ -3,8 +3,15 @@
 (setq x-meta-keysym 'super)
 (map! "s-;" #'counsel-M-x)
 
+;(global-set-key (kbd "C-x n") #'centaur-tabs-forward)
+;(global-set-key (kbd "C-b n") #'centaur-tabs-backward)
 
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "C-S-n") nil)
+  (define-key evil-normal-state-map (kbd "C-S-b") nil))
 
+(global-set-key (kbd "C-S-n") 'centaur-tabs-forward)
+(global-set-key (kbd"C-S-b") 'centaur-tabs-backward)
 
 (map! :leader
       :desc "Goto Word" "SPC" #'avy-goto-word-0
