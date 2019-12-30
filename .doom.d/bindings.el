@@ -8,13 +8,22 @@
 
 (with-eval-after-load 'evil-maps
   (define-key evil-normal-state-map (kbd "C-S-n") nil)
-  (define-key evil-normal-state-map (kbd "C-S-b") nil))
+  (define-key evil-normal-state-map (kbd "C-S-b") nil)
+  (define-key evil-normal-state-map (kbd "C-j") nil)
+  (define-key evil-normal-state-map (kbd "C-k") nil))
 
 (global-set-key (kbd "C-S-n") 'centaur-tabs-forward)
 (global-set-key (kbd"C-S-b") 'centaur-tabs-backward)
+(global-set-key (kbd "C-k") 'centaur-tabs-forward)
+(global-set-key (kbd"C-j") 'centaur-tabs-backward)
 
 (map! :leader
       :desc "Goto Word" "SPC" #'avy-goto-word-0
+      :desc "window 0" "0" #'treemacs-select-window
+      :desc "window 1" "1" #'winum-select-window-1
+      :desc "window 2" "2" #'winum-select-window-2
+      :desc "window 3" "3" #'winum-select-window-3
+      :desc "window 4" "4" #'winum-select-window-4
 
       ;; M-x
       (:desc "M-x" ";" #'counsel-M-x)
@@ -23,7 +32,7 @@
       ;; help
       (:prefix ("h" . "help")
       :desc "Man pages" "m" #'man)
-
+     
       ;; open
       (:prefix ("o" . "open")
       :desc "vterm" "t" #'switch-to-vterm)
@@ -83,8 +92,6 @@
       "z" #'dired-do-compress
       "r" #'dired-do-rename
       )
-
-
 
 
  ;; (map! :leader

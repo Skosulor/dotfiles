@@ -5,6 +5,10 @@
 (package! vterm)
 (package! evil-nerd-commenter)
 (package! dired-hacks)
+(package! winum)
+(package! highlight-indent-guides)
+(package! lsp-treemacs)
+(package! minimap)
 
 
 
