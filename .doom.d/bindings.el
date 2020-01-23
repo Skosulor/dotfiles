@@ -48,7 +48,8 @@
       :desc "comment line" "l" #'comment-line
       :desc "comment & copy" "y" #'evilnc-copy-and-comment-lines
       :desc "comment paragraph" "p" #'evilnc-comment-or-uncomment-paragraphs
-      :desc "rtags jump to definition" "D" #'rtags-find-symbol-at-point)
+      :desc "rtags jump to definition" "D" #'rtags-find-symbol-at-point
+      :desc "correct word at point" "s" #'flyspell-correct-at-point)
 
       ;; last buffer
       (:prefix ("TAB" . "workspace")
@@ -72,6 +73,12 @@
       "m" #'run-haskell
       "s" #'haskell-interactive-switch
       "l" #'haskell-process-load-file
+      )
+
+(map! :map org-mode-map
+      :localleader
+      "T" #'evil-org-org-insert-todo-heading-respect-content-below
+      "h" #'evil-org-org-insert-heading-respect-content-below
       )
 
 

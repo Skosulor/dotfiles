@@ -65,6 +65,15 @@ function passMenu(){
 
    python ~/progStuff/pyStuff/passGen.py $domain $pass
 }
+function passMenu2(){
+   domain=$(echo derp | rofi -theme powermenu -lines 0 -width 10% -dmenu -p "Domain");
+   pass -c $domain
+}
+function genPass(){
+   domain=$(echo derp | rofi -theme powermenu -lines 0 -width 10% -dmenu -p "Domain");
+   pass generate $domain
+}
+
 
 function screenLayout(){
    layout=$(echo -e "away\nhome" | rofi -theme powermenu -lines 2 -width 10% -dmenu -p "Layout");
@@ -76,8 +85,8 @@ function screenLayout(){
 }
 
 function getQuickMenu(){
-  echo -e "key layout\npower off\nreboot\nquick edit\nopen pdf\nkill process\nbluetooth\nnetwork\npass\nman pages\nwindow layout" |
-    rofi -theme powermenu -lines 11 -width 10% -dmenu -p "Quick Menu" ;
+  echo -e "key layout\npower off\nreboot\nquick edit\nopen pdf\nkill process\nbluetooth\nnetwork\npassold\nman pages\nwindow layout\npass\ngenpass" |
+    rofi -theme powermenu -lines 13 -width 10% -dmenu -p "Quick Menu" ;
 }
 
 
@@ -115,8 +124,14 @@ function utilities(){
   elif [ "$action" == "network" ]; then
     networkmanager_dmenu;
 
-  elif [ "$action" == "pass" ]; then
+  elif [ "$action" == "passold" ]; then
     passMenu;
+
+  elif [ "$action" == "pass" ]; then
+    passMenu2;
+
+  elif [ "$action" == "genpass" ]; then
+    genPass;
 
   elif [ "$action" == "man pages" ]; then
     manPage;
