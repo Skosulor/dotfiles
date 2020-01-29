@@ -75,11 +75,6 @@
       "l" #'haskell-process-load-file
       )
 
-(map! :map org-mode-map
-      :localleader
-      "T" #'evil-org-org-insert-todo-heading-respect-content-below
-      "h" #'evil-org-org-insert-heading-respect-content-below
-      )
 
 
 
@@ -103,3 +98,9 @@
 
  ;; (map! :leader
  ;;       :desc "Align" "a" #'align)
+(require 'org)
+(map! :map org-mode-map
+      :localleader
+      "T" #'evil-org-org-insert-todo-heading-respect-content-below
+      "h" #'evil-org-org-insert-heading-respect-content-below
+      )

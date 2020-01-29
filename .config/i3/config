@@ -47,7 +47,7 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec dmenu_run -y 400 -l 5 -h 50 -o 0.85 -dim 0.6 -w 500 -x 700 -fn "Inconsolata-13:regular" -sb '#6A8FA3' -i
 bindsym $mod+d exec rofi -show drun -theme doom -show-icons -drun-match-fields all -drun-display-format {name}
 
-bindsym $mod+Tab exec ~/progStuff/scripts/utilitiesMenu.sh
+bindsym $mod+Escape exec ~/progStuff/scripts/utilitiesMenu.sh
 
 bindsym $mod+n exec networkmanager_dmenu -y 400 -l 5 -h 50 -o 0.85 -dim 0.6 -w 600 -x 700 -fn "Inconsolata-11:regular" -sb '#6A8FA3' -i
 
