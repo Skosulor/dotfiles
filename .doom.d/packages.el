@@ -9,6 +9,7 @@
 (package! highlight-indent-guides)
 (package! lsp-treemacs)
 (package! minimap)
+(package! org-jira)
 
 
 

@@ -1,5 +1,8 @@
 ;;; .doom.d/config.el -*- lexical-binding: t; -*-
 
+
+(setq jiralib-url "https://jira.tritech.se")
+
 (setq centaur-tabs-height 30)
 (setq centaur-tabs-set-icons t)
 (setq centaur-tabs-gray-out-icons 'buffer)

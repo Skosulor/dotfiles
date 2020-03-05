@@ -99,6 +99,8 @@
  ;; (map! :leader
  ;;       :desc "Align" "a" #'align)
 (require 'org)
+(define-key org-mode-map (kbd "C-S-k") 'centaur-tabs-forward)
+(define-key org-mode-map (kbd "C-S-j") 'centaur-tabs-backward)
 (map! :map org-mode-map
       :localleader
       "T" #'evil-org-org-insert-todo-heading-respect-content-below
