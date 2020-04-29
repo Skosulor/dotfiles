@@ -10,6 +10,7 @@
 (package! lsp-treemacs)
 (package! minimap)
 (package! org-jira)
+(package! grammarly)
 
 
 

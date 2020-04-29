@@ -44,16 +44,19 @@
       ;; comments
       (:prefix ("c" . "code/comment")
       :desc "Spellcheck word" "s" #'ispell-word
+      :desc "find synonym" "S" #'get-syn
       :desc "comment box" "b" #'comment-box
       :desc "comment line" "l" #'comment-line
       :desc "comment & copy" "y" #'evilnc-copy-and-comment-lines
       :desc "comment paragraph" "p" #'evilnc-comment-or-uncomment-paragraphs
       :desc "rtags jump to definition" "D" #'rtags-find-symbol-at-point
+      :desc "multiedit" "m" #'evil-multiedit-match-all
       :desc "correct word at point" "s" #'flyspell-correct-at-point)
 
       ;; last buffer
       (:prefix ("TAB" . "workspace")
-      :desc "last buffer" "TAB" #'evil-switch-to-windows-last-buffer)
+        :desc "last buffer" "TAB" #'evil-switch-to-windows-last-buffer
+        :desc "buffers" "SPC" #'switch-to-buffer)
 
       ;;jump
       (:prefix-map ("j" . "jump")

@@ -191,7 +191,6 @@ alias omega="ssh root@omega-b64b.local"
 # export IDF_PATH=~/progStuff/esp/esp-idf
 
 alias ch="python /home/ohman/progStuff/pyStuff/spellcheck.py"
-# alias syn="python /home/ohman/progStuff/pyStuff/webReader.py"
 alias pas="python /home/ohman/progStuff/pyStuff/passGen.py"
 alias 328check="sudo avrdude -B 5 -c usbasp -p m328 "
 alias 328burn="sudo avrdude -B 5 -c usbasp -p m328 -U flash:w:rune.hex"
@@ -209,9 +208,8 @@ alias asdf="cht.sh --shell"
 alias bt="py ~/progStuff/pyStuff/bluetooth.py"
 alias jabjab="bt c jabra"
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-alias sshjanus='ssh -i ~/.ssh/ohmanandreas.key ohmanandreas@130.238.10.236'
-alias sshjuice='ssh -i ~/.ssh/ohmanandreas.key -L 3440:10.11.11.92:3000 ohmanandreas@130.238.10.236'
 alias open='xdg-open'
+alias c='clear'
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -303,7 +301,8 @@ function bu2(){
   cp -r ~/.doom.d /run/media/ohman/backup/archFiles/;
 }
 
-
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
 
 
 

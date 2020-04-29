@@ -42,7 +42,7 @@ URxvt.colorUL:                       #e9cfd3
 
 /* urxvt*background: rgba:1200/1200/1200/E800 */
 ! urxvt*background: rgba:2500/2300/1700/E800
-urxvt*background: rgba:3100/2500/2500/E800
+urxvt*background: rgba:3100/2500/2500/FB00
 
 
 ! *background: #32302f */

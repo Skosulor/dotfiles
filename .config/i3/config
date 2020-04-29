@@ -291,6 +291,7 @@ exec xmodmap --no-startup-id -e 'clear Lock' -e 'keycode 0x42 = Escape'
 # exec_always feh --bg-scale ~/bgImages/bg22.jpg #8.j 9.j 12.j 4.j 6.p
 # exec_always feh --bg-scale ~/bgImages/bg30.jpg #8.j 9.j 12.j 4.j 6.p
 # exec_always feh --bg-scale ~/bgImages/ultimateDoomRed.png #8.j 9.j 12.j 4.j 6.p
-exec_always feh --bg-scale ~/bgImages/doomDepth.png #8.j 9.j 12.j 4.j 6.p
+# exec_always feh --bg-scale ~/bgImages/doomDepth.png #8.j 9.j 12.j 4.j 6.p
+exec_always feh --bg-scale ~/bgImages/bg31.jpg #8.j 9.j 12.j 4.j 6.p
 exec udiskie -2 -N &
 exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1

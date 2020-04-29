@@ -1,14 +1,29 @@
 ;;; .doom.d/config.el -*- lexical-binding: t; -*-
 
 
+
 (setq jiralib-url "https://jira.tritech.se")
 
+;; (setq python-indent 4)
+(add-hook 'python-mode-hook
+  (lambda ()
+    (setq-default indent-tabs-mode t)
+    (setq-default tab-width 4)
+    (setq-default py-indent-tabs-mode t)
+  (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+
+;; Opacity
+(set-frame-parameter (selected-frame) 'alpha '(100 100))
+(add-to-list 'default-frame-alist '(alpha 100 100))
+
+;; Tabs
 (setq centaur-tabs-height 30)
 (setq centaur-tabs-set-icons t)
 (setq centaur-tabs-gray-out-icons 'buffer)
 (setq centaur-tabs-set-bar 'under)
 (setq x-underline-at-descent-line t)
 
+;; Fonts
 (setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'light))
 (setq doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 14))
 
@@ -49,6 +64,11 @@
 (defun switch-to-vterm ()
   (when (get-buffer "vterm")
   (switch-to-buffer vterm)))
+
+(defun get-syn (&optional b e)
+  (interactive)
+  (shell-command (concat "syn " (thing-at-point 'word))))
+
 
 (defun ocp ()
   (interactive)
