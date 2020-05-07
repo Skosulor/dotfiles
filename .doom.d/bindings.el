@@ -32,7 +32,7 @@
       ;; help
       (:prefix ("h" . "help")
       :desc "Man pages" "m" #'man)
-     
+
       ;; open
       (:prefix ("o" . "open")
       :desc "vterm" "t" #'switch-to-vterm)
@@ -51,6 +51,7 @@
       :desc "comment paragraph" "p" #'evilnc-comment-or-uncomment-paragraphs
       :desc "rtags jump to definition" "D" #'rtags-find-symbol-at-point
       :desc "multiedit" "m" #'evil-multiedit-match-all
+      :desc "narrow buffer" "n" #'doom/toggle-narrow-buffer
       :desc "correct word at point" "s" #'flyspell-correct-at-point)
 
       ;; last buffer
