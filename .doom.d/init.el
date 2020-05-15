@@ -35,7 +35,7 @@
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
        ;;pretty-code       ; replace bits of code with pretty symbols
-       tabs              ; an tab bar for Emacs REVIEW
+       ;tabs              ; an tab bar for Emacs REVIEW
        (treemacs +icons)          ; a project drawer, like neotree but cooler REVIEW
        ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
