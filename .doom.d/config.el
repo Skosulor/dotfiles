@@ -2,6 +2,7 @@
 
 
 
+
 (setq jiralib-url "https://jira.tritech.se")
 
 ;; (setq python-indent 4)
