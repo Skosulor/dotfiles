@@ -1,7 +1,7 @@
 ;;; .doom.d/config.el -*- lexical-binding: t; -*-
 
 
-
+;; F
 
 (setq jiralib-url "https://jira.tritech.se")
 
