@@ -1,9 +1,34 @@
 ;;; .doom.d/config.el -*- lexical-binding: t; -*-
 
 
-;; F
+;; custom functions ----
 
-(setq jiralib-url "https://jira.tritech.se")
+(defun get-syn (&optional b e)
+  (interactive)
+  (shell-command (concat "syn " (thing-at-point 'word))))
+
+(defun ocp ()
+  (interactive)
+  (lsp-ui-sideline-toggle-symbols-info)
+  (lsp-treemacs-symbols)
+  (evil-window-left 1)
+  ;; (evil-window-right 1)
+  (treemacs)
+  (evil-window-right 1))
+
+;; Toggle between two themes
+(defun toggle-theme ()
+  (interactive)
+  (if (string-equal doom-theme "doom-one")
+      (load-theme 'doom-zenburn t)
+    (load-theme 'doom-one t)))
+
+
+;; set scope of evil snipe
+(setq evil-snipe-scope 'visible)
+
+;; auto update pdf's
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
 ;; (setq python-indent 4)
 (add-hook 'python-mode-hook
@@ -17,19 +42,22 @@
 (set-frame-parameter (selected-frame) 'alpha '(100 100))
 (add-to-list 'default-frame-alist '(alpha 100 100))
 
-;; Tabs
-(setq centaur-tabs-height 30)
-(setq centaur-tabs-set-icons t)
-(setq centaur-tabs-gray-out-icons 'buffer)
-(setq centaur-tabs-set-bar 'under)
-(setq x-underline-at-descent-line t)
+;; ;; Tabs
+;; (setq centaur-tabs-height 30)
+;; (setq centaur-tabs-set-icons t)
+;; (setq centaur-tabs-gray-out-icons 'buffer)
+;; (setq centaur-tabs-set-bar 'under)
+;; (setq x-underline-at-descent-line t)
 
 ;; Fonts
-(setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'light))
-(setq doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 14))
+ (setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'light))
+ (setq doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 14))
 
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(setq highlight-indent-guides-method 'character)
+
+
+;; (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+;; (setq highlight-indent-guides-method 'character)
+
 (setq neo-window-width 18)
 (setq neo-window-fixed-size nil)
 
@@ -62,23 +90,6 @@
 (setq display-line-numbers-type 'relative
               display-line-numbers-current-absolute t)
 
-(defun switch-to-vterm ()
-  (when (get-buffer "vterm")
-  (switch-to-buffer vterm)))
-
-(defun get-syn (&optional b e)
-  (interactive)
-  (shell-command (concat "syn " (thing-at-point 'word))))
-
-
-(defun ocp ()
-  (interactive)
-  (lsp-ui-sideline-toggle-symbols-info)
-  (lsp-treemacs-symbols)
-  (evil-window-left 1)
-  ;; (evil-window-right 1)
-  (treemacs)
-  (evil-window-right 1))
 
 (map! :leader
       (:prefix ("p" . "project")
@@ -118,3 +129,9 @@
         ("NOTE" font-lock-keyword-face bold)
         ("DEPRECATED" font-lock-doc-face bold)
         ("OBS" . (:foreground "red" :weight bold))))
+
+(yas-global-mode 1)
+(add-hook 'yas-minor-mode-hook (lambda ()
+                                 (yas-activate-extra-mode 'fundamental-mode)))
+
+

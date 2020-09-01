@@ -16,7 +16,7 @@
        (company +auto)         ; the ultimate code completion backend
        ;; (helm +fuzzy)              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       (ivy +fuzzy +prescient) ; a search engine for love and life
+       (ivy) ;; +prescient) ; a search engine for love and life
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -48,7 +48,7 @@
        file-templates    ; auto-snippets for empty files
        ;;god               ; run Emacs commands without modifier keys
        fold              ; (nigh) universal code folding
-       ;;(format +onsave)  ; automated prettiness
+       (format) ; +onsave)  ; automated prettiness
        ;;lispy             ; vim for lisp, for people who dont like vim
        multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
@@ -66,7 +66,7 @@
        ;;eshell            ; a consistent, cross-platform shell (WIP)
        ;;shell             ; a terminal REPL for Emacs
        ;;term              ; terminals in Emacs
-       ;;vterm             ; another terminals in Emacs
+       vterm             ; another terminals in Emacs
 
        :tools
        ;;ansible
@@ -127,6 +127,7 @@
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
+	+pretty
         +dragndrop       ; drag & drop files/images into org buffers
         ;+hugo           ; use Emacs for hugo blogging
         +ipython         ; ipython/jupyter support for babel
@@ -141,7 +142,7 @@
        ;;racket            ; a DSL for DSLs
        ;;rest              ; Emacs as a REST client
        ;;ruby              ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +lsp)              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
@@ -160,7 +161,7 @@
        ;; toward a specific purpose. They may have additional dependencies and
        ;; should be loaded late.
        :app
-       ;;calendar
+       calendar
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
        ;;twitter           ; twitter client https://twitter.com/vnought

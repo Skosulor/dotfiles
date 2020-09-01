@@ -1,5 +1,6 @@
 ;;; ~/.doom.d/bindings.el -*- lexical-binding: t; -*-
 
+
 (setq x-meta-keysym 'super)
 (map! "s-;" #'counsel-M-x)
 
@@ -12,10 +13,25 @@
   (define-key evil-normal-state-map (kbd "C-j") nil)
   (define-key evil-normal-state-map (kbd "C-k") nil))
 
+(require 'evil-snipe)
+  (define-key evil-snipe-parent-transient-map (kbd "s") 'evil-snipe-repeat)
+  (define-key evil-snipe-parent-transient-map (kbd "f") 'evil-snipe-repeat)
+  (define-key evil-snipe-parent-transient-map (kbd "S") 'evil-snipe-repeat-reverse)
+  (define-key evil-snipe-parent-transient-map (kbd "F") 'evil-snipe-repeat-reverse)
+
 (global-set-key (kbd "C-S-n") 'centaur-tabs-forward)
 (global-set-key (kbd"C-S-b") 'centaur-tabs-backward)
 (global-set-key (kbd "C-k") 'centaur-tabs-forward)
 (global-set-key (kbd"C-j") 'centaur-tabs-backward)
+
+(map! :leader
+      (:prefix ("t" . "toggle")
+       :desc "dark mode" "d" #'toggle-theme
+       :desc "vterm" "t" #'+vterm/toggle))
+
+;; (map! :leader
+;;       (:prefix ("p" . "project")
+;;        :desc "List project TODOs" "t" #'ivy-magit-todos))
 
 (map! :leader
       :desc "Goto Word" "SPC" #'avy-goto-word-0
@@ -33,9 +49,9 @@
       (:prefix ("h" . "help")
       :desc "Man pages" "m" #'man)
 
-      ;; open
+      ;; op
       (:prefix ("o" . "open")
-      :desc "vterm" "t" #'switch-to-vterm)
+      :desc "Calender" "c" #'cfw:open-org-calendar)
 
       ;; files
       (:prefix ("f" . "file")

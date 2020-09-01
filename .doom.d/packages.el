@@ -1,6 +1,7 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; .doom.d/packages.el
 
+(unpin! doom-themes)
 (package! haskell-mode)
 (package! vterm)
 (package! evil-nerd-commenter)
@@ -11,7 +12,10 @@
 (package! minimap)
 (package! org-jira)
 (package! grammarly)
-
+(package! typit)
+(package! gdscript-mode
+          :recipe (:host github
+                   :repo "GDQuest/emacs-gdscript-mode"))
 
 
 ;;; Examples:
