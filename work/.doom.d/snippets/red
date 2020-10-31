@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: red
+# uuid: red
+# key: trigger-key
+# condition: t
+# --
+{\color{red} $0}
