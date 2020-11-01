@@ -7,7 +7,7 @@ SETUVAR FZF_PREVIEW_DIR_CMD:ls
 SETUVAR FZF_PREVIEW_FILE_CMD:head\x20\x2dn\x2010
 SETUVAR FZF_TMUX_HEIGHT:40\x25
 SETUVAR __fish_initialized:3100
-SETUVAR _fish_abbr_ins:sudo\x20pacman\x20\x2dS
+SETUVAR _fish_abbr_ins:sudo\x20sudo\x20apt\x20install
 SETUVAR _fish_abbr_upg:sudo\x20pacman\x20\x2dSyu
 SETUVAR budspencer_nobell:\x1d
 SETUVAR chain_links:chain\x2elinks\x2eroot\x1echain\x2elinks\x2ejobs\x1echain\x2elinks\x2epwd\x1echain\x2elinks\x2evcs_branch\x1echain\x2elinks\x2evcs_dirty\x1echain\x2elinks\x2evcs_stashed
