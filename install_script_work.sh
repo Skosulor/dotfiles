@@ -1,47 +1,66 @@
 #!/bin/bash
 
-DOT_PATH="$HOME/configs"
-WORKDOT_PATH="$DOT_PATH/work"
-DOOM_CONFIG_PATH="$WORKDOT_PATH/.doom.d"
-AUTOSTART_PATH="$HOME/.config/autostart"
-XCAPE_CONF="$WORKDOT_PATH/xcape.desktop"
-SHORTCUT_PATH="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-GUAKE_CONF_PATH="$WORKDOT_PATH/guakeconf"
-FISH_CONFIG_PATH="$WORKDOT_PATH/fish"
+# The paths are set in function "set_paths()"
+DOT_PATH=""
+WORKDOT_PATH=""
+DOOM_CONFIG_PATH=""
+AUTOSTART_PATH=""
+XCAPE_CONF=""
+SHORTCUT_PATH=""
+GUAKE_CONF_PATH=""
+FISH_CONFIG_PATH=""
+TEMP_DIR=""
+
+# Shortcut to exit a program (replaces alt-f4)
 QUIT_COMMAND="['<Alt>q']"
+# Open application menu
 RUN_COMMAND="['<Alt>d']"
 
+# List to fill with failed installations
 failed_installations=()
 
-
 main() {
-	apps=(
-		git
-		neovim
-		xcape
-		fd-find
-		qutebrowser
-		ripgrep
-		emacs
-		tmux
-		ccls
-		guake
-		gawk
-		gnome-tweaks
-		fish
-		python3-pip
-		neofetch
-		gcc
-		g++
-		make
-		cmake
-		xdotool
-		libreoffice
-	)
 
+	# Set path depending on OS
+	set_paths
 
-	 install_apps "${apps[@]}"
-	 print_separator
+	#
+	if pacman --version > /dev/null 2>&1;
+	then
+	 	install_apps "${apps_manjaro[@]}"
+	else
+	 	install_apps "${apps_ubuntu[@]}"
+	fi
+	print_separator
+
+	echo "Setting shortcuts.."
+	#set_shortcuts
+	print_separator
+
+	echo "Installing font iosevka"
+	#install_font_iosevka
+	print_separator
+
+	echo "Fetching configs"
+	#get_configs
+	print_separator
+
+	echo "Installing DOOM emacs"
+	#install_doom
+	print_separator
+
+	echo "Configuring xcape"
+	#configure_xcape
+	print_separator
+
+	echo "Configuring fish shell"
+	set_fish_conf
+	print_separator
+
+	echo "Configuring guake"
+	#set_guake_preferences
+	print_separator
+
 
 	if [ ${#failed_installations[@]} -eq 0 ]; then
     		echo "All appps successfully installed!"
@@ -50,36 +69,6 @@ main() {
 		print_list "${failed_installations[@]}"
 	fi
 
-	echo "Setting shortcuts.."
-	set_shortcuts
-	print_separator
-
-	echo "Installing font iosevka"
-	install_font_iosevka
-	print_separator
-
-	echo "Fetching configs"
-	get_configs
-	print_separator
-
-	echo "Installing DOOM emacs"
-	install_doom
-	print_separator
-
-	echo "Configuring xcape"
-	configure_xcape
-	print_separator
-
-	echo "Configuring fish shell"
-	set_fish_conf
-	print_separator
-
-	echo "Configuring guake"
-	set_guake_preferences
-	print_separator
-
-	#install_alacritty
-	#install_tdrop
 	echo "All done, welcome Andreas"
 }
 
@@ -90,8 +79,8 @@ function install_apps(){
 		do 
 			out="Installing ${app}..."
 			echo $out 
-			if sudo apt install -y $app > /dev/null 2>&1; then
-				echo "Successfully installed $app"
+			if sudo $INSTALL_COMMAND $app > /dev/null 2>&1; then
+				:
 			else
 				echo "failed to install $app"
 				failed_installations+=( $app )
@@ -159,10 +148,8 @@ function shortcut_helper(){
 	CMD_BEGINNING="gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding"
 	KEY_PATH_BASE="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
 
-	# get exsited shortcut sub folders
 	EXISTED_PATHS=$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)
 
-	# find how many shorcut keybindings already defined, and the value will be used as the new shortcut index
 	NEW_KEY_INDEX=$(dconf list /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ | wc -l)
 
 	NEW_KEY_PATH=$KEY_PATH_BASE/custom$NEW_KEY_INDEX/
@@ -174,33 +161,22 @@ function shortcut_helper(){
 		NEW_PATHS="['$NEW_KEY_PATH']"
 	fi
 
-    #########################################################################################
-	# Four steps to create a new shortcut keybinding
-
-	# Step 1: Add one custom shortcut folder in the "Custom Shortcuts" category
 	gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "${NEW_PATHS}"
-
-	# Step 2-4: Set name, command, and binding properties of the shortcut
 
 	$CMD_BEGINNING:$NEW_KEY_PATH name "$1"
 	$CMD_BEGINNING:$NEW_KEY_PATH command "$2"
 	$CMD_BEGINNING:$NEW_KEY_PATH binding "$3"
-
-
-	# $CMD_BEGINNING:$NEW_KEY_PATH name $1
-	# $CMD_BEGINNING:$NEW_KEY_PATH command $2
-	# $CMD_BEGINNING:$NEW_KEY_PATH binding $3
-
-
 }
 
 function install_font_iosevka(){
 	wget https://github.com/be5invis/Iosevka/releases/download/v3.7.1/ttf-iosevka-term-3.7.1.zip
-	mkdir temp
-	cp ttf-iosevka* temp/
-	unzip temp/ttf-iosevka* -d temp/
-	sudo cp -r temp/ttf /usr/share/fonts/
+	mkdir $TEMP_DIR
+	cp ttf-iosevka* $TEMP_DIR/
+	rm ttf-iosevka-term-3.7.1.zip
+	unzip $TEMP_DIR/ttf-iosevka* -d $TEMP_DIR/
+	sudo cp -r $TEMP_DIR/ttf /usr/share/fonts/
 	fc-cache
+	rm -rf $TEMP_DIR
 }
 
 
@@ -223,6 +199,79 @@ function set_guake_preferences(){
 function set_fish_conf(){
 	cp -rf $FISH_CONFIG_PATH ~/.config/	
 }
+
+function set_paths(){
+
+	DOT_PATH="$HOME/configs"
+
+	if pacman --version > /dev/null 2>&1;
+	then
+		WORKDOT_PATH="$DOT_PATH/work/manjaro"
+		INSTALL_COMMAND="sudo pacman -S --noconfirm"
+	else
+		WORKDOT_PATH="$DOT_PATH/work/ubuntu"
+		INSTALL_COMMAND="sudo apt install --yes"
+	fi
+
+	DOOM_CONFIG_PATH="$WORKDOT_PATH/.doom.d"
+	AUTOSTART_PATH="$HOME/.config/autostart"
+	XCAPE_CONF="$WORKDOT_PATH/xcape.desktop"
+	SHORTCUT_PATH="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+	GUAKE_CONF_PATH="$WORKDOT_PATH/guakeconf"
+	FISH_CONFIG_PATH="$WORKDOT_PATH/fish"
+	TEMP_DIR="temporary_dir_for_install_script"
+
+
+}
+
+	apps_ubuntu=(
+		git
+		neovim
+		xcape
+		fd-find
+		qutebrowser
+		ripgrep
+		emacs
+		tmux
+		ccls
+		guake
+		gawk
+		gnome-tweaks
+		fish
+		python3-pip
+		neofetch
+		g++
+		gcc
+		make
+		cmake
+		xdotool
+		firefox
+		libreoffice
+	)
+
+	apps_manjaro=(
+		git
+		neovim
+		xcape
+		fd
+		qutebrowser
+		ripgrep
+		emacs
+		tmux
+		ccls
+		guake
+		gawk
+		gnome-tweaks
+		fish
+		python-pip
+		neofetch
+		gcc
+		make
+		cmake
+		xdotool
+		firefox
+		libreoffice
+	)
 
 
 main "$@"; exit

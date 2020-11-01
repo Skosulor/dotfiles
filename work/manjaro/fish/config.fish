@@ -8,7 +8,8 @@ set fish_cursor_visual                 block
 
 
 # Abbreviations
-abbr ins sudo sudo apt install
+abbr ins sudo pacman -S 
+abbr upg sudo pacman -Syu
 
 # Aliases
 
