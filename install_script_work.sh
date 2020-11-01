@@ -34,23 +34,23 @@ main() {
 	print_separator
 
 	echo "Setting shortcuts.."
-	#set_shortcuts
+	set_shortcuts
 	print_separator
 
 	echo "Installing font iosevka"
-	#install_font_iosevka
+	install_font_iosevka
 	print_separator
 
 	echo "Fetching configs"
-	#get_configs
+	get_configs
 	print_separator
 
 	echo "Installing DOOM emacs"
-	#install_doom
+	install_doom
 	print_separator
 
 	echo "Configuring xcape"
-	#configure_xcape
+	configure_xcape
 	print_separator
 
 	echo "Configuring fish shell"
@@ -58,7 +58,7 @@ main() {
 	print_separator
 
 	echo "Configuring guake"
-	#set_guake_preferences
+	set_guake_preferences
 	print_separator
 
 
