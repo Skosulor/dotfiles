@@ -207,7 +207,7 @@ function set_guake_preferences(){
 }
 
 function set_dot_configs{
-	mdir $DOT_CONFIG_PATH
+	mkdir $DOT_CONFIG_PATH
 	cp -r $M_DOT_CONFIG_PATH/* $DOT_CONFIG_PATH
 }
 
