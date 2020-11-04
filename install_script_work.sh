@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # The paths are set in function "set_paths()"
-
 DOT_LOCAL_PATH=""
 AUTOSTART_PATH=""
 DOT_PATH=""
@@ -82,6 +81,8 @@ main() {
 	fi
 
 	echo "All done, welcome Andreas"
+	echo "Don't forget to add a second language and to change "
+	echo "shell and open/close shortcut for yakuake"
 }
 
 function install_apps(){
@@ -208,18 +209,18 @@ function set_guake_preferences(){
 
 function set_dot_configs(){
 	mkdir $DOT_CONFIG_PATH
-	cp -r $M_DOT_CONFIG_PATH/* $DOT_CONFIG_PATH
+	cp -r $M_DOT_CONFIG_PATH/  $HOME
 }
 
+function install_dot_local(){
+	mkdir r $DOT_LOCAL_PATH 
+	cp -r $M_DOT_LOCAL_PATH $HOME
+}
 
 function set_fish_conf(){
 	cp -rf $FISH_CONFIG_PATH ~/.config/	
 }
 
-function install_dot_local(){
-	mkdir r $DOT_LOCAL_PATH 
-	cp -r $M_DOT_LOCAL_PATH $DOT_LOCAL_PATH
-}
 
 function set_paths(){
 
@@ -272,6 +273,7 @@ function set_paths(){
 		xdotool
 		firefox
 		libreoffice
+		yakuake
 	)
 
 	apps_manjaro=(
@@ -296,6 +298,7 @@ function set_paths(){
 		xdotool
 		firefox
 		libreoffice
+		yakuake
 	)
 
 
@@ -303,3 +306,6 @@ main "$@"; exit
 
 # TODO Languages
 # TODO Add input argument for type of tools like basic, c++, configs, office suite
+# TODO one function for all config copies.. 
+# TODO remove mkdirs 
+# TODO add error handling for everything (except doom install but maybe supress output?)
