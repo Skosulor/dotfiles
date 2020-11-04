@@ -83,6 +83,7 @@ main() {
 	echo "All done, welcome Andreas"
 	echo "Don't forget to add a second language and to change "
 	echo "shell and open/close shortcut for yakuake"
+	echo "consider setting default shell as well"
 }
 
 function install_apps(){
