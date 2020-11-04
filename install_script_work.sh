@@ -37,6 +37,14 @@ main() {
 	fi
 	print_separator
 
+	echo "copying .configs"
+	set_dot_configs
+	print_separator
+
+	echo "copying .local"
+	install_dot_local
+	print_separator
+
 	echo "Setting shortcuts.."
 	set_shortcuts
 	print_separator
@@ -47,10 +55,6 @@ main() {
 
 	echo "Fetching configs"
 	get_configs
-	print_separator
-
-	echo "copying .configs"
-	set_dot_configs
 	print_separator
 
 	echo "Installing DOOM emacs"
