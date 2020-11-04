@@ -206,7 +206,7 @@ function set_guake_preferences(){
 	guake --restore-preferences $GUAKE_CONF_PATH
 }
 
-function set_dot_configs{
+function set_dot_configs(){
 	mkdir $DOT_CONFIG_PATH
 	cp -r $M_DOT_CONFIG_PATH/* $DOT_CONFIG_PATH
 }
