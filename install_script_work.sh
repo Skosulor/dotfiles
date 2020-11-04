@@ -4,6 +4,7 @@
 DOT_PATH=""
 WORKDOT_PATH=""
 DOOM_CONFIG_PATH=""
+DOT_CONFIG_PATH=""
 AUTOSTART_PATH=""
 XCAPE_CONF=""
 SHORTCUT_PATH=""
@@ -43,6 +44,10 @@ main() {
 
 	echo "Fetching configs"
 	get_configs
+	print_separator
+
+	echo "copying .configs"
+	set_dot_configs
 	print_separator
 
 	echo "Installing DOOM emacs"
@@ -123,9 +128,7 @@ function get_configs(){
 }
 
 function configure_xcape(){
-	mkdir $AUTOSTART_PATH
 	gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
-	sudo cp $XCAPE_CONF $AUTOSTARTPATH/
 }
 
 function set_shortcuts(){
@@ -196,6 +199,12 @@ function set_guake_preferences(){
 	guake --restore-preferences $GUAKE_CONF_PATH
 }
 
+function set_dot_configs{
+	mdir $DOT_CONFIG_PATH
+	cp -r $M_DOT_CONFIG_PATH/* $DOT_CONFIG_PATH
+}
+
+
 function set_fish_conf(){
 	cp -rf $FISH_CONFIG_PATH ~/.config/	
 }
@@ -214,6 +223,8 @@ function set_paths(){
 	fi
 
 	DOOM_CONFIG_PATH="$WORKDOT_PATH/.doom.d"
+	DOT_CONFIG_PATH="$HOME/.config"
+	M_DOT_CONFIG_PATH="$WORKDOT_PATH/.config"
 	AUTOSTART_PATH="$HOME/.config/autostart"
 	XCAPE_CONF="$WORKDOT_PATH/xcape.desktop"
 	SHORTCUT_PATH="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"

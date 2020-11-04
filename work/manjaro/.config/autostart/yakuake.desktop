@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Guake Terminal
+Comment=drop down terminal
+TryExec=yakuake
+Exec=yakuake
+Icon=yakuake
+Type=Application
+StartupNotify=true
+X-GNOME-Autostart-enabled=true

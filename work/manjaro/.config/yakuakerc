@@ -1,0 +1,33 @@
+[Appearance]
+Skin=breeze-minimal
+SkinInstalledWithKns=true
+Translucency=true
+
+[Desktop Entry]
+DefaultProfile=Profile 3.profile
+
+[Dialogs]
+FirstRun=false
+
+[DownloadDialog Settings]
+DVI-D-0 Height 1080=447
+DVI-D-0 Width 1920=700
+
+[Favorite Profiles]
+Favorites=The one.profile
+
+[Shortcuts]
+grow-terminal-bottom=none
+new-session=Alt+T
+next-session=Alt+L
+next-terminal=Alt+J
+previous-session=Alt+H
+previous-terminal=Alt+K
+split-top-bottom=Alt+S
+toggle-window-state=none
+
+[Window]
+Height=100
+Position=100
+ShowTabBar=false
+Width=50
