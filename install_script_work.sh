@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # The paths are set in function "set_paths()"
+
+DOT_LOCAL_PATH=""
+AUTOSTART_PATH=""
 DOT_PATH=""
 WORKDOT_PATH=""
 DOOM_CONFIG_PATH=""
@@ -209,6 +212,11 @@ function set_fish_conf(){
 	cp -rf $FISH_CONFIG_PATH ~/.config/	
 }
 
+function install_dot_local(){
+	mkdir r $DOT_LOCAL_PATH 
+	cp -r $M_DOT_LOCAL_PATH $DOT_LOCAL_PATH
+}
+
 function set_paths(){
 
 	DOT_PATH="$HOME/configs"
@@ -225,6 +233,8 @@ function set_paths(){
 	DOOM_CONFIG_PATH="$WORKDOT_PATH/.doom.d"
 	DOT_CONFIG_PATH="$HOME/.config"
 	M_DOT_CONFIG_PATH="$WORKDOT_PATH/.config"
+	M_DOT_LOCAL_PATH="$WORKDOT_PATH/.local"
+	DOT_LOCAL_PATH="$HOME/.local"
 	AUTOSTART_PATH="$HOME/.config/autostart"
 	XCAPE_CONF="$WORKDOT_PATH/xcape.desktop"
 	SHORTCUT_PATH="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
