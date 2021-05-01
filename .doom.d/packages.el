@@ -10,12 +10,16 @@
 (package! highlight-indent-guides)
 (package! lsp-treemacs)
 (package! minimap)
-(package! org-jira)
-(package! grammarly)
-(package! typit)
-(package! gdscript-mode
-          :recipe (:host github
-                   :repo "GDQuest/emacs-gdscript-mode"))
+(package! dap-mode)
+
+;; (package! org-bullets)
+;; (package! org-jira)
+;; (package! grammarly)
+;; (package! typit)
+
+;; (package! gdscript-mode
+;;           :recipe (:host github
+;;                    :repo "GDQuest/emacs-gdscript-mode"))
 
 
 ;;; Examples:

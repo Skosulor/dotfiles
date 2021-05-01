@@ -1,5 +1,6 @@
 ;;; .doom.d/config.el -*- lexical-binding: t; -*-
 
+
 (defun get-syn (&optional b e)
   (interactive)
   (shell-command (concat "syn " (thing-at-point 'word))))
@@ -17,7 +18,7 @@
 (defun toggle-theme ()
   (interactive)
   (if (string-equal doom-theme "doom-one")
-      (load-theme 'doom-zenburn t)
+      (load-theme 'doom-gruvbox-light t)
     (load-theme 'doom-one t)))
 
 
@@ -47,9 +48,11 @@
 ;; (setq x-underline-at-descent-line t)
 
 ;; Fonts
- (setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'light))
- (setq doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 14))
-
+ ;; (setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'medium))
+(setq doom-font (font-spec :family "Iosevka Term" :size 13))
+(setq doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 13))
+;; (setq doom-font (font-spec :family "Hack" :size 14))
+ ;;(setq doom-variable-pitch-font (font-spec :family "Hack" :size 14))
 
 
 ;; (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
@@ -92,30 +95,6 @@
       (:prefix ("p" . "project")
       :desc "project tools" "P" 'ocp))
 
-;; (require 'org)
-;;  (setq org-todo-keywords
-;;   '((sequence "TODO"
-;;       "OBS!"
-;;       "MAYBE"
-;;       "NOTE"
-;;       "REVIEW"
-;;       "WAITING"
-;;       "DONE")))
-
-;; (setq org-todo-keyword-faces
-;;       '(("TODO" . org-warning) ("STARTED" . "yellow")
-;;         ("NOTE" . (:foreground "orange" :weight bold))
-;;         ("REVIEW" . (:foreground "pink" :weight bold))
-;;         ("OBS!" . (:foreground "red" :weight bold))))
-
-;; (setq hl-todo-keyword-faces
-;;       '(("TODO"   . "#FF0000")
-;;         ("FIXME"  . "#FF0000")
-;;         ("OBS!" . (:foreground "red" :weight bold)))
-;;         ("DEBUG"  . "#A020F0")
-;;         ("REVIEW"  . "#A020F0")
-;;         ("GOTCHA" . "#FF4500")
-;;         ("NOTE"   . "#1E90FF")))
 
 (setq hl-todo-keyword-faces
       '(("TODO" warning bold)
@@ -246,3 +225,86 @@
 
 (add-hook 'window-size-change-functions #'set-appropriate-splash)
 (add-hook 'doom-load-theme-hook #'set-appropriate-splash)
+
+
+;;;;;;;;;;;;;;
+;; ORG MODE ;;
+;;;;;;;;;;;;;;
+
+(setq deft-directory "~/org"
+      deft-extensions '("org")
+      deft-recursive t)
+
+(unpin! org-mode)
+
+(after! org (setq org-hide-emphasis-markers t))
+
+(after! org (setq org-insert-heading-respect-content nil))
+
+(after! org
+  (setq org-log-done t)
+  (setq org-log-into-drawer t))
+
+(after! org
+  (setq org-special-ctrl-a/e t)
+  (setq org-special-ctrl-k t))
+
+;;Enable Speed Keys, which allows quick single-key commands when the cursor is placed on a heading. Usually the cursor needs to be at the beginning of a headline line, but defining it with this function makes them active on any of the asterisks at the beginning of the line.
+
+(after! org
+  (setq org-use-speed-commands
+        (lambda ()
+          (and (looking-at org-outline-regexp)
+               (looking-back "^\**")))))
+
+(add-hook! org-mode (electric-indent-local-mode -1))
+
+;; Turn of completion for org mode
+(defun zz/adjust-org-company-backends ()
+  (remove-hook 'after-change-major-mode-hook '+company-init-backends-h)
+  (setq-local company-backends nil))
+(add-hook! org-mode (zz/adjust-org-company-backends))
+
+(add-hook! org-mode :append
+           #'visual-line-mode
+           #'variable-pitch-mode)
+
+(package! org-appear
+  :recipe (:host github
+           :repo "awth13/org-appear"))
+
+
+(add-hook! org-mode :append #'org-appear-mode)
+
+(setq org-indent-indentation-per-level 6)
+(setq org-indent-boundary-char ?　)
+
+(setq org-ellipsis " ▼")
+
+(after! org-superstar
+  ;; Every non-TODO headline now have no bullet
+  (setq org-superstar-headline-bullets-list '("　"))
+  (setq org-superstar-leading-bullet ?　)
+  ;; Enable custom bullets for TODO items
+  (setq org-superstar-special-todo-items t)
+  (setq org-superstar-todo-bullet-alist
+        '(("TODO" "☐　")
+          ("NEXT" "✒　")
+          ("PROG" "✰　")
+          ("WAIT" "☕　")
+          ("FAIL" "✘　")
+          ("DONE" "✔　")))
+  (org-superstar-restart))
+
+(add-hook! 'org-mode-hook #'doom-disable-line-numbers-h)
+
+(custom-set-faces
+ '( org-level-1 ((t (:height 1.4))) )
+ '( org-level-2 ((t (:height 1.3))) )
+ '( org-level-3 ((t (:height 1.2))) )
+ '( org-level-4 ((t (:height 1.1))) )
+ )
+;; (set-face-attribute 'org-level-1 :height "1.4")
+;; (set-face-attribute 'org-level-2 :height "1.3")
+;; (set-face-attribute 'org-level-3 :height "1.2")
+;; (set-face-attribute 'org-level-4 :height "1.1")

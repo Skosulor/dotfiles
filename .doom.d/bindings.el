@@ -3,6 +3,10 @@
 
 (setq x-meta-keysym 'super)
 (map! "s-;" #'counsel-M-x)
+(map! "s-j" 'evil-window-down)
+(map! "s-k" 'evil-window-up)
+(map! "s-h" 'evil-window-left)
+(map! "s-l" 'evil-window-right)
 
 ;(global-set-key (kbd "C-x n") #'centaur-tabs-forward)
 ;(global-set-key (kbd "C-b n") #'centaur-tabs-backward)
@@ -87,13 +91,13 @@
       :desc "Goto word" "W" #'avy-goto-word-0
       :desc "Goto char " "c" #'avy-goto-char-2))
 
-;; haskell bindings
-(map! :map haskell-mode-map
-      :localleader
-      "m" #'run-haskell
-      "s" #'haskell-interactive-switch
-      "l" #'haskell-process-load-file
-      )
+;; ;; haskell bindings
+;; (map! :map haskell-mode-map
+;;       :localleader
+;;       "m" #'run-haskell
+;;       "s" #'haskell-interactive-switch
+;;       "l" #'haskell-process-load-file
+;;       )
 
 
 
