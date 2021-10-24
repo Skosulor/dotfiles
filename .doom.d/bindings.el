@@ -23,10 +23,10 @@
   (define-key evil-snipe-parent-transient-map (kbd "S") 'evil-snipe-repeat-reverse)
   (define-key evil-snipe-parent-transient-map (kbd "F") 'evil-snipe-repeat-reverse)
 
-;; (global-set-key (kbd "C-S-n") 'centaur-tabs-forward)
-;; (global-set-key (kbd"C-S-b") 'centaur-tabs-backward)
-;; (global-set-key (kbd "C-k") 'centaur-tabs-forward)
-;; (global-set-key (kbd"C-j") 'centaur-tabs-backward)
+
+
+(map! :map general-override-mode-map "C-h" #'c-end-expression)
+(map! :map general-override-mode-map :n "C-h" #'c-end-expression)
 
 (map! :leader
       (:prefix ("t" . "toggle")

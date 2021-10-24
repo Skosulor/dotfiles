@@ -11,6 +11,7 @@
 (package! lsp-treemacs)
 (package! minimap)
 (package! dap-mode)
+(package! scroll-on-jump)
 
 ;; (package! org-bullets)
 ;; (package! org-jira)
