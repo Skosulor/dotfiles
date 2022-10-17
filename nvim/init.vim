@@ -137,85 +137,8 @@ Plug 'preservim/nerdcommenter'
 call plug#end()
 
 lua <<EOF
--- Begin LUA
-
-local lsp = require('lsp-zero')
-
-lsp.set_preferences({
-  suggest_lsp_servers = true,
-  setup_servers_on_start = true,
-  set_lsp_keymaps = false,
-  configure_diagnostics = true,
-  cmp_capabilities = true,
-  manage_nvim_cmp = true,
-  call_servers = 'local',
-  sign_icons = {
-    error = '✘',
-    warn = '▲',
-    hint = '⚑',
-    info = ''
-  }
-})
-
---lsp.preset('recommended')
-lsp.setup()
-
--- Hop
-require'hop'.setup()
-
--- Telescope setup
-local actions = require("telescope.actions")
-require("telescope").setup({
-    pickers = {
-        colorscheme = {
-          enable_preview = true
-        }
-    },
-    defaults = {
-        mappings = {
-            i = {
-      		["<C-j>"] = actions.move_selection_next,
-      		["<C-k>"] = actions.move_selection_previous,
-                ["<esc>"] = actions.close,
-            },
-        },
-
-        --layout_strategy = "vertical",
-        layout_config = {
-            preview_cutoff = 20,
-            },
-    },
-})
-
-
--- File browser with telescope
-require("telescope").load_extension "file_browser"
-
--- Which-key / preview commands in popup buffer
-require("which-key").setup {}
-
--- Yanky / Yank history
-require("yanky").setup({
-highlight = {
-    on_put = false,
-    on_yank = false,
-    timer = 500,
-    }
-})
-require("telescope").load_extension("yank_history")
-
--- Lualine
-require('lualine').setup()
-
---require("whichkey_map").setup()
-
--- Harpoon
-require("telescope").load_extension('harpoon')
-
-local neogit = require('neogit')
-neogit.setup {}
-
--- End of LUA
+-- Transition to lua init
+require("init_lua").setup()
 EOF
 
 colorscheme onedark
