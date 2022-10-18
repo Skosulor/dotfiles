@@ -96,22 +96,30 @@ nnoremap <leader><leader> <cmd>HopWord<cr>
 " Plugins
 call plug#begin()
 
+" General
 Plug 'jbyuki/venn.nvim'
-Plug 'DanilaMihailov/beacon.nvim'
-Plug 'mhinz/vim-startify'
-Plug 'ThePrimeagen/harpoon'
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'sindrets/diffview.nvim'
-Plug 'rhysd/clever-f.vim'
-Plug 'phaazon/hop.nvim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'navarasu/onedark.nvim'
-Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-orgmode/orgmode'
 Plug 'AckslD/nvim-whichkey-setup.lua'
-Plug 'folke/which-key.nvim'
 Plug 'gbprod/yanky.nvim'
+Plug 'preservim/nerdcommenter'
+
+" Theming
+Plug 'mhinz/vim-startify'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'navarasu/onedark.nvim'
+
+" Git
+Plug 'sindrets/diffview.nvim'
 Plug 'TimUntersberger/neogit'
+
+" Navigation
+Plug 'folke/which-key.nvim'
+Plug 'phaazon/hop.nvim'
+Plug 'ThePrimeagen/harpoon'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'DanilaMihailov/beacon.nvim'
+Plug 'rhysd/clever-f.vim'
 
 " Telescope
 Plug 'nvim-telescope/telescope-file-browser.nvim'
@@ -133,7 +141,6 @@ Plug 'hrsh7th/cmp-path'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
-Plug 'preservim/nerdcommenter'
 call plug#end()
 
 lua <<EOF
