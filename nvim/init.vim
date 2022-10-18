@@ -6,7 +6,6 @@
 "   C-d (forward) and C-b (backward)
 " * Find an alignment plugin
 " * https://github.com/aserowy/tmux.nvim    | Tmux and nvim window integration
-" * https://github.com/jbyuki/venn.nvim     | Draw diagrams
 " * https://github.com/nvim-orgmode/orgmode | Org mode
 " * https://github.com/hkupty/iron.nvim     | Integrated repl
 " * Add keymaps for tabs
@@ -97,6 +96,7 @@ nnoremap <leader><leader> <cmd>HopWord<cr>
 " Plugins
 call plug#begin()
 
+Plug 'jbyuki/venn.nvim'
 Plug 'DanilaMihailov/beacon.nvim'
 Plug 'mhinz/vim-startify'
 Plug 'ThePrimeagen/harpoon'
