@@ -57,6 +57,7 @@ nnoremap * <cmd>Telescope grep_string<cr>
 
 " Telescope General
 nnoremap <leader><TAB>m <cmd>Telescope man_pages<cr>
+nnoremap <leader><TAB>m <cmd>:lua require'functions'.man_pages()<cr>
 nnoremap <leader><TAB>y <cmd>Telescope yank_history<cr>
 nnoremap <leader><TAB>d <cmd>Telescope diagnostics<cr>
 nnoremap <leader><TAB>k <cmd>Telescope keymaps<cr>
@@ -93,6 +94,8 @@ nnoremap <leader>tt <cmd>vsplit<cr><C-W><C-L>:term<ENTER>i
 " Hop
 nnoremap <leader><leader> <cmd>HopWord<cr>
 
+" Clear search-highlight with esc
+noremap <ESC> :noh<CR><ESC>
 " Plugins
 call plug#begin()
 
@@ -103,11 +106,6 @@ Plug 'nvim-orgmode/orgmode'
 Plug 'AckslD/nvim-whichkey-setup.lua'
 Plug 'gbprod/yanky.nvim'
 Plug 'preservim/nerdcommenter'
-
-" Theming
-Plug 'mhinz/vim-startify'
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'navarasu/onedark.nvim'
 
 " Git
 Plug 'sindrets/diffview.nvim'
@@ -141,6 +139,12 @@ Plug 'hrsh7th/cmp-path'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
+
+" Theming
+Plug 'mhinz/vim-startify'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'navarasu/onedark.nvim'
+
 call plug#end()
 
 lua <<EOF
@@ -149,7 +153,4 @@ require("init_lua").setup()
 EOF
 
 colorscheme onedark
-
-
-
 
