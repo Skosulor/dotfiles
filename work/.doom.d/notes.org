@@ -1,6 +1,0 @@
-#+TITLE: notes
-
-* Inbox
-** TODO
-
-[[file:~/.doom.d/bindings.el::(:prefix ("c" . "code/comment")]]

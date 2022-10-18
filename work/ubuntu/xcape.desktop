@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=xcape
-Comment=rebind keys
-GenericName=xcape
-Exec=/usr/bin/xcape -t 250 -e "Caps_Lock=Escape"
-Type=Application
-StartupNotify=true
