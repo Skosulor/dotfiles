@@ -76,8 +76,12 @@ nnoremap gr <cmd>Telescope lsp_references<cr>
 " Git
 nnoremap <leader>gg <cmd>Neogit<cr>
 nnoremap <leader>gb <cmd>Telescope git_branches<cr>
-nnoremap <leader>gs <cmd>Telescope git_status<cr>
 nnoremap <leader>gc <cmd>Telescope git_commits<cr>
+nnoremap <leader>gh <cmd>GitGutterPreviewHunk<cr>
+nnoremap <leader>gs <cmd>GitGutterStageHunk<cr>
+nnoremap <leader>gd <cmd>GitGutterDiffOrig<cr>
+nnoremap <leader>gn <cmd>GitGutterNextHunk<cr>
+nnoremap <leader>gp <cmd>GitGutterPrevHunk<cr>
 
 " Windows
 nnoremap <leader>wv <cmd>vsplit<cr><C-W><C-L>
