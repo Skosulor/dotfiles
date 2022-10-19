@@ -24,6 +24,7 @@ set shiftwidth=4
 set autoindent 
 set smartindent
 set cindent   
+set updatetime=100
 
 " Theme
 let g:onedark_config = {
@@ -100,6 +101,8 @@ noremap <ESC> :noh<CR><ESC>
 call plug#begin()
 
 " General
+
+Plug 'airblade/vim-gitgutter'
 Plug 'jbyuki/venn.nvim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nvim-orgmode/orgmode'
