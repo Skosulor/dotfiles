@@ -26,6 +26,13 @@ set smartindent
 set cindent   
 set updatetime=100
 
+" Set File data location
+set dir=~/.nvim/swapfiles
+set backup
+set backupdir=~/.nvim/backupfiles
+set undofile
+set undodir=~/.nvim/undofiles
+
 " Theme
 let g:onedark_config = {
   \ 'style': 'warm',
