@@ -4,17 +4,28 @@ local conf = require("telescope.config").values
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 
-local finder_results = {
-    "os",
-    "subprocess",
-    "math"
-    }
 
--- our picker function: colors
-local colors = function(opts)
+local function mysplit (inputstr, sep)
+        if sep == nil then
+                sep = "%s"
+        end
+        local t={}
+        for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+                table.insert(t, str)
+        end
+        return t
+end
+
+local cmd = ("python3 get_module_names.py")
+local f = assert(io.popen(cmd, 'r'))
+local results = assert(f:read('*a'))
+local finder_results = mysplit(results, "\n")
+
+-- our picker function: pydoc
+local pydoc = function(opts)
   opts = opts or {}
   pickers.new(opts, {
-    prompt_title = "colors",
+    prompt_title = "pydoc",
     finder = finders.new_table {
       results = finder_results
     },
@@ -23,8 +34,6 @@ local colors = function(opts)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
-        --print(vim.inspect(selection))
-        --vim.api.nvim_put({ selection[1] }, "", false, true)
         vim.cmd("! pydoc3 " .. selection[1])
       end)
       return true
@@ -32,14 +41,5 @@ local colors = function(opts)
   }):find()
 end
 
--- to execute the function
-colors(require("telescope.themes").get_dropdown{})
 
--- Python sippet which prints python standard libs
---import distutils.sysconfig as sysconfig
---import os
---std_lib = sysconfig.get_python_lib(standard_lib=True)
---for top, dirs, files in os.walk(std_lib):
-    --for nm in files:
-        --if nm != '__init__.py' and nm[-3:] == '.py':
-            --print os.path.join(top, nm)[len(std_lib)+1:-3].replace(os.sep, '.')
+pydoc(require("telescope.themes").get_dropdown{})
