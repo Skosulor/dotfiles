@@ -40,6 +40,7 @@ M.setup = function()
     -- Hop
     require'hop'.setup()
 
+    local fb_actions = require"telescope".extensions.file_browser.actions
     -- Telescope setup
     local actions = require("telescope.actions")
     require("telescope").setup({
@@ -49,7 +50,15 @@ M.setup = function()
                 override_generic_sorter = true,
                 override_file_sorter = true,
                 case_mode = "smart_case",
-            }
+            },
+            file_browser = {
+                mappings = {
+                    ["i"] = {
+                        ["<C-i>"] = fb_actions.toggle_hidden,
+                        ["<C-h>"] = fb_actions.goto_parent_dir,
+                    },
+                },
+            },
         },
         pickers = {
             colorscheme = {
@@ -59,6 +68,7 @@ M.setup = function()
         defaults = {
             mappings = {
                 i = {
+                    ["<C-l>"] = actions.select_default,
                     ["<C-j>"] = actions.move_selection_next,
                     ["<C-k>"] = actions.move_selection_previous,
                     ["<esc>"] = actions.close,
