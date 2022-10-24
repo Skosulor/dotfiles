@@ -136,6 +136,7 @@ Plug 'folke/which-key.nvim'
 Plug 'phaazon/hop.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'DanilaMihailov/beacon.nvim'
 Plug 'rhysd/clever-f.vim'
 
