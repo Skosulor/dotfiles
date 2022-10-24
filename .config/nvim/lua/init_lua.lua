@@ -1,6 +1,21 @@
 local M = {}
 
 M.setup = function()
+
+    require'nvim-treesitter.configs'.setup {
+      -- A list of parser names, or "all"
+      ensure_installed = { "c", "lua",},
+      -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+      auto_install = true,
+      highlight = {
+        enable = true,
+        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+        -- Instead of true it can also be a list of languages
+        additional_vim_regex_highlighting = true,
+      },
+    }
+
+
     local lsp = require('lsp-zero')
 
     lsp.set_preferences({
@@ -28,6 +43,14 @@ M.setup = function()
     -- Telescope setup
     local actions = require("telescope.actions")
     require("telescope").setup({
+        extensions = {
+            fzf = {
+                fuzzy = true,
+                override_generic_sorter = true,
+                override_file_sorter = true,
+                case_mode = "smart_case",
+            }
+        },
         pickers = {
             colorscheme = {
                 enable_preview = true
@@ -108,8 +131,10 @@ M.setup = function()
             end, { "i", "s" }),
         },
     })
-
+    require('leap').add_default_mappings()
 end
+
+require('telescope').load_extension('fzf')
 
 function _G.Toggle_venn()
     local venn_enabled = vim.inspect(vim.b.venn_enabled)
@@ -129,6 +154,11 @@ function _G.Toggle_venn()
         vim.b.venn_enabled = nil
     end
 end
+
+
 -- toggle keymappings for venn using <leader>v
 vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
+
+
+
 return M

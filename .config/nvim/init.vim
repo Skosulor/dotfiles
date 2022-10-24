@@ -117,6 +117,8 @@ call plug#begin()
 
 " General
 
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'ggandor/leap.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'jbyuki/venn.nvim'
 Plug 'jiangmiao/auto-pairs'
