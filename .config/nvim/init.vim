@@ -52,14 +52,17 @@ let mapleader=" "
 " Paste and Yank 
 xnoremap("<leader>p", "\"_dP)
 
+" Exit terminal
+tnoremap <C-q> <C-\><C-n><C-w><C-w>
+
 " Lsp
 nnoremap gd :lua vim.lsp.buf.definition()<enter>
 nnoremap gl :lua vim.diagnostic.open_float()<enter>
 nnoremap K :lua vim.lsp.buf.hover()<enter>
 
 " File and search
-nnoremap <leader>f <cmd>:lua require"search_files".project_files()<cr>
-nnoremap <leader>F <cmd>Telescope file_browser<cr>
+nnoremap <leader>fs <cmd>:lua require"search_files".project_files()<cr>
+nnoremap <leader>ff <cmd>Telescope file_browser<cr>
 nnoremap <leader>ss <cmd>Telescope live_grep<cr>
 nnoremap * <cmd>Telescope grep_string<cr>
 
@@ -72,6 +75,7 @@ nnoremap <leader><TAB>k <cmd>Telescope keymaps<cr>
 nnoremap <leader><TAB>c <cmd>Telescope commands<cr>
 nnoremap <leader><TAB>t <cmd>Telescope treesitter<cr>
 nnoremap <leader><TAB>h <cmd>Telescope help_tags<cr>
+nnoremap <leader><TAB>p <cmd>:lua require'pydoc_picker'.pydoc()<cr>
 
 " LSP
 nnoremap <leader><tab><leader> <cmd>Telescope buffers<cr>
