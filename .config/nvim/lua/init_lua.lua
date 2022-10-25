@@ -52,12 +52,7 @@ M.setup = function()
                 case_mode = "smart_case",
             },
             file_browser = {
-                mappings = {
-                    ["i"] = {
-                        ["<C-i>"] = fb_actions.toggle_hidden,
-                        ["<C-h>"] = fb_actions.goto_parent_dir,
-                    },
-                },
+                respect_gitignore = false,
             },
         },
         pickers = {
@@ -68,10 +63,13 @@ M.setup = function()
         defaults = {
             mappings = {
                 i = {
+                    ["<C-i>"] = fb_actions.toggle_hidden,
+                    ["<C-h>"] = fb_actions.goto_parent_dir,
                     ["<C-l>"] = actions.select_default,
                     ["<C-j>"] = actions.move_selection_next,
                     ["<C-k>"] = actions.move_selection_previous,
                     ["<esc>"] = actions.close,
+                    ["<C-l>"] = actions.select_default,
                 },
             },
 
@@ -81,7 +79,6 @@ M.setup = function()
             },
         },
     })
-
 
     -- File browser with telescope
     require("telescope").load_extension "file_browser"
