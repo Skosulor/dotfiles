@@ -112,11 +112,18 @@ nnoremap <leader><leader> <cmd>HopWord<cr>
 
 " Clear search-highlight with esc
 noremap <ESC> :noh<CR><ESC>
+
+" Aligning
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+
 " Plugins
 call plug#begin()
 
 " General
 
+Plug 'karb94/neoscroll.nvim'
+Plug 'junegunn/vim-easy-align'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'ggandor/leap.nvim'
 Plug 'airblade/vim-gitgutter'
