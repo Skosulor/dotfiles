@@ -15,7 +15,7 @@ set relativenumber
 set number
 set clipboard=unnamedplus
 set encoding=UTF-8
-set timeoutlen=0
+set timeoutlen=300
 
 " Indenting
 set tabstop=8     
@@ -76,6 +76,7 @@ nnoremap <leader><TAB>c <cmd>Telescope commands<cr>
 nnoremap <leader><TAB>t <cmd>Telescope treesitter<cr>
 nnoremap <leader><TAB>h <cmd>Telescope help_tags<cr>
 nnoremap <leader><TAB>p <cmd>:lua require'pydoc_picker'.pydoc()<cr>
+nnoremap <leader><TAB>p <cmd>Telescope notify<cr>
 
 " LSP
 nnoremap <leader><tab><leader> <cmd>Telescope buffers<cr>
@@ -122,6 +123,11 @@ call plug#begin()
 
 " General
 
+Plug 'rcarriga/nvim-notify'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'folke/noice.nvim'
+Plug 'michaelb/sniprun', {'do': 'bash install.sh'} 
+Plug 'airblade/vim-rooter'
 Plug 'karb94/neoscroll.nvim'
 Plug 'junegunn/vim-easy-align'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
