@@ -67,7 +67,6 @@ nnoremap <leader>ss <cmd>Telescope live_grep<cr>
 nnoremap * <cmd>Telescope grep_string<cr>
 
 " Telescope General
-nnoremap <leader><TAB>m <cmd>Telescope man_pages<cr>
 nnoremap <leader><TAB>m <cmd>:lua require'functions'.man_pages()<cr>
 nnoremap <leader><TAB>y <cmd>Telescope yank_history<cr>
 nnoremap <leader><TAB>d <cmd>Telescope diagnostics<cr>
@@ -76,7 +75,7 @@ nnoremap <leader><TAB>c <cmd>Telescope commands<cr>
 nnoremap <leader><TAB>t <cmd>Telescope treesitter<cr>
 nnoremap <leader><TAB>h <cmd>Telescope help_tags<cr>
 nnoremap <leader><TAB>p <cmd>:lua require'pydoc_picker'.pydoc()<cr>
-nnoremap <leader><TAB>p <cmd>Telescope notify<cr>
+nnoremap <leader><TAB>n <cmd>Telescope notify<cr>
 
 " LSP
 nnoremap <leader><tab><leader> <cmd>Telescope buffers<cr>
@@ -117,6 +116,9 @@ noremap <ESC> :noh<CR><ESC>
 " Aligning
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
+
+" SnipRun
+xmap <leader>s :SnipRun<cr>
 
 " Plugins
 call plug#begin()
