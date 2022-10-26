@@ -85,7 +85,7 @@ nnoremap gr <nop>
 nnoremap gr <cmd>Telescope lsp_references<cr>
 
 " Git
-nnoremap <leader>gg <cmd>Neogit<cr>
+nnoremap <leader>gg <cmd>Git<cr>
 nnoremap <leader>gb <cmd>Telescope git_branches<cr>
 nnoremap <leader>gc <cmd>Telescope git_commits<cr>
 nnoremap <leader>gh <cmd>GitGutterPreviewHunk<cr>
@@ -124,7 +124,10 @@ xmap <leader>s :SnipRun<cr>
 call plug#begin()
 
 " General
-
+Plug 'anuvyklack/windows.nvim'
+Plug 'anuvyklack/middleclass'
+Plug 'anuvyklack/animation.nvim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'rcarriga/nvim-notify'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'folke/noice.nvim'
@@ -144,7 +147,7 @@ Plug 'preservim/nerdcommenter'
 
 " Git
 Plug 'sindrets/diffview.nvim'
-Plug 'TimUntersberger/neogit'
+Plug 'tpope/vim-fugitive'
 
 " Navigation
 Plug 'folke/which-key.nvim'

@@ -102,8 +102,8 @@ M.setup = function()
     -- Harpoon
     require("telescope").load_extension('harpoon')
 
-    local neogit = require('neogit')
-    neogit.setup {}
+    --local neogit = require('neogit')
+    --neogit.setup {}
 
     -- cmp setup
     local has_words_before = function()
@@ -177,6 +177,16 @@ M.setup = function()
         display = {"NvimNotify"},
     })
 
+    require("catppuccin").setup {
+        flavour = "frappe" -- mocha, macchiato, frappe, lattec
+    }
+    config = function()
+        vim.o.winwidth = 10
+        vim.o.winminwidth = 10
+        vim.o.equalalways = false
+        require('windows').setup()
+    end
+    config()
 end
 
 require('telescope').load_extension('fzf')
