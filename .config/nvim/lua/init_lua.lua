@@ -187,17 +187,18 @@ M.setup = function()
             winwidth = 30,
         },
         ignore = {
-            buftype = { "quickfix" },
-            filetype = { "NvimTree", "neo-tree", "undotree", "gundo" }
+            buftype = { "quickfix", "Telescope", "telescope"},
+            filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Telescope", "telescope", }
         },
 
         animation = {
-            enable = true,
+            enable = false,
             duration = 300,
             fps = 60,
             easing = "in_out_sine"
         }
     })
+
 end
 
 require('telescope').load_extension('fzf')
