@@ -144,22 +144,22 @@ M.setup = function()
         views = {
             cmdline_popup = {
                 position = {
-                    row = 5,
+                    row = 20,
                     col = "50%",
                 },
                 size = {
-                    width = 60,
+                    width = 200,
                     height = "auto",
                 },
             },
             popupmenu = {
                 relative = "editor",
                 position = {
-                    row = 8,
+                    row = 20,
                     col = "50%",
                 },
                 size = {
-                    width = 60,
+                    width = 200,
                     height = 10,
                 },
                 border = {
