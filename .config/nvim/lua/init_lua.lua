@@ -180,13 +180,24 @@ M.setup = function()
     require("catppuccin").setup {
         flavour = "frappe" -- mocha, macchiato, frappe, lattec
     }
-    config = function()
-        vim.o.winwidth = 10
-        vim.o.winminwidth = 10
-        vim.o.equalalways = false
-        require('windows').setup()
-    end
-    config()
+
+    require('windows').setup({
+        autowidth = {
+            enable = true,
+            winwidth = 30,
+        },
+        ignore = {
+            buftype = { "quickfix" },
+            filetype = { "NvimTree", "neo-tree", "undotree", "gundo" }
+        },
+
+        animation = {
+            enable = true,
+            duration = 300,
+            fps = 60,
+            easing = "in_out_sine"
+        }
+    })
 end
 
 require('telescope').load_extension('fzf')

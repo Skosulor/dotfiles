@@ -93,6 +93,7 @@ nnoremap <leader>gs <cmd>GitGutterStageHunk<cr>
 nnoremap <leader>gd <cmd>GitGutterDiffOrig<cr>
 nnoremap <leader>gn <cmd>GitGutterNextHunk<cr>
 nnoremap <leader>gp <cmd>GitGutterPrevHunk<cr>
+nnoremap <leader>gm <cmd>Git mergetool<cr>
 
 " Windows
 nnoremap <leader>wv <cmd>vsplit<cr><C-W><C-L>
