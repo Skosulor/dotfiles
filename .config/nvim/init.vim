@@ -23,6 +23,7 @@ set tabstop=8
 set expandtab    
 set shiftwidth=4
 set autoindent 
+set ignorecase
 set smartindent
 set cindent   
 set updatetime=100
