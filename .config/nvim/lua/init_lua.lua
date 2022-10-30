@@ -199,6 +199,31 @@ M.setup = function()
         }
     })
 
+    local header_art = 
+    [[
+    ╭╮╭┬─╮╭─╮┬  ┬┬╭┬╮
+    │││├┤ │ │╰┐┌╯││││
+    ╯╰╯╰─╯╰─╯ ╰╯ ┴┴ ┴
+    ]]
+
+    --require('mini.nvim').setup({
+        local starter = require'mini.starter'
+        starter.setup {
+            items = {
+                starter.sections.telescope(),
+            },
+            content_hooks = {
+                starter.gen_hook.adding_bullet(),
+                starter.gen_hook.aligning("center", "center"),
+            },
+            header = header_art
+        }
+
+        require('toggleterm').setup({
+            autochdir = true,
+            direction = 'float',
+        })
+
 end
 
 require('telescope').load_extension('fzf')

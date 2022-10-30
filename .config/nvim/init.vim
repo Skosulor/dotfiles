@@ -16,6 +16,7 @@ set number
 set clipboard=unnamedplus
 set encoding=UTF-8
 set timeoutlen=300
+packadd termdebug
 
 " Indenting
 set tabstop=8     
@@ -106,7 +107,7 @@ nnoremap <leader>wo <C-W><C-O>
 nnoremap <leader>wq :q!<enter>
 
 " Terminal
-nnoremap <leader>tt <cmd>vsplit<cr><C-W><C-L>:term<ENTER>i
+nnoremap <leader>tt <cmd>ToggleTerm<cr>
 
 " Hop
 nnoremap <leader><leader> <cmd>HopWord<cr>
@@ -125,6 +126,10 @@ xmap <leader>s :SnipRun<cr>
 call plug#begin()
 
 " General
+
+Plug 'echasnovski/mini.nvim'
+Plug 'akinsho/toggleterm.nvim'
+Plug 'kevinhwang91/nvim-bqf'
 Plug 'anuvyklack/windows.nvim'
 Plug 'anuvyklack/middleclass'
 Plug 'anuvyklack/animation.nvim'
