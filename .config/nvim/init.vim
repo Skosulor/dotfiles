@@ -96,6 +96,7 @@ nnoremap <leader>gd <cmd>GitGutterDiffOrig<cr>
 nnoremap <leader>gn <cmd>GitGutterNextHunk<cr>
 nnoremap <leader>gp <cmd>GitGutterPrevHunk<cr>
 nnoremap <leader>gm <cmd>Git mergetool<cr>
+nnoremap <leader>gl <cmd>GV<cr>
 
 " Windows
 nnoremap <leader>wv <cmd>vsplit<cr><C-W><C-L>
@@ -155,6 +156,7 @@ Plug 'preservim/nerdcommenter'
 " Git
 Plug 'sindrets/diffview.nvim'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 
 " Navigation
 Plug 'folke/which-key.nvim'
