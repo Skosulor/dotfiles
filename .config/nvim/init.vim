@@ -55,7 +55,7 @@ let mapleader=" "
 xnoremap("<leader>p", "\"_dP)
 
 " Exit terminal
-tnoremap <C-q> <C-\><C-n><C-w><C-w>
+tnoremap <leader>tt <C-\><C-n><C-w><C-w>
 
 " Lsp
 nnoremap gd :lua vim.lsp.buf.definition()<enter>
