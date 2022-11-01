@@ -143,12 +143,18 @@ M.setup = function()
                     fallback()
                 end
             end, { "i", "s" }),
+            ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item()),
+            ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item()),
         },
     })
     require('leap').add_default_mappings()
 
     require("noice").setup({
+        excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
         views = {
+            messages = {
+
+            },
             cmdline_popup = {
                 position = {
                     row = 20,

@@ -4,10 +4,7 @@
 " * Keybindings harpoon
 " * During autocompletion, jump between arguments with TAB -> its done with
 "   C-d (forward) and C-b (backward)
-" * Find an alignment plugin
-" * https://github.com/aserowy/tmux.nvim    | Tmux and nvim window integration
 " * https://github.com/nvim-orgmode/orgmode | Org mode
-" * https://github.com/hkupty/iron.nvim     | Integrated repl
 " * Add keymaps for tabs
 
 " General 
@@ -16,6 +13,7 @@ set number
 set clipboard=unnamedplus
 set encoding=UTF-8
 set timeoutlen=300
+set laststatus=3
 packadd termdebug
 
 " Indenting
