@@ -1,0 +1,6 @@
+CompileFlags:
+    Compiler: arm-none-eabi-gcc
+    Add: [-I/usr/local/gcc-arm-none-eabi-7-2018-q2-update/arm-none-eabi/include]
+
+Diagnostics:
+    Suppress: -Wformat
