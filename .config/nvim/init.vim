@@ -96,6 +96,7 @@ nnoremap <leader>gp <cmd>GitGutterPrevHunk<cr>
 nnoremap <leader>gm <cmd>Git mergetool<cr>
 nnoremap <leader>gl <cmd>GV<cr>
 nnoremap <leader>gf <cmd>Git fetch --all<cr>
+nnoremap <leader>gf <cmd>GitGutterUndoHunk<cr>
 
 " Windows
 nnoremap <leader>wv <cmd>vsplit<cr><C-W><C-L>
