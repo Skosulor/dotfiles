@@ -13,7 +13,6 @@ set number
 set clipboard=unnamedplus
 set encoding=UTF-8
 set timeoutlen=300
-set laststatus=3
 packadd termdebug
 
 " Indenting
@@ -71,11 +70,12 @@ nnoremap <leader><TAB>m <cmd>:lua require'functions'.man_pages()<cr>
 nnoremap <leader><TAB>y <cmd>Telescope yank_history<cr>
 nnoremap <leader><TAB>d <cmd>Telescope diagnostics<cr>
 nnoremap <leader><TAB>k <cmd>Telescope keymaps<cr>
-nnoremap <leader><TAB>c <cmd>Telescope commands<cr>
 nnoremap <leader><TAB>t <cmd>Telescope treesitter<cr>
 nnoremap <leader><TAB>h <cmd>Telescope help_tags<cr>
 nnoremap <leader><TAB>p <cmd>:lua require'pydoc_picker'.pydoc()<cr>
 nnoremap <leader><TAB>n <cmd>Telescope notify<cr>
+
+nnoremap <leader>; <cmd>Telescope commands<cr>
 
 " LSP
 nnoremap <leader><tab><leader> <cmd>Telescope buffers<cr>
@@ -124,11 +124,15 @@ xmap ga <Plug>(EasyAlign)
 " SnipRun
 xmap <leader>s :SnipRun<cr>
 
+" color-picker
+nnoremap <leader>p :PickColor<cr>
+
 " Plugins
 call plug#begin()
 
 " General
 
+Plug 'ziontee113/color-picker.nvim'
 Plug 'echasnovski/mini.nvim'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'kevinhwang91/nvim-bqf'

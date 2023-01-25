@@ -220,7 +220,7 @@ M.setup = function()
     require('windows').setup({
         autowidth = {
             enable = true,
-            winwidth = 60,
+            winwidth = 30,
         },
         ignore = {
             buftype = { "quickfix", "Telescope", "telescope"},
@@ -260,6 +260,8 @@ M.setup = function()
             direction = 'float',
         })
 
+        local colorpicker = require('color-picker')
+        colorpicker.setup()
 end
 
 require('telescope').load_extension('fzf')
