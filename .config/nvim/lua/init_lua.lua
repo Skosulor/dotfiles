@@ -220,7 +220,7 @@ M.setup = function()
     require('windows').setup({
         autowidth = {
             enable = true,
-            winwidth = 30,
+            winwidth = 50,
         },
         ignore = {
             buftype = { "quickfix", "Telescope", "telescope"},

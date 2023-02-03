@@ -85,7 +85,7 @@ nnoremap gr <nop>
 nnoremap gr <cmd>Telescope lsp_references<cr>
 
 " Git
-nnoremap <leader>gg <cmd>Git<cr>
+nnoremap <leader>gg <cmd>vertical Git<cr>
 nnoremap <leader>gb <cmd>Telescope git_branches<cr>
 nnoremap <leader>gc <cmd>Telescope git_commits<cr>
 nnoremap <leader>gh <cmd>GitGutterPreviewHunk<cr>
@@ -98,6 +98,7 @@ nnoremap <leader>gl <cmd>GV<cr>
 xnoremap gl :'<,'>GV<cr>
 nnoremap <leader>gf <cmd>Git fetch --all<cr>
 nnoremap <leader>gu <cmd>GitGutterUndoHunk<cr>
+nnoremap <leader>a <cmd>lua vim.lsp.buf.code_action()<CR>
 
 " Windows
 nnoremap <leader>wv <cmd>vsplit<cr><C-W><C-L>
@@ -108,6 +109,10 @@ nnoremap <leader>wl <C-W><C-L>
 nnoremap <leader>wh <C-W><C-H>
 nnoremap <leader>wo <C-W><C-O>
 nnoremap <leader>wq :q!<enter>
+
+" Harpoon
+nnoremap <leader>hm :lua require("harpoon.mark").add_file()<cr>
+nnoremap <leader>h<leader> :lua require("harpoon.ui").toggle_quick_menu()<cr>
 
 " Terminal
 nnoremap <leader>tt <cmd>ToggleTerm<cr>
