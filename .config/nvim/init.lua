@@ -46,8 +46,9 @@ local x_keymap = function(lhs, rhs)
     vim.api.nvim_set_keymap('x', lhs, rhs, { noremap = true, silent = true })
 end
 
+-- files
+n_keymap('<leader>fn',':e ~/.config/nvim/one.norg<cr>')
 n_keymap('<leader>ft','<cmd>NvimTreeToggle<cr>')
-
 n_keymap('<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
 n_keymap('<leader>ff', '<cmd>Telescope file_browser<cr>')
 n_keymap('<leader>ss', '<cmd>Telescope live_grep<cr>')
@@ -62,6 +63,7 @@ n_keymap('<leader>td', '<cmd>Telescope diagnostics<cr>')
 n_keymap('<leader>tk', '<cmd>Telescope keymaps<cr>')
 n_keymap('<leader>th', '<cmd>Telescope help_tags<cr>')
 n_keymap('<leader>tn', '<cmd>Telescope notify<cr>')
+n_keymap('<leader>to', '<cmd>Telescope oldfiles<cr>')
 n_keymap('<leader>;',  '<cmd>Telescope commands<cr>')
 n_keymap('<leader><tab><leader>', '<cmd>Telescope buffers<cr>')
 n_keymap('<leader>j',             '<cmd>Telescope lsp_document_symbols<cr>')
@@ -109,8 +111,8 @@ n_keymap('<leader>h<leader>', ':lua require("harpoon.ui").toggle_quick_menu()<cr
 
  -- Code
 n_keymap('<leader>ct', '<cmd>TodoQuickFix<cr>')
-n_keymap('<leader>cc', '<cmd>Commentary<cr>')
-x_keymap('<leader>cc', ':Commentary<cr>')
+n_keymap('<leader>cl', '<cmd>Commentary<cr>')
+x_keymap('<leader>cl', ':Commentary<cr>')
 
  -- Terminal
 n_keymap('<leader>tt', '<cmd>ToggleTerm<cr>')
