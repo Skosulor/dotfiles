@@ -2,6 +2,9 @@ local M = {}
 
 M.setup = function()
 
+    require("todo-comments").setup()
+    require("nvim-tree").setup()
+
     require'nvim-treesitter.configs'.setup {
       -- A list of parser names, or "all"
       ensure_installed = { "c", "lua",},

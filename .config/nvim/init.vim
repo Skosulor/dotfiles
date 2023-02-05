@@ -43,6 +43,7 @@ let g:onedark_config = {
   \ },
 \ }
 
+let g:NERDCreateDefaultMappings = 0
 
 " Keybindings
 nnoremap <SPACE> <nop>
@@ -60,20 +61,20 @@ nnoremap gl :lua vim.diagnostic.open_float()<enter>
 nnoremap K :lua vim.lsp.buf.hover()<enter>
 
 " File and search
+nnoremap <leader>ft <cmd>NvimTreeToggle<cr>
 nnoremap <leader>fs <cmd>:lua require"search_files".project_files()<cr>
 nnoremap <leader>ff <cmd>Telescope file_browser<cr>
 nnoremap <leader>ss <cmd>Telescope live_grep<cr>
+nnoremap <leader>/  <cmd>Telescope live_grep<cr>
 nnoremap * <cmd>Telescope grep_string<cr>
 
 " Telescope General
-nnoremap <leader><TAB>m <cmd>:lua require'functions'.man_pages()<cr>
-nnoremap <leader><TAB>y <cmd>Telescope yank_history<cr>
-nnoremap <leader><TAB>d <cmd>Telescope diagnostics<cr>
-nnoremap <leader><TAB>k <cmd>Telescope keymaps<cr>
-nnoremap <leader><TAB>t <cmd>Telescope treesitter<cr>
-nnoremap <leader><TAB>h <cmd>Telescope help_tags<cr>
-nnoremap <leader><TAB>p <cmd>:lua require'pydoc_picker'.pydoc()<cr>
-nnoremap <leader><TAB>n <cmd>Telescope notify<cr>
+nnoremap <leader>tm <cmd>:lua require'functions'.man_pages()<cr>
+nnoremap <leader>ty <cmd>Telescope yank_history<cr>
+nnoremap <leader>td <cmd>Telescope diagnostics<cr>
+nnoremap <leader>tk <cmd>Telescope keymaps<cr>
+nnoremap <leader>th <cmd>Telescope help_tags<cr>
+nnoremap <leader>tn <cmd>Telescope notify<cr>
 
 nnoremap <leader>; <cmd>Telescope commands<cr>
 
@@ -114,6 +115,11 @@ nnoremap <leader>wq :q!<enter>
 nnoremap <leader>hm :lua require("harpoon.mark").add_file()<cr>
 nnoremap <leader>h<leader> :lua require("harpoon.ui").toggle_quick_menu()<cr>
 
+" Code
+nnoremap <leader>ct <cmd>TodoQuickFix<cr>
+nnoremap <leader>cc <cmd>Commentary<cr>
+xnoremap <leader>cc :Commentary<cr>
+
 " Terminal
 nnoremap <leader>tt <cmd>ToggleTerm<cr>
 
@@ -142,6 +148,8 @@ Plug 'ziontee113/color-picker.nvim'
 Plug 'echasnovski/mini.nvim'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'kevinhwang91/nvim-bqf'
+Plug 'folke/todo-comments.nvim'
+Plug 'nvim-tree/nvim-tree.lua'
 Plug 'anuvyklack/windows.nvim'
 Plug 'anuvyklack/middleclass'
 Plug 'anuvyklack/animation.nvim'
@@ -161,7 +169,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'nvim-orgmode/orgmode'
 Plug 'AckslD/nvim-whichkey-setup.lua'
 Plug 'gbprod/yanky.nvim'
-Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-commentary'
 
 " Git
 Plug 'sindrets/diffview.nvim'
