@@ -82,9 +82,9 @@ return {
             starter.setup {
                 items = {
                     starter.sections.telescope(),
-                    {name = "One", action = ":e ./.config/nvim/one.norg", section = "Doc's"},
-                    {name = "Plugins", action = ":e ./.config/nvim/lua/plugins.lua", section = "Doc's"},
-                    {name = "Init", action = ":e ./.config/nvim/init.lua", section = "Doc's"},
+                    {name = "One", action = ":e ~/.config/nvim/one.norg", section = "Doc's"},
+                    {name = "Plugins", action = ":e ~/.config/nvim/lua/plugins.lua", section = "Doc's"},
+                    {name = "Init", action = ":e ~/.config/nvim/init.lua", section = "Doc's"},
                     starter.sections.recent_files(5, false),
                     starter.sections.builtin_actions(),
                 },
