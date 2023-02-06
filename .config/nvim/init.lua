@@ -117,6 +117,9 @@ n_keymap('<leader>h<leader>', ':lua require("harpoon.ui").toggle_quick_menu()<cr
 
 
  -- Code
+n_keymap('<leader>cs', '<cmd>AerialToggle<cr>')
+n_keymap('<leader>ca', ':lua vim.lsp.buf.code_action()<cr>')
+n_keymap('<leader>cS', ':lua vim.lsp.buf.document_symbol()<cr>')
 n_keymap('<leader>ct', '<cmd>TodoQuickFix<cr>')
 n_keymap('<leader>cl', '<cmd>Commentary<cr>')
 x_keymap('<leader>cl', ':Commentary<cr>')
@@ -134,3 +137,13 @@ vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', { noremap = false, silen
 n_keymap('<leader>p', ':PickColor<cr>')
 
 vim.api.nvim_set_keymap('t', '<leader>tt', "<C-\\><C-n><cmd>ToggleTerm<cr>", { noremap = true, silent = true })
+
+
+vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
