@@ -32,9 +32,9 @@ set.smartindent = true
 set.cindent     = true
 set.updatetime  = 100
 
-set.dir = ".nvim/swapfiles"
+set.dir = vim.fn.stdpath('config') .. "/undo"
 set.backup = true
-set.backupdir = ".nvim/backupfiles"
+set.backupdir = vim.fn.stdpath('config') .. '/backupfiles'
 set.undofile = true
 
 -- Key mappings
