@@ -126,7 +126,7 @@ return {
             require('windows').setup({
                 autowidth = {
                     enable = true,
-                    winwidth = 50,
+                    winwidth = 40,
                 },
                 ignore = {
                     buftype = { "quickfix", "Telescope", "telescope"},
@@ -164,7 +164,7 @@ return {
                             col = "50%",
                         },
                         size = {
-                            width = 200,
+                            width = 130,
                             height = "auto",
                         },
                     },
@@ -191,7 +191,7 @@ return {
                             col = "50%",
                         },
                         size = {
-                            width = 200,
+                            width = 130,
                             height = 10,
                         },
                         border = {
@@ -378,13 +378,16 @@ return {
         'navarasu/onedark.nvim',
         config = function()
             require('onedark').setup {
-                style = 'warm'
+                style = 'dark'
             }
             vim.cmd([[colorscheme onedark]])
         end,
     },
-    'sainnhe/everforest',
-
+    {
+        'sainnhe/everforest',
+        config = function()
+        end,
+    },
     {
  {
         "nvim-neorg/neorg",
@@ -405,4 +408,6 @@ return {
         dependencies = { { "nvim-lua/plenary.nvim" } },
     }
     },
+    'AlexvZyl/nordic.nvim',
+    'catppuccin/nvim',
 }

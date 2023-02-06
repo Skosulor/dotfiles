@@ -46,6 +46,8 @@ local x_keymap = function(lhs, rhs)
     vim.api.nvim_set_keymap('x', lhs, rhs, { noremap = true, silent = true })
 end
 
+vim.cmd([[colorscheme everforest]])
+
 -- files
 n_keymap('<leader>fn',':e ~/.config/nvim/one.norg<cr>')
 n_keymap('<leader>ft','<cmd>NvimTreeToggle<cr>')
@@ -103,6 +105,11 @@ n_keymap('<leader>wl', '<C-W><C-L>')
 n_keymap('<leader>wh', '<C-W><C-H>')
 n_keymap('<leader>wo', '<C-W><C-O>')
 n_keymap('<leader>wq', ':q!<enter>')
+
+n_keymap('<leader>wJ', '<C-W>J')
+n_keymap('<leader>wK', '<C-W>K')
+n_keymap('<leader>wL', '<C-W>L')
+n_keymap('<leader>wH', '<C-W>H')
 
 -- Harpoon
 n_keymap('<leader>hm',        ':lua require("harpoon.mark").add_file()<cr>')
