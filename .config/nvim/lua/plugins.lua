@@ -126,7 +126,7 @@ return {
             require('windows').setup({
                 autowidth = {
                     enable = true,
-                    winwidth = 40,
+                    winwidth = 20,
                 },
                 ignore = {
                     buftype = { "quickfix", "Telescope", "telescope"},
