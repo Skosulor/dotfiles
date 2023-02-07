@@ -9,6 +9,24 @@ version: 1.0.0
 @end
 
 * Work
+** EME
+*** Loadcell + acc investigation(Thule)
+    - Accelerometer and Loadcell values should be in the same range
+    - Loadcell should only be used in upphill (?)
+    - Torque = (loadcell + accelermeter)
+    ---- F = M * A
+    ---- Accelerometer gives us A
+    ---- Loadcell gives us F but is unreliable due to calibration
+    ---- We know the weight of the Trailer
+    ---- What if:
+    ------ F1 = accelerometer * trailer weight
+    ------ F2 = Loadcell - F1 
+    ------ Min(F2) = 0
+    ------ Torque = (F1 + F2)
+    - [] Need to bla
+
+
+
 * Projects
 * Code 
 * Misc
