@@ -123,6 +123,7 @@ n_keymap('<leader>h<leader>', ':lua require("harpoon.ui").toggle_quick_menu()<cr
 
 
  -- Code
+n_keymap('<leader>cr', '<cmd>Spectre<cr>')
 n_keymap('<leader>cs', '<cmd>AerialToggle<cr>')
 n_keymap('<leader>ca', ':lua vim.lsp.buf.code_action()<cr>')
 n_keymap('<leader>cS', ':lua vim.lsp.buf.document_symbol()<cr>')

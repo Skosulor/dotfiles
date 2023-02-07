@@ -431,4 +431,8 @@ return {
             })
         end,
     },
+    'elvessousa/sobrio',
+    'savq/melange-nvim',
+    'rebelot/kanagawa.nvim',
+    'nvim-pack/nvim-spectre',
 }
