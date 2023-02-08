@@ -42,6 +42,8 @@ vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decr
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
+vim.g.everforest_background = 'hard'
+
 -- Key mappings
 local n_keymap = function(lhs, rhs)
     vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true, silent = true })
@@ -52,6 +54,8 @@ local x_keymap = function(lhs, rhs)
 end
 
 vim.cmd([[colorscheme everforest]])
+ -- Hide the tildes that denotes end of file
+vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
 
 -- files
 n_keymap('<leader>fn',':e ~/.config/nvim/one.norg<cr>')
@@ -149,4 +153,5 @@ vim.api.nvim_set_keymap('t', '<leader>tt', "<C-\\><C-n><cmd>ToggleTerm<cr>", { n
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
 

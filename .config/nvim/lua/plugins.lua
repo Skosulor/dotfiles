@@ -76,7 +76,7 @@ return {
             │││├┤ │ │╰┐┌╯││││
             ╯╰╯╰─╯╰─╯ ╰╯ ┴┴ ┴
             ]]
-
+            require('mini.sessions').setup()
             --require('mini.nvim').setup({
             local starter = require'mini.starter'
             starter.setup {
@@ -86,6 +86,7 @@ return {
                     {name = "Plugins", action = ":e ~/.config/nvim/lua/plugins.lua", section = "Doc's"},
                     {name = "Init", action = ":e ~/.config/nvim/init.lua", section = "Doc's"},
                     starter.sections.recent_files(5, false),
+                    -- starter.sections.sessions(5,false),
                     starter.sections.builtin_actions(),
                 },
                 content_hooks = {
@@ -417,8 +418,12 @@ return {
         end,
     },
     {
-      'stevearc/aerial.nvim',
-      config = function() require('aerial').setup() end,
+        'stevearc/aerial.nvim',
+        config = function() require('aerial').setup(
+            {
+                filter_kind = false,
+            })
+        end,
     },
     {
         'kevinhwang91/nvim-ufo',
