@@ -139,7 +139,7 @@ x_keymap('<leader>cl', ':Commentary<cr>')
 n_keymap('<leader>tt', '<cmd>ToggleTerm<cr>')
 
 -- Remove search highlihgt with ESC
-vim.api.nvim_set_keymap('', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
 
 -- Aligning 
 vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
