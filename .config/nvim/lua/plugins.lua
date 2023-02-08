@@ -208,7 +208,13 @@ return {
 
         end,
     },
-    'airblade/vim-rooter',
+    {
+        'airblade/vim-rooter',
+        config = function()
+            vim.g.rooter_patterns = {'.git'}
+        end,
+
+    },
     {
         'karb94/neoscroll.nvim',
         config = function()
@@ -440,4 +446,5 @@ return {
     'savq/melange-nvim',
     'rebelot/kanagawa.nvim',
     'nvim-pack/nvim-spectre',
+    'sainnhe/edge'
 }
