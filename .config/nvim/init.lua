@@ -69,6 +69,7 @@ n_keymap('*', '<cmd>Telescope grep_string<cr>')
 
 
 -- Telescope General
+n_keymap('<leader>tp', ':Telescope neoclip<cr>')
 n_keymap('<leader>tm', '<cmd>:lua require("functions").man_pages()<cr>')
 n_keymap('<leader>ty', '<cmd>Telescope yank_history<cr>')
 n_keymap('<leader>td', '<cmd>Telescope diagnostics<cr>')
