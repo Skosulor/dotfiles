@@ -479,4 +479,10 @@ return {
                 require('telescope').load_extension('neoclip')
             end,
     },
+    {
+        'rmagatti/goto-preview',
+        config = function()
+            require('goto-preview').setup()
+        end,
+    },
 }
