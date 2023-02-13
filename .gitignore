@@ -2,3 +2,6 @@
 .config/nvim/backupfiles/
 .config/nvim/undo/
 .config/nvim/lazy-lock.json
+.nvim/
+.config/nvim/nvim
+
