@@ -135,6 +135,7 @@ n_keymap('<leader>cS', ':lua vim.lsp.buf.document_symbol()<cr>')
 n_keymap('<leader>ct', '<cmd>TodoQuickFix<cr>')
 n_keymap('<leader>cl', '<cmd>Commentary<cr>')
 x_keymap('<leader>cl', ':Commentary<cr>')
+x_keymap('<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
  -- Terminal
 n_keymap('<leader>tt', '<cmd>ToggleTerm<cr>')
