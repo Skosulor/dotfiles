@@ -518,5 +518,11 @@ return {
         wants = {'nvim-treesitter'}, -- or require if not used so far
         after = {'nvim-cmp'} -- if a completion plugin is using tabs load it before
     },
-    'rmehri01/onenord.nvim'
+    'rmehri01/onenord.nvim',
+    {
+       'folke/twilight.nvim',
+       config = function()
+           require("twilight").setup()
+       end,
+   },
 }
