@@ -58,7 +58,7 @@ vim.cmd([[colorscheme everforest]])
 vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
 
 -- files
-n_keymap('<leader>fn',':e ~/.config/nvim/one.norg<cr>')
+n_keymap('<leader>fn',':e ~/one/one.norg<cr>')
 n_keymap('<leader>ft','<cmd>NvimTreeToggle<cr>')
 n_keymap('<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
 n_keymap('<leader>ff', '<cmd>Telescope file_browser<cr>')
