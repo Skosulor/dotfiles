@@ -63,8 +63,9 @@ n_keymap('<leader>ft','<cmd>NvimTreeToggle<cr>')
 n_keymap('<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
 n_keymap('<leader>ff', '<cmd>Telescope file_browser<cr>')
 n_keymap('<leader>fh', ':lua MiniStarter.open()<cr>')
-n_keymap('<leader>ss', '<cmd>Telescope live_grep<cr>')
-n_keymap('<leader>/', '<cmd>Telescope live_grep<cr>')
+n_keymap('<leader>ss', '<cmd>:lua require("functions").grep_project()<cr>')
+
+n_keymap('<leader>/', ':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>')
 n_keymap('*', '<cmd>Telescope grep_string<cr>')
 
 
