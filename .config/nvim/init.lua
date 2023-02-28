@@ -137,6 +137,7 @@ n_keymap('<leader>ct', '<cmd>TodoQuickFix<cr>')
 n_keymap('<leader>cl', '<cmd>Commentary<cr>')
 x_keymap('<leader>cl', ':Commentary<cr>')
 x_keymap('<leader>ch', ':ClangdSwitchSourceHeader<cr>')
+n_keymap('<leader>cP', ':PickColor<cr>')
 
  -- Terminal
 n_keymap('<leader>tt', '<cmd>ToggleTerm<cr>')
@@ -144,11 +145,13 @@ n_keymap('<leader>tt', '<cmd>ToggleTerm<cr>')
 -- Remove search highlihgt with ESC
 vim.api.nvim_set_keymap('n', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
 
+-- Project
+n_keymap('<leader>p', '<cmd>Telescope projects<cr>')
+
 -- Aligning 
 vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 
-n_keymap('<leader>p', ':PickColor<cr>')
 
 vim.api.nvim_set_keymap('t', '<leader>tt', "<C-\\><C-n><cmd>ToggleTerm<cr>", { noremap = true, silent = true })
 

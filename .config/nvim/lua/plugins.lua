@@ -82,7 +82,7 @@ return {
             starter.setup {
                 items = {
                     starter.sections.telescope(),
-                    {name = "One", action = ":e ~/.config/nvim/one.norg", section = "Doc's"},
+                    {name = "One", action = ":e ~/one/one.norg", section = "Doc's"},
                     {name = "Plugins", action = ":e ~/.config/nvim/lua/plugins.lua", section = "Doc's"},
                     {name = "Init", action = ":e ~/.config/nvim/init.lua", section = "Doc's"},
                     starter.sections.recent_files(5, false),
@@ -209,9 +209,12 @@ return {
         end,
     },
     {
-        'airblade/vim-rooter',
+        'ahmedkhalf/project.nvim',
         config = function()
-            vim.g.rooter_patterns = {'.git'}
+            require('telescope').load_extension('projects')
+            require("project_nvim").setup ({
+                patterns = {'.git'},
+            })
         end,
 
     },
@@ -525,4 +528,11 @@ return {
            require("twilight").setup()
        end,
    },
+   {
+       "kylechui/nvim-surround",
+       config = function()
+           require("nvim-surround").setup({})
+       end,
+   },
 }
+
