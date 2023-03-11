@@ -127,7 +127,7 @@ return {
             require('windows').setup({
                 autowidth = {
                     enable = true,
-                    winwidth = 20,
+                    winwidth = 10,
                 },
                 ignore = {
                     buftype = { "quickfix", "Telescope", "telescope"},
@@ -219,10 +219,10 @@ return {
 
     },
     {
-        'karb94/neoscroll.nvim',
-        config = function()
-            require('neoscroll').setup()
-        end,
+        -- 'karb94/neoscroll.nvim',
+        -- config = function()
+        --     require('neoscroll').setup()
+        -- end,
     },
     'junegunn/vim-easy-align',
 

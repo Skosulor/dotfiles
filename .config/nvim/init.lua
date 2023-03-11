@@ -143,6 +143,20 @@ n_keymap('<leader>cP', ':PickColor<cr>')
  -- Terminal
 n_keymap('<leader>tt', '<cmd>ToggleTerm<cr>')
 
+-- Tabs
+vim.api.nvim_set_keymap('n', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('t', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
+
+-- vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true, silent = true })
+
 -- Remove search highlihgt with ESC
 vim.api.nvim_set_keymap('n', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
 
@@ -162,6 +176,11 @@ vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 
+
 n_keymap('<leader>cp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
 vim.api.nvim_set_keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 
+if vim.g.neovide then
+    vim.g.neovide_scroll_animation_length = 0.5
+    vim.g.neovide_hide_mouse_when_typing = true
+end
