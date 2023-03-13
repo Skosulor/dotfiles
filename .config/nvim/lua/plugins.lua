@@ -76,7 +76,7 @@ return {
             │││├┤ │ │╰┐┌╯││││
             ╯╰╯╰─╯╰─╯ ╰╯ ┴┴ ┴
             ]]
-            require('mini.sessions').setup()
+            -- require('mini.sessions').setup()
             --require('mini.nvim').setup({
             local starter = require'mini.starter'
             starter.setup {
@@ -150,64 +150,64 @@ return {
 
     -- 'rcarriga/nvim-notify',
     'MunifTanjim/nui.nvim',
-    {
-        'folke/noice.nvim',
-        config = function()
-            require("noice").setup({
-                excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
-                views = {
-                    messages = {
+    --{
+    --    'folke/noice.nvim',
+    --    config = function()
+    --        require("noice").setup({
+    --            excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
+    --            views = {
+    --                messages = {
 
-                    },
-                    cmdline_popup = {
-                        position = {
-                            row = 20,
-                            col = "50%",
-                        },
-                        size = {
-                            width = 130,
-                            height = "auto",
-                        },
-                    },
-                    lsp = {
-                        hover = {
-                            enabled = true,
-                        },
-                        documentation = {
-                            view = "hover",
-                            ---@type NoiceViewOptions
-                            opts = {
-                                lang = "markdown",
-                                replace = true,
-                                render = "plain",
-                                format = { "{message}" },
-                                win_options = { concealcursor = "n", conceallevel = 3 },
-                            },
-                        },
-                    },
-                    popupmenu = {
-                        relative = "editor",
-                        position = {
-                            row = 20,
-                            col = "50%",
-                        },
-                        size = {
-                            width = 130,
-                            height = 10,
-                        },
-                        border = {
-                            style = "rounded",
-                            padding = { 0, 1 },
-                        },
-                        win_options = {
-                            winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-                        },
-                    },
-                },
-            })
+    --                },
+    --                cmdline_popup = {
+    --                    position = {
+    --                        row = 20,
+    --                        col = "50%",
+    --                    },
+    --                    size = {
+    --                        width = 130,
+    --                        height = "auto",
+    --                    },
+    --                },
+    --                lsp = {
+    --                    hover = {
+    --                        enabled = true,
+    --                    },
+    --                    documentation = {
+    --                        view = "hover",
+    --                        ---@type NoiceViewOptions
+    --                        opts = {
+    --                            lang = "markdown",
+    --                            replace = true,
+    --                            render = "plain",
+    --                            format = { "{message}" },
+    --                            win_options = { concealcursor = "n", conceallevel = 3 },
+    --                        },
+    --                    },
+    --                },
+    --                popupmenu = {
+    --                    relative = "editor",
+    --                    position = {
+    --                        row = 20,
+    --                        col = "50%",
+    --                    },
+    --                    size = {
+    --                        width = 130,
+    --                        height = 10,
+    --                    },
+    --                    border = {
+    --                        style = "rounded",
+    --                        padding = { 0, 1 },
+    --                    },
+    --                    win_options = {
+    --                        winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+    --                    },
+    --                },
+    --            },
+    --        })
 
-        end,
-    },
+    --    end,
+    --},
     {
         'ahmedkhalf/project.nvim',
         config = function()
