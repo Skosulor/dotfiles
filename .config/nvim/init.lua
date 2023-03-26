@@ -42,15 +42,11 @@ vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decr
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
-vim.g.everforest_background = 'hard'
+vim.g.everforest_background = 'soft'
 
--- Key mappings
-local n_keymap = function(lhs, rhs)
-    vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true, silent = true })
-end
-
-local x_keymap = function(lhs, rhs)
-    vim.api.nvim_set_keymap('x', lhs, rhs, { noremap = true, silent = true })
+local keymap = function(mode, lhs, rhs, opts)
+    opts = opts or { noremap = true, silent = true }
+    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
 vim.cmd([[colorscheme everforest]])
@@ -58,117 +54,116 @@ vim.cmd([[colorscheme everforest]])
 vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
 
 -- files
-n_keymap('<leader>fn',':e ~/one/one.norg<cr>')
-n_keymap('<leader>ft','<cmd>NvimTreeToggle<cr>')
-n_keymap('<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
-n_keymap('<leader>ff', '<cmd>Telescope file_browser<cr>')
-n_keymap('<leader>fh', ':lua MiniStarter.open()<cr>')
-n_keymap('<leader>ss', '<cmd>:lua require("functions").grep_project()<cr>')
+keymap('n', '<leader>fn',':e ~/one/one.norg<cr>')
+keymap('n', '<leader>ft','<cmd>NvimTreeToggle<cr>')
+keymap('n', '<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
+keymap('n', '<leader>ff', '<cmd>Telescope file_browser<cr>')
+keymap('n', '<leader>fh', ':lua MiniStarter.open()<cr>')
+keymap('n', '<leader>ss', '<cmd>:lua require("functions").grep_project()<cr>')
 
-n_keymap('<leader>/', ':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>')
-n_keymap('*', '<cmd>Telescope grep_string<cr>')
+keymap('n', '<leader>/', ':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>')
+keymap('n', '*', '<cmd>Telescope grep_string<cr>')
 
 
 -- Telescope General
-n_keymap('<leader>tp', ':Telescope neoclip<cr>')
-n_keymap('<leader>tm', '<cmd>:lua require("functions").man_pages()<cr>')
-n_keymap('<leader>ty', '<cmd>Telescope yank_history<cr>')
-n_keymap('<leader>td', '<cmd>Telescope diagnostics<cr>')
-n_keymap('<leader>tk', '<cmd>Telescope keymaps<cr>')
-n_keymap('<leader>th', '<cmd>Telescope help_tags<cr>')
-n_keymap('<leader>tn', '<cmd>Telescope notify<cr>')
-n_keymap('<leader>to', '<cmd>Telescope oldfiles<cr>')
-n_keymap('<leader>;',  '<cmd>Telescope commands<cr>')
-n_keymap('<leader><tab><leader>', '<cmd>Telescope buffers<cr>')
-n_keymap('<leader>j',             '<cmd>Telescope lsp_document_symbols<cr>')
-n_keymap('<leader>J',             '<cmd>Telescope lsp_workspace_symbols<cr>')
-n_keymap('gr',                    '<nop>')
-n_keymap('gr',                    '<cmd>Telescope lsp_references<cr>')
+keymap('n', '<leader>tp', ':Telescope neoclip<cr>')
+keymap('n', '<leader>tm', '<cmd>:lua require("functions").man_pages()<cr>')
+keymap('n', '<leader>ty', '<cmd>Telescope yank_history<cr>')
+keymap('n', '<leader>td', '<cmd>Telescope diagnostics<cr>')
+keymap('n', '<leader>tk', '<cmd>Telescope keymaps<cr>')
+keymap('n', '<leader>th', '<cmd>Telescope help_tags<cr>')
+keymap('n', '<leader>tn', '<cmd>Telescope notify<cr>')
+keymap('n', '<leader>to', '<cmd>Telescope oldfiles<cr>')
+keymap('n', '<leader>;',  '<cmd>Telescope commands<cr>')
+keymap('n', '<leader>tb', '<cmd>Telescope buffers<cr>')
+keymap('n', '<leader>j',             '<cmd>Telescope lsp_document_symbols<cr>')
+keymap('n', '<leader>J',             '<cmd>Telescope lsp_workspace_symbols<cr>')
+keymap('n', 'gr',                    '<nop>')
+keymap('n', 'gr',                    '<cmd>Telescope lsp_references<cr>')
 
 
  -- LSP
-n_keymap('gd', ':lua vim.lsp.buf.definition()<cr>')
-n_keymap('gl', ':lua vim.diagnostic.open_float()<cr>')
-n_keymap('K', ':lua vim.lsp.buf.hover()<enter>')
+keymap('n', 'gd', ':lua vim.lsp.buf.definition()<cr>')
+keymap('n', 'gl', ':lua vim.diagnostic.open_float()<cr>')
+keymap('n', 'K', ':lua vim.lsp.buf.hover()<enter>')
 
 
  -- Git
-n_keymap('<leader>gg', '<cmd>vertical Git<cr>')
-n_keymap('<leader>gb', '<cmd>Telescope git_branches<cr>')
-n_keymap('<leader>gc', '<cmd>Telescope git_commits<cr>')
-n_keymap('<leader>gh', '<cmd>GitGutterPreviewHunk<cr>')
-n_keymap('<leader>gs', '<cmd>GitGutterStageHunk<cr>')
-n_keymap('<leader>gd', '<cmd>GitGutterDiffOrig<cr>')
-n_keymap('<leader>gn', '<cmd>GitGutterNextHunk<cr>')
-n_keymap('<leader>gp', '<cmd>GitGutterPrevHunk<cr>')
-n_keymap('<leader>gm', '<cmd>Git mergetool<cr>')
-n_keymap('<leader>gl', '<cmd>GV<cr>')
-n_keymap('<leader>gf', '<cmd>Git fetch --all<cr>')
-n_keymap('<leader>gu', '<cmd>GitGutterUndoHunk<cr>')
-n_keymap('<leader>a',  '<cmd>lua vim.lsp.buf.code_action()<CR>')
+keymap('n', '<leader>gg', '<cmd>vertical Git<cr>')
+keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>')
+keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>')
+keymap('n', '<leader>gh', '<cmd>GitGutterPreviewHunk<cr>')
+keymap('n', '<leader>gs', '<cmd>GitGutterStageHunk<cr>')
+keymap('n', '<leader>gd', '<cmd>GitGutterDiffOrig<cr>')
+keymap('n', '<leader>gn', '<cmd>GitGutterNextHunk<cr>')
+keymap('n', '<leader>gp', '<cmd>GitGutterPrevHunk<cr>')
+keymap('n', '<leader>gm', '<cmd>Git mergetool<cr>')
+keymap('n', '<leader>gl', '<cmd>GV<cr>')
+keymap('n', '<leader>gf', '<cmd>Git fetch --all<cr>')
+keymap('n', '<leader>gu', '<cmd>GitGutterUndoHunk<cr>')
+keymap('n', '<leader>a',  '<cmd>lua vim.lsp.buf.code_action()<CR>')
 
 
  -- Windows
-n_keymap('<leader>wv', '<cmd>vsplit<cr><C-W><C-L>')
-n_keymap('<leader>ws', '<cmd>split<cr><C-W><C-J>')
-n_keymap('<leader>wj', '<C-W><C-J>')
-n_keymap('<leader>wk', '<C-W><C-K>')
-n_keymap('<leader>wl', '<C-W><C-L>')
-n_keymap('<leader>wh', '<C-W><C-H>')
-n_keymap('<leader>wo', '<C-W><C-O>')
-n_keymap('<leader>wq', ':q!<enter>')
+keymap('n', '<leader>wv', '<cmd>vsplit<cr><C-W><C-L>')
+keymap('n', '<leader>ws', '<cmd>split<cr><C-W><C-J>')
+keymap('n', '<leader>wj', '<C-W><C-J>')
+keymap('n', '<leader>wk', '<C-W><C-K>')
+keymap('n', '<leader>wl', '<C-W><C-L>')
+keymap('n', '<leader>wh', '<C-W><C-H>')
+keymap('n', '<leader>wo', '<C-W><C-O>')
+keymap('n', '<leader>wq', ':q!<enter>')
 
-n_keymap('<leader>wJ', '<C-W>J')
-n_keymap('<leader>wK', '<C-W>K')
-n_keymap('<leader>wL', '<C-W>L')
-n_keymap('<leader>wH', '<C-W>H')
+keymap('n', '<leader>wJ', '<C-W>J')
+keymap('n', '<leader>wK', '<C-W>K')
+keymap('n', '<leader>wL', '<C-W>L')
+keymap('n', '<leader>wH', '<C-W>H')
 
 -- Harpoon
-n_keymap('<leader>hm',        ':lua require("harpoon.mark").add_file()<cr>')
-n_keymap('<leader>h<leader>', ':lua require("harpoon.ui").toggle_quick_menu()<cr>')
+keymap('n', '<leader>hm',        ':lua require("harpoon.mark").add_file()<cr>')
+keymap('n', '<leader>h<leader>', ':lua require("harpoon.ui").toggle_quick_menu()<cr>')
 
 
  -- Code
-n_keymap('<leader>cr', '<cmd>Spectre<cr>')
-n_keymap('<leader>cs', '<cmd>AerialToggle<cr>')
-n_keymap('<leader>ca', ':lua vim.lsp.buf.code_action()<cr>')
-n_keymap('<leader>cS', ':lua vim.lsp.buf.document_symbol()<cr>')
-n_keymap('<leader>cT', '<cmd>TodoQuickFix<cr>')
-n_keymap('<leader>ct', '<cmd>Trouble<cr>')
-n_keymap('<leader>cl', '<cmd>Commentary<cr>')
-x_keymap('<leader>cl', ':Commentary<cr>')
-x_keymap('<leader>ch', ':ClangdSwitchSourceHeader<cr>')
-n_keymap('<leader>cP', ':PickColor<cr>')
+keymap('n', '<leader>cr', '<cmd>Spectre<cr>')
+keymap('n', '<leader>cs', '<cmd>AerialToggle<cr>')
+keymap('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<cr>')
+keymap('n', '<leader>cS', ':lua vim.lsp.buf.document_symbol()<cr>')
+keymap('n', '<leader>cT', '<cmd>TodoQuickFix<cr>')
+keymap('n', '<leader>ct', '<cmd>Trouble<cr>')
+keymap('n', '<leader>cl', '<cmd>Commentary<cr>')
+keymap('x', '<leader>cl', ':Commentary<cr>')
+keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
+keymap('n', '<leader>cP', ':PickColor<cr>')
 
  -- Terminal
-n_keymap('<leader>tt', '<cmd>ToggleTerm<cr>')
+keymap('n', '<leader><tab>', '<cmd>ToggleTerm<cr>')
+keymap('t', '<leader><tab>', "<C-\\><C-n><cmd>ToggleTerm<cr>", { noremap = true, silent = true })
+
 
 -- Tabs
-vim.api.nvim_set_keymap('n', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
+keymap('n', '<C-n>', '<CMD>tab new<cr><CMD>lua MiniStarter.open()<cr>', { noremap = true, silent = true })
+keymap('n', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
+keymap('n', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('t', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
+keymap('t', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
+keymap('t', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
+keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
+keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
+keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 
 -- vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true, silent = true })
 
 -- Remove search highlihgt with ESC
-vim.api.nvim_set_keymap('n', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
+keymap('n', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
 
 -- Project
-n_keymap('<leader>p', '<cmd>Telescope projects<cr>')
+keymap('n', '<leader>p', '<cmd>Telescope projects<cr>')
 
 -- Aligning 
-vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
-vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
-
-
-vim.api.nvim_set_keymap('t', '<leader>tt', "<C-\\><C-n><cmd>ToggleTerm<cr>", { noremap = true, silent = true })
+keymap('n', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
+keymap('x', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 
 
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
@@ -176,9 +171,13 @@ vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 
+vim.g.copilot_no_tab_map = true
+keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
-n_keymap('<leader>cp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
-vim.api.nvim_set_keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
+keymap('n', '<C-b>', '<cmd>NibblerToggle<cr>')
+
+keymap('n', '<leader>cp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
+keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 
 if vim.g.neovide then
     vim.g.neovide_scroll_animation_length = 0.5
@@ -190,9 +189,12 @@ if vim.g.neovide then
         vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
     end
     vim.keymap.set("n", "<C-+>", function()
-        change_scale_factor(1.25)
+        change_scale_factor(1.10)
     end)
     vim.keymap.set("n", "<C-->", function()
-        change_scale_factor(1/1.25)
+        change_scale_factor(1/1.10)
     end)
+    vim.o.guifont = "Iosevka"
 end
+
+

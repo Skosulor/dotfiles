@@ -556,5 +556,11 @@ return {
            })
        end
    },
+   {
+        'github/copilot.vim',
+   },
+   {
+       'skosulor/nibbler'
+   },
 }
 
