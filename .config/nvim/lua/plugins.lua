@@ -557,10 +557,31 @@ return {
        end
    },
    {
-        'github/copilot.vim',
+       'github/copilot.vim',
    },
    {
        'skosulor/nibbler'
+   },
+   {
+       'willothy/flatten.nvim',
+       config = true
+   },
+   {
+       'folke/twilight.nvim',
+       config = true,
+   },
+   {
+       'folke/zen-mode.nvim',
+       config = function ()
+           require("zen-mode").setup ({
+                   window = {
+                       options = {
+                           number = false,
+                           relativenumber = false,
+                       },
+                   }
+               })
+       end
    },
 }
 

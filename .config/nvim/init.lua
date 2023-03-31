@@ -59,6 +59,7 @@ keymap('n', '<leader>ft','<cmd>NvimTreeToggle<cr>')
 keymap('n', '<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
 keymap('n', '<leader>ff', '<cmd>Telescope file_browser<cr>')
 keymap('n', '<leader>fh', ':lua MiniStarter.open()<cr>')
+keymap('n', '<leader>fw', '<cmd>write<cr>')
 keymap('n', '<leader>ss', '<cmd>:lua require("functions").grep_project()<cr>')
 
 keymap('n', '<leader>/', ':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>')
@@ -105,19 +106,7 @@ keymap('n', '<leader>a',  '<cmd>lua vim.lsp.buf.code_action()<CR>')
 
 
  -- Windows
-keymap('n', '<leader>wv', '<cmd>vsplit<cr><C-W><C-L>')
-keymap('n', '<leader>ws', '<cmd>split<cr><C-W><C-J>')
-keymap('n', '<leader>wj', '<C-W><C-J>')
-keymap('n', '<leader>wk', '<C-W><C-K>')
-keymap('n', '<leader>wl', '<C-W><C-L>')
-keymap('n', '<leader>wh', '<C-W><C-H>')
-keymap('n', '<leader>wo', '<C-W><C-O>')
-keymap('n', '<leader>wq', ':q!<enter>')
-
-keymap('n', '<leader>wJ', '<C-W>J')
-keymap('n', '<leader>wK', '<C-W>K')
-keymap('n', '<leader>wL', '<C-W>L')
-keymap('n', '<leader>wH', '<C-W>H')
+keymap('n', '<leader>w', '<C-W>')
 
 -- Harpoon
 keymap('n', '<leader>hm',        ':lua require("harpoon.mark").add_file()<cr>')
@@ -165,6 +154,8 @@ keymap('n', '<leader>p', '<cmd>Telescope projects<cr>')
 keymap('n', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 keymap('x', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 
+-- Zen mode 
+keymap('n', '<leader>z', '<cmd>ZenMode<cr>', { noremap = false, silent = true })
 
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
