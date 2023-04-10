@@ -561,6 +561,11 @@ return {
    },
    {
        'skosulor/nibbler'
+       config = function()
+           require('nibbler').setup({
+                display_enabled = true,
+           })
+       end,
    },
    {
        'willothy/flatten.nvim',
@@ -583,5 +588,12 @@ return {
                })
        end
    },
-}
+   {
+       "iamcco/markdown-preview.nvim",
+       build = function() 
+           vim.fn["mkdp#util#install"]() 
+       end,
+   }
+} 
+
 

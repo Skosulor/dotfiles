@@ -61,6 +61,7 @@ keymap('n', '<leader>ff', '<cmd>Telescope file_browser<cr>')
 keymap('n', '<leader>fh', ':lua MiniStarter.open()<cr>')
 keymap('n', '<leader>fw', '<cmd>write<cr>')
 keymap('n', '<leader>ss', '<cmd>:lua require("functions").grep_project()<cr>')
+keymap('n', '<leader>fr', '<cmd>Telescope oldfiles<cr>')
 
 keymap('n', '<leader>/', ':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>')
 keymap('n', '*', '<cmd>Telescope grep_string<cr>')
@@ -74,7 +75,6 @@ keymap('n', '<leader>td', '<cmd>Telescope diagnostics<cr>')
 keymap('n', '<leader>tk', '<cmd>Telescope keymaps<cr>')
 keymap('n', '<leader>th', '<cmd>Telescope help_tags<cr>')
 keymap('n', '<leader>tn', '<cmd>Telescope notify<cr>')
-keymap('n', '<leader>to', '<cmd>Telescope oldfiles<cr>')
 keymap('n', '<leader>;',  '<cmd>Telescope commands<cr>')
 keymap('n', '<leader>tb', '<cmd>Telescope buffers<cr>')
 keymap('n', '<leader>j',             '<cmd>Telescope lsp_document_symbols<cr>')
@@ -165,7 +165,9 @@ vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 vim.g.copilot_no_tab_map = true
 keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
+-- Nibbler
 keymap('n', '<C-b>', '<cmd>NibblerToggle<cr>')
+keymap('v', '<C-b>', '<cmd>NibblerToggle<cr>')
 
 keymap('n', '<leader>cp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
 keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
