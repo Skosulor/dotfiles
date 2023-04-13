@@ -168,9 +168,16 @@ keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 -- Nibbler
 keymap('n', '<C-b>', '<cmd>NibblerToggle<cr>')
 keymap('v', '<C-b>', '<cmd>NibblerToggle<cr>')
+keymap('n', '<C-g>', '<cmd>NibblerToBin<cr>')
+keymap('v', '<C-g>', '<cmd>NibblerToBin<cr>')
 
+-- Yank history
+keymap('n', '<leader>y', '<cmd>Telescope yank_history<cr>')
+
+-- Goto 
 keymap('n', '<leader>cp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
 keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
+
 
 if vim.g.neovide then
     vim.g.neovide_scroll_animation_length = 0.5

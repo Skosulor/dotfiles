@@ -40,7 +40,6 @@ return {
                         i = {
                             ["<C-i>"] = fb_actions.toggle_hidden,
                             ["<C-h>"] = fb_actions.goto_parent_dir,
-                            ["<C-l>"] = actions.select_default,
                             ["<C-j>"] = actions.move_selection_next,
                             ["<C-k>"] = actions.move_selection_previous,
                             ["<esc>"] = actions.close,
@@ -242,11 +241,8 @@ return {
     },
 
     'airblade/vim-gitgutter',
-    'jbyuki/venn.nvim',
     'jiangmiao/auto-pairs',
-    'nvim-orgmode/orgmode',
     -- 'AckslD/nvim-whichkey-setup.lua',
-    -- 'gbprod/yanky.nvim',
     'tpope/vim-commentary',
 
      -- Git
@@ -560,7 +556,7 @@ return {
        'github/copilot.vim',
    },
    {
-       'skosulor/nibbler'
+       dir = '~/projects/nibbler',
        config = function()
            require('nibbler').setup({
                 display_enabled = true,
@@ -593,7 +589,39 @@ return {
        build = function() 
            vim.fn["mkdp#util#install"]() 
        end,
-   }
+   },
+    {
+        "ellisonleao/glow.nvim",
+        cmd = "Glow",
+        config = function()
+            require("glow").setup({
+                style = "dark",
+                width = 150,
+            })
+        end,
+    },
+
+    {
+        'gbprod/yanky.nvim',
+        config = function()
+            local mapping = require("yanky.telescope.mapping")
+            local actions = require("telescope.actions")
+            require("telescope").load_extension("yank_history")
+            require('yanky').setup({
+                picker = {
+                    telescope = {
+                        mappings = {
+                            i = {
+                                ["<c-x>"] = mapping.delete(),
+                                ["<C-j>"] = actions.move_selection_next,
+                                ["<C-k>"] = actions.move_selection_previous,
+                            },
+                        }
+        }
+                }
+            })
+        end,
+    },
 } 
 
 
