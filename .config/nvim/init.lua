@@ -163,6 +163,7 @@ vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 
 vim.g.copilot_no_tab_map = true
+-- Uncomment to enable copilot autocompletion
 keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 -- Nibbler
@@ -178,6 +179,18 @@ keymap('n', '<leader>y', '<cmd>Telescope yank_history<cr>')
 keymap('n', '<leader>cp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
 keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 
+-- Fix for Cmp missing lsp completion
+local cmp = require('cmp')
+local cmp_action = require('lsp-zero').cmp_action()
+
+cmp.setup({
+  sources = {
+    {name = 'path'},
+    {name = 'nvim_lsp'},
+    {name = 'buffer', keyword_length = 3},
+    {name = 'luasnip', keyword_length = 2},
+  },
+})
 
 if vim.g.neovide then
     vim.g.neovide_scroll_animation_length = 0.5

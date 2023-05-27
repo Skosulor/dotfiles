@@ -559,7 +559,7 @@ return {
        dir = '~/projects/nibbler',
        config = function()
            require('nibbler').setup({
-                display_enabled = true,
+               display_enabled = true,
            })
        end,
    },
@@ -575,13 +575,13 @@ return {
        'folke/zen-mode.nvim',
        config = function ()
            require("zen-mode").setup ({
-                   window = {
-                       options = {
-                           number = false,
-                           relativenumber = false,
-                       },
-                   }
-               })
+               window = {
+                   options = {
+                       number = false,
+                       relativenumber = false,
+                   },
+               }
+           })
        end
    },
    {
@@ -590,11 +590,11 @@ return {
            vim.fn["mkdp#util#install"]() 
        end,
    },
-    {
-        "ellisonleao/glow.nvim",
-        cmd = "Glow",
-        config = function()
-            require("glow").setup({
+   {
+       "ellisonleao/glow.nvim",
+       cmd = "Glow",
+       config = function()
+           require("glow").setup({
                 style = "dark",
                 width = 150,
             })
@@ -621,6 +621,11 @@ return {
                 }
             })
         end,
+    },
+    {
+        'stevearc/oil.nvim',
+        opts = {},
+        dependencies = { "nvim-tree/nvim-web-devicons" },
     },
 } 
 
