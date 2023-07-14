@@ -37,6 +37,7 @@ set.backup = true
 set.backupdir = vim.fn.stdpath('config') .. '/backupfiles'
 set.undofile = true
 
+vim.o.nowrap = true
 vim.o.foldcolumn = '0'
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
@@ -62,6 +63,7 @@ keymap('n', '<leader>fh', ':lua MiniStarter.open()<cr>')
 keymap('n', '<leader>fw', '<cmd>write<cr>')
 keymap('n', '<leader>ss', '<cmd>:lua require("functions").grep_project()<cr>')
 keymap('n', '<leader>fr', '<cmd>Telescope oldfiles<cr>')
+keymap('n', '<leader>fo', '<cmd>Oil<cr>')
 
 keymap('n', '<leader>/', ':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>')
 keymap('n', '*', '<cmd>Telescope grep_string<cr>')
@@ -179,9 +181,16 @@ keymap('n', '<leader>y', '<cmd>Telescope yank_history<cr>')
 keymap('n', '<leader>cp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
 keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 
+keymap('n', '<C-e>', '<C-e>j')
+keymap('n', '<C-y>', '<C-y>k')
+
 -- Fix for Cmp missing lsp completion
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
+
+local neogit = require('neogit')
+neogit.setup {}
+
 
 cmp.setup({
   sources = {
