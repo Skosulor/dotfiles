@@ -44,6 +44,15 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
 vim.g.everforest_background = 'soft'
+set.background = 'light'
+
+toggleDarkMode = function()
+    if vim.opt.background:get() == 'dark' then
+        vim.opt.background = 'light'
+    else
+        vim.opt.background = 'dark'
+    end
+end
 
 local keymap = function(mode, lhs, rhs, opts)
     opts = opts or { noremap = true, silent = true }
@@ -53,6 +62,8 @@ end
 vim.cmd([[colorscheme everforest]])
  -- Hide the tildes that denotes end of file
 vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
+
+keymap('n', '<leader>dm', ':lua toggleDarkMode()<cr>')
 
 -- files
 keymap('n', '<leader>fn',':e ~/one/one.norg<cr>')
