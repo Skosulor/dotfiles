@@ -676,4 +676,8 @@ return {
         'NeogitOrg/neogit',
         dependencies = 'nvim-lua/plenary.nvim',
     },
-} 
+        { 
+            'rose-pine/neovim', 
+            name = 'rose-pine' 
+    },
+    } 

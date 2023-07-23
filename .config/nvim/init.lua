@@ -92,7 +92,7 @@ keymap('n', 'K', ':lua vim.lsp.buf.hover()<enter>')
 
 
  -- Git
-keymap('n', '<leader>gg', '<cmd>vertical Git<cr>')
+keymap('n', '<leader>gg', '<cmd>Neogit<cr>')
 keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>')
 keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>')
 keymap('n', '<leader>gh', '<cmd>GitGutterPreviewHunk<cr>')
