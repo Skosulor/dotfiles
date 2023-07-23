@@ -155,6 +155,9 @@ return {
             require("noice").setup({
                 excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
                 views = {
+                    confirm = {
+                        enabled = false,
+                    },
                     messages = {
 
                     },
@@ -672,12 +675,20 @@ return {
     {
         'chrisbra/NrrwRgn'
     },
-    { 
+    {
         'NeogitOrg/neogit',
+        config = function()
+            require("neogit").setup({
+                commit_confirmation = {
+                    enabled = false,
+                    close_on_deny = true,
+                },
+            })
+        end,
         dependencies = 'nvim-lua/plenary.nvim',
     },
-        { 
-            'rose-pine/neovim', 
-            name = 'rose-pine' 
+    {
+            'rose-pine/neovim',
+            name = 'rose-pine'
     },
-    } 
+}
