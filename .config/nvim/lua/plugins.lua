@@ -679,10 +679,7 @@ return {
         'NeogitOrg/neogit',
         config = function()
             require("neogit").setup({
-                commit_confirmation = {
-                    enabled = false,
-                    close_on_deny = true,
-                },
+                disable_commit_confirmation = true,
             })
         end,
         dependencies = 'nvim-lua/plenary.nvim',
