@@ -56,7 +56,6 @@ return {
             require("telescope").load_extension "file_browser"
         end,
     },
-
     {
         'echasnovski/mini.nvim',
         config = function()
