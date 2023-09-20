@@ -59,6 +59,8 @@ local keymap = function(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
+set.grepprg = "rg --vimgrep --no-heading --smart-case"
+
 vim.cmd([[colorscheme everforest]])
  -- Hide the tildes that denotes end of file
 vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
@@ -72,9 +74,10 @@ keymap('n', '<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
 keymap('n', '<leader>ff', '<cmd>Telescope file_browser<cr>')
 keymap('n', '<leader>fh', ':lua MiniStarter.open()<cr>')
 keymap('n', '<leader>fw', '<cmd>write<cr>')
-keymap('n', '<leader>ss', '<cmd>:lua require("functions").grep_project()<cr>')
+keymap('n', '<leader>ss', '<cmd>:silent lua require("functions").grep_project()<cr>')
 keymap('n', '<leader>fr', '<cmd>Telescope oldfiles<cr>')
 keymap('n', '<leader>fo', '<cmd>Oil<cr>')
+keymap('n', '<leader>fp', '<cmd>Telescope projects<cr>')
 
 keymap('n', '<leader>/', ':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>')
 keymap('n', '*', '<cmd>Telescope grep_string<cr>')
@@ -94,6 +97,9 @@ keymap('n', '<leader>j',             '<cmd>Telescope lsp_document_symbols<cr>')
 keymap('n', '<leader>J',             '<cmd>Telescope lsp_workspace_symbols<cr>')
 keymap('n', 'gr',                    '<nop>')
 keymap('n', 'gr',                    '<cmd>Telescope lsp_references<cr>')
+
+
+keymap('n', '<leader>p','<cmd>Telescope neoclip<cr>')
 
 
  -- LSP
@@ -161,7 +167,6 @@ keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent =
 keymap('n', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
 
 -- Project
-keymap('n', '<leader>p', '<cmd>Telescope projects<cr>')
 
 -- Aligning 
 keymap('n', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })

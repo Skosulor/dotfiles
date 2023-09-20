@@ -7,7 +7,8 @@ end
 
 M.grep_project = function()
     local fname = vim.fn.input("Search: ", "", "file")
-    vim.cmd('Ggrep -q ' .. fname)
+    vim.cmd('grep! ' .. fname)
+    vim.cmd('copen')
 end
 
 return M
