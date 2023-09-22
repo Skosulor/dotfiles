@@ -1,5 +1,6 @@
 return {
     { "folke/neoconf.nvim", cmd = "Neoconf" },
+
     "folke/neodev.nvim",
     {
         'ziontee113/color-picker.nvim',
@@ -56,6 +57,7 @@ return {
             require("telescope").load_extension "file_browser"
         end,
     },
+
     {
         'echasnovski/mini.nvim',
         config = function()
@@ -214,7 +216,7 @@ return {
         config = function()
             require('telescope').load_extension('projects')
             require("project_nvim").setup ({
-                patterns = {'.git'},
+                patterns = {'.git', '.vproject'},
             })
         end,
 
@@ -565,10 +567,7 @@ return {
        end
    },
    {
-       'github/copilot.vim',
-   },
-   {
-       dir = '~/projects/nibbler',
+       'skosulor/nibbler',
        config = function()
            require('nibbler').setup({
                display_enabled = true,
