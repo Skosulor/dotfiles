@@ -85,17 +85,10 @@ keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
 keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 
-
  -- LSP
 keymap('n', 'gd', ':lua vim.lsp.buf.definition()<cr>')
 keymap('n', 'gl', ':lua vim.diagnostic.open_float()<cr>')
 keymap('n', 'K', ':lua vim.lsp.buf.hover()<enter>')
-
- -- Windows
-
--- Harpoon
-keymap('n', '<leader>hm',        ':lua require("harpoon.mark").add_file()<cr>')
-keymap('n', '<leader>h<leader>', ':lua require("harpoon.ui").toggle_quick_menu()<cr>')
 
  -- Terminal
 keymap('n', '<leader><tab>', '<cmd>ToggleTerm<cr>')
@@ -108,12 +101,14 @@ keymap('n', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
 keymap('n', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 keymap('x', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 
--- Zen mode 
+-- remove some unwanted bindings
+keymap('n', '<leader>hp', '<nop>')
+keymap('n', '<leader>hs', '<nop>')
+keymap('n', '<leader>hu', '<nop>')
+keymap('n', '<leader>nr', '<nop>')
 
--- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-
+-- Exit Terminal mode
+keymap('t', '<leader><Esc>', '<C-\\><C-n>')
 
 vim.g.copilot_no_tab_map = true
 -- Uncomment to enable copilot autocompletion

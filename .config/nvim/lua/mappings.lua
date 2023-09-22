@@ -25,8 +25,9 @@ wk.register({
 
     g = {
         name = "Git",
-        g =  { '<cmd>Git<cr>', 'Git status' },
+        g =  { '<cmd>vertical Git<cr>', 'Git status' },
         b =  { '<cmd>Telescope git_branches<cr>', 'Branches' },
+        B =  { '<cmd>Git blame<cr>', 'Blame' },
         c =  { '<cmd>Telescope git_commits<cr>', 'Commits' },
         h =  { '<cmd>GitGutterPreviewHunk<cr>', 'Preview hunk' },
         s =  { '<cmd>GitGutterStageHunk<cr>', 'Stage hunk' },
@@ -50,8 +51,17 @@ wk.register({
         l =  { '<cmd>Commentary<cr>', 'Comment' },
         P =  { ':PickColor<cr>', 'Pick Color' },
         p =  { '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', 'Preview definition' },
+        -- Comment and copy 
+        -- comment paragraph
     },
 
+    m = {
+        name = 'Marks/Harpoon',
+        m = {':lua require("harpoon.mark").add_file()<cr>', 'HarpoonMark'},
+        M = {'<cmd>mark<cr>', 'Mark'},
+        o = {'<cmd>Telescope marks<cr>'},
+        ['<leader>'] = {':lua require("harpoon.ui").toggle_quick_menu()<cr>', 'Open Marks'},
+    }, 
 
     w = { '<C-W>', 'Window' },
     p = { ':Telescope neoclip<cr>', 'Paste' },
