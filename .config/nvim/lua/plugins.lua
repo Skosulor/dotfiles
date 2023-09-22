@@ -54,8 +54,7 @@ return {
                     entry_prefix = "  ",
                     initial_mode = "insert",
                     selection_strategy = "reset",
-                    sorting_strategy = "ascending",
-                    layout_strategy = "horizontal",
+                    sorting_strategy = "descending",
                     layout_config = {
                         horizontal = {
                             prompt_position = "top",
@@ -67,7 +66,7 @@ return {
                         },
                         width = 0.87,
                         height = 0.80,
-                        preview_cutoff = 120,
+                        preview_cutoff = 80,
                     },
                     file_sorter = require("telescope.sorters").get_fuzzy_file,
                     file_ignore_patterns = { "node_modules" },
@@ -94,10 +93,7 @@ return {
                         },
                     },
 
-                    -- layout_strategy = "vertical",
-                    -- layout_config = {
-                    --     preview_cutoff = 20,
-                    -- },
+                    layout_strategy = "vertical",
                 },
             })
             require("telescope").load_extension "file_browser"
