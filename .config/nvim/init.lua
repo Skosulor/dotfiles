@@ -9,10 +9,11 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
-vim.opt.rtp:prepend(lazypath)
 
+vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 require("lazy").setup("plugins", opts)
+require("mappings")
 
 local set = vim.opt
 
@@ -64,88 +65,12 @@ vim.cmd([[colorscheme everforest]])
  -- Hide the tildes that denotes end of file
 vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
 
-keymap('n', '<leader>dm', ':lua toggleDarkMode()<cr>')
 
--- files
-keymap('n', '<leader>fn',':e ~/one/one.norg<cr>')
-keymap('n', '<leader>ft','<cmd>NvimTreeToggle<cr>')
-keymap('n', '<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
-keymap('n', '<leader>ff', '<cmd>Telescope file_browser<cr>')
-keymap('n', '<leader>fh', ':lua MiniStarter.open()<cr>')
-keymap('n', '<leader>fw', '<cmd>write<cr>')
-keymap('n', '<leader>ss', '<cmd>:silent lua require("functions").grep_project()<cr>')
-keymap('n', '<leader>fr', '<cmd>Telescope oldfiles<cr>')
-keymap('n', '<leader>fo', '<cmd>Oil<cr>')
-keymap('n', '<leader>fp', '<cmd>Telescope projects<cr>')
-
-keymap('n', '<leader>/', ':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>')
-keymap('n', '*', '<cmd>Telescope grep_string<cr>')
-
-
--- Telescope General
-keymap('n', '<leader>tp', ':Telescope neoclip<cr>')
-keymap('n', '<leader>tm', '<cmd>:lua require("functions").man_pages()<cr>')
-keymap('n', '<leader>ty', '<cmd>Telescope yank_history<cr>')
-keymap('n', '<leader>td', '<cmd>Telescope diagnostics<cr>')
-keymap('n', '<leader>tk', '<cmd>Telescope keymaps<cr>')
-keymap('n', '<leader>th', '<cmd>Telescope help_tags<cr>')
-keymap('n', '<leader>tn', '<cmd>Telescope notify<cr>')
-keymap('n', '<leader>;',  '<cmd>Telescope commands<cr>')
-keymap('n', '<leader>tb', '<cmd>Telescope buffers<cr>')
-keymap('n', '<leader>j',             '<cmd>Telescope lsp_document_symbols<cr>')
-keymap('n', '<leader>J',             '<cmd>Telescope lsp_workspace_symbols<cr>')
+-- Non leader key bindings
 keymap('n', 'gr',                    '<nop>')
 keymap('n', 'gr',                    '<cmd>Telescope lsp_references<cr>')
-
-
-keymap('n', '<leader>p','<cmd>Telescope neoclip<cr>')
-
-
- -- LSP
-keymap('n', 'gd', ':lua vim.lsp.buf.definition()<cr>')
-keymap('n', 'gl', ':lua vim.diagnostic.open_float()<cr>')
-keymap('n', 'K', ':lua vim.lsp.buf.hover()<enter>')
-
-
- -- Git
-keymap('n', '<leader>gg', '<cmd>Neogit<cr>')
-keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>')
-keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>')
-keymap('n', '<leader>gh', '<cmd>GitGutterPreviewHunk<cr>')
-keymap('n', '<leader>gs', '<cmd>GitGutterStageHunk<cr>')
-keymap('n', '<leader>gd', '<cmd>GitGutterDiffOrig<cr>')
-keymap('n', '<leader>gn', '<cmd>GitGutterNextHunk<cr>')
-keymap('n', '<leader>gp', '<cmd>GitGutterPrevHunk<cr>')
-keymap('n', '<leader>gm', '<cmd>Git mergetool<cr>')
-keymap('n', '<leader>gl', '<cmd>GV<cr>')
-keymap('n', '<leader>gf', '<cmd>Git fetch --all<cr>')
-keymap('n', '<leader>gu', '<cmd>GitGutterUndoHunk<cr>')
-keymap('n', '<leader>a',  '<cmd>lua vim.lsp.buf.code_action()<CR>')
-
-
- -- Windows
-keymap('n', '<leader>w', '<C-W>')
-
--- Harpoon
-keymap('n', '<leader>hm',        ':lua require("harpoon.mark").add_file()<cr>')
-keymap('n', '<leader>h<leader>', ':lua require("harpoon.ui").toggle_quick_menu()<cr>')
-
-
- -- Code
-keymap('n', '<leader>cr', '<cmd>Spectre<cr>')
-keymap('n', '<leader>cs', '<cmd>AerialToggle<cr>')
-keymap('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<cr>')
-keymap('n', '<leader>cS', ':lua vim.lsp.buf.document_symbol()<cr>')
-keymap('n', '<leader>cT', '<cmd>TodoQuickFix<cr>')
-keymap('n', '<leader>ct', '<cmd>Trouble<cr>')
-keymap('n', '<leader>cl', '<cmd>Commentary<cr>')
 keymap('x', '<leader>cl', ':Commentary<cr>')
 keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
-keymap('n', '<leader>cP', ':PickColor<cr>')
-
- -- Terminal
-keymap('n', '<leader><tab>', '<cmd>ToggleTerm<cr>')
-keymap('t', '<leader><tab>', "<C-\\><C-n><cmd>ToggleTerm<cr>", { noremap = true, silent = true })
 
 
 -- Tabs
@@ -160,19 +85,30 @@ keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
 keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 
--- vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true, silent = true })
+
+ -- LSP
+keymap('n', 'gd', ':lua vim.lsp.buf.definition()<cr>')
+keymap('n', 'gl', ':lua vim.diagnostic.open_float()<cr>')
+keymap('n', 'K', ':lua vim.lsp.buf.hover()<enter>')
+
+ -- Windows
+
+-- Harpoon
+keymap('n', '<leader>hm',        ':lua require("harpoon.mark").add_file()<cr>')
+keymap('n', '<leader>h<leader>', ':lua require("harpoon.ui").toggle_quick_menu()<cr>')
+
+ -- Terminal
+keymap('n', '<leader><tab>', '<cmd>ToggleTerm<cr>')
+keymap('t', '<leader><tab>', "<C-\\><C-n><cmd>ToggleTerm<cr>", { noremap = true, silent = true })
 
 -- Remove search highlihgt with ESC
 keymap('n', '<ESC>', ':noh<CR><ESC>', { noremap = true, silent = true })
-
--- Project
 
 -- Aligning 
 keymap('n', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 keymap('x', 'ga', '<Plug>(EasyAlign)', { noremap = false, silent = true })
 
 -- Zen mode 
-keymap('n', '<leader>z', '<cmd>ZenMode<cr>', { noremap = false, silent = true })
 
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
@@ -189,11 +125,7 @@ keymap('v', '<C-b>', '<cmd>NibblerToggle<cr>')
 keymap('n', '<C-g>', '<cmd>NibblerToBin<cr>')
 keymap('v', '<C-g>', '<cmd>NibblerToBin<cr>')
 
--- Yank history
-keymap('n', '<leader>y', '<cmd>Telescope yank_history<cr>')
-
 -- Goto 
-keymap('n', '<leader>cp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>')
 keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 
 keymap('n', '<C-e>', '<C-e>j')
