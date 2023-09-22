@@ -219,14 +219,7 @@ return {
         end,
 
     },
-    {
-        -- 'karb94/neoscroll.nvim',
-        -- config = function()
-        --     require('neoscroll').setup()
-        -- end,
-    },
     'junegunn/vim-easy-align',
-
     {
         'nvim-telescope/telescope-fzf-native.nvim', 
         build = 'make',
@@ -234,7 +227,6 @@ return {
             require('telescope').load_extension('fzf')
         end,
     },
-
     {
         "folke/flash.nvim",
         event = "VeryLazy",
@@ -286,22 +278,18 @@ return {
 
     'airblade/vim-gitgutter',
     'jiangmiao/auto-pairs',
-    -- 'AckslD/nvim-whichkey-setup.lua',
     'tpope/vim-commentary',
-
      -- Git
     'sindrets/diffview.nvim',
     'tpope/vim-fugitive',
     'junegunn/gv.vim',
 
-    -- Navigation
     {
         'folke/which-key.nvim',
         config = function ()
             require("which-key").setup {}
         end,
     },
-    -- 'phaazon/hop.nvim',
     {
         'ThePrimeagen/harpoon',
         config = function ()
@@ -443,26 +431,6 @@ return {
         'sainnhe/everforest',
         config = function()
         end,
-    },
-    {
- {
-        "nvim-neorg/neorg",
-        build = ":Neorg sync-parsers",
-        opts = {
-            load = {
-                ["core.defaults"] = {}, -- Loads default behaviour
-                ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
-                ["core.norg.dirman"] = { -- Manages Neorg workspaces
-                    config = {
-                        workspaces = {
-                            notes = "~/notes",
-                        },
-                    },
-                },
-            },
-        },
-        dependencies = { { "nvim-lua/plenary.nvim" } },
-    }
     },
     'AlexvZyl/nordic.nvim',
     'catppuccin/nvim',

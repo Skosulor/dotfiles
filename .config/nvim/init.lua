@@ -1,4 +1,3 @@
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -72,7 +71,7 @@ keymap('n', '<leader>fs', '<cmd>:lua require"search_files".project_files()<cr>')
 keymap('n', '<leader>ff', '<cmd>Telescope file_browser<cr>')
 keymap('n', '<leader>fh', ':lua MiniStarter.open()<cr>')
 keymap('n', '<leader>fw', '<cmd>write<cr>')
-keymap('n', '<leader>ss', '<cmd>:lua require("functions").grep_project()<cr>')
+keymap('n', '<leader>ss', '<cmd>:silent lua require("functions").grep_project()<cr>')
 keymap('n', '<leader>fr', '<cmd>Telescope oldfiles<cr>')
 keymap('n', '<leader>fo', '<cmd>Oil<cr>')
 
