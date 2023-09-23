@@ -1,6 +1,34 @@
 return {
     { "folke/neoconf.nvim", cmd = "Neoconf" },
 
+    'nvim-pack/nvim-spectre',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lua',
+    'nvim-treesitter/nvim-treesitter-context',
+    'DanilaMihailov/beacon.nvim',
+    'rhysd/clever-f.vim',
+    'nvim-telescope/telescope-file-browser.nvim',
+    'nvim-lua/plenary.nvim',
+    'sharkdp/fd',
+    'neovim/nvim-lspconfig',
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'chrisbra/NrrwRgn',
+    'junegunn/vim-easy-align',
+    'MunifTanjim/nui.nvim',
+    'L4MON4D3/LuaSnip',
+    'anuvyklack/middleclass',
+    'kevinhwang91/nvim-bqf',
+    'airblade/vim-gitgutter',
+    'jiangmiao/auto-pairs',
+    'tpope/vim-commentary',
+     -- Git
+    'sindrets/diffview.nvim',
+    'tpope/vim-fugitive',
+    'junegunn/gv.vim',
     "folke/neodev.nvim",
     {
         'ziontee113/color-picker.nvim',
@@ -100,46 +128,6 @@ return {
         end,
     },
 
-    {
-        'echasnovski/mini.nvim',
-        config = function()
-            local header_art = 
-            [[
-╭╮╭╮╭╮╱╱╭╮
-┃┃┃┃┃┃╱╱┃┃
-┃┃┃┃┃┣━━┫┃╭━━┳━━┳╮╭┳━━╮
-┃╰╯╰╯┃┃━┫┃┃╭━┫╭╮┃╰╯┃┃━┫
-╰╮╭╮╭┫┃━┫╰┫╰━┫╰╯┃┃┃┃┃━┫
-╱╰╯╰╯╰━━┻━┻━━┻━━┻┻┻┻━━╯
-]]
-            local header_art2 = 
-            [[
-            ╭╮╭┬─╮╭─╮┬  ┬┬╭┬╮
-            │││├┤ │ │╰┐┌╯││││
-            ╯╰╯╰─╯╰─╯ ╰╯ ┴┴ ┴
-            ]]
-            -- require('mini.sessions').setup()
-            --require('mini.nvim').setup({
-            local starter = require'mini.starter'
-            starter.setup {
-                items = {
-                    starter.sections.telescope(),
-                    {name = "One", action = ":e ~/one/one.norg", section = "Doc's"},
-                    {name = "Plugins", action = ":e ~/.config/nvim/lua/plugins.lua", section = "Doc's"},
-                    {name = "Init", action = ":e ~/.config/nvim/init.lua", section = "Doc's"},
-                    starter.sections.recent_files(5, false),
-                    -- starter.sections.sessions(5,false),
-                    starter.sections.builtin_actions(),
-                },
-                content_hooks = {
-                    starter.gen_hook.adding_bullet(),
-                    starter.gen_hook.aligning("center", "center"),
-                },
-                header = header_art,
-                footer = " ",
-            }
-        end,
-    },
 
     {
         'akinsho/toggleterm.nvim',
@@ -150,7 +138,6 @@ return {
             })
         end,
     },
-    'kevinhwang91/nvim-bqf',
     {
         'folke/todo-comments.nvim',
         config = function()
@@ -185,74 +172,6 @@ return {
             })
         end,
     },
-    'anuvyklack/middleclass',
-    'anuvyklack/animation.nvim',
-
-    {'L3MON4D3/LuaSnip'},
-
-    -- 'rcarriga/nvim-notify',
-    'MunifTanjim/nui.nvim',
-    {
-        'folke/noice.nvim',
-        config = function()
-            require("noice").setup({
-                excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
-                views = {
-                    confirm = {
-                        enabled = false,
-                    },
-                    messages = {
-
-                    },
-                    cmdline_popup = {
-                        position = {
-                            row = 20,
-                            col = "50%",
-                        },
-                        size = {
-                            width = 130,
-                            height = "auto",
-                        },
-                    },
-                    lsp = {
-                        hover = {
-                            enabled = true,
-                        },
-                        documentation = {
-                            view = "hover",
-                            ---@type NoiceViewOptions
-                            opts = {
-                                lang = "markdown",
-                                replace = true,
-                                render = "plain",
-                                format = { "{message}" },
-                                win_options = { concealcursor = "n", conceallevel = 3 },
-                            },
-                        },
-                    },
-                    popupmenu = {
-                        relative = "editor",
-                        position = {
-                            row = 20,
-                            col = "50%",
-                        },
-                        size = {
-                            width = 130,
-                            height = 10,
-                        },
-                        border = {
-                            style = "rounded",
-                            padding = { 0, 1 },
-                        },
-                        win_options = {
-                            winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-                        },
-                    },
-                },
-            })
-
-        end,
-    },
     {
         'ahmedkhalf/project.nvim',
         config = function()
@@ -263,7 +182,6 @@ return {
         end,
 
     },
-    'junegunn/vim-easy-align',
     {
         'nvim-telescope/telescope-fzf-native.nvim', 
         build = 'make',
@@ -319,15 +237,6 @@ return {
             },
         },
     },
-
-    'airblade/vim-gitgutter',
-    'jiangmiao/auto-pairs',
-    'tpope/vim-commentary',
-     -- Git
-    'sindrets/diffview.nvim',
-    'tpope/vim-fugitive',
-    'junegunn/gv.vim',
-
     {
         'folke/which-key.nvim',
         config = function ()
@@ -370,19 +279,6 @@ return {
             }
         end,
     },
-    'nvim-treesitter/nvim-treesitter-context',
-    'DanilaMihailov/beacon.nvim',
-    'rhysd/clever-f.vim',
-
-    'nvim-telescope/telescope-file-browser.nvim',
-    'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons',
-    'sharkdp/fd',
-
-    -- Lsp
-    'neovim/nvim-lspconfig',
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
     {
         'VonHeikemen/lsp-zero.nvim',
         config = function()
@@ -403,12 +299,9 @@ return {
                     info = ''
                 }
             })
-            --lsp.preset('recommended')
             lsp.setup()
         end,
     },
-
-    -- Autocompletion
     {
         'hrsh7th/nvim-cmp',
         config = function ()
@@ -448,51 +341,6 @@ return {
             })
         end,
     },
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
-    'saadparwaiz1/cmp_luasnip',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-nvim-lua',
-
-    -- Theming
-    {
-        'nvim-lualine/lualine.nvim',
-        config = function ()
-            require('lualine').setup()
-        end,
-    },
-    {
-        'navarasu/onedark.nvim',
-        config = function()
-            require('onedark').setup {
-                style = 'dark'
-            }
-            vim.cmd([[colorscheme onedark]])
-        end,
-    },
-    {
-        'sainnhe/everforest',
-        config = function()
-        end,
-    },
-    'AlexvZyl/nordic.nvim',
-    'catppuccin/nvim',
-    {
-        'simrat39/symbols-outline.nvim',
-        config = function()
-            require("symbols-outline").setup()
-        end,
-    },
-    {
-        'stevearc/aerial.nvim',
-        config = function() require('aerial').setup(
-            {
-                filter_kind = false,
-            })
-        end,
-    },
-    'rebelot/kanagawa.nvim',
-    'nvim-pack/nvim-spectre',
     {
         "AckslD/nvim-neoclip.lua",
         config = function()
@@ -558,13 +406,6 @@ return {
         wants = {'nvim-treesitter'}, -- or require if not used so far
         after = {'nvim-cmp'} -- if a completion plugin is using tabs load it before
     },
-    'rmehri01/onenord.nvim',
-    {
-       'folke/twilight.nvim',
-       config = function()
-           require("twilight").setup()
-       end,
-   },
    {
        "kylechui/nvim-surround",
        config = function()
@@ -580,20 +421,6 @@ return {
        end
    },
    {
-       'crispgm/nvim-tabline',
-       dependencies = { 'nvim-tree/nvim-web-devicons' }, -- optional
-       config = function()
-           require('tabline').setup({
-               show_index = false,        -- show tab index
-               show_modify = true,       -- show buffer modification indicator
-               show_icon = false,        -- show file extension icon
-               modify_indicator = '[M]', -- modify indicator
-               no_name = 'No name',      -- no name buffer name
-               brackets = { '', '' },  -- file name brackets surrounding
-           })
-       end
-   },
-   {
        'skosulor/nibbler',
        config = function()
            require('nibbler').setup({
@@ -606,48 +433,8 @@ return {
        config = true
    },
    {
-       'folke/twilight.nvim',
-       config = true,
+       'stevearc/oil.nvim',
+       opts = {},
+       dependencies = { "nvim-tree/nvim-web-devicons" },
    },
-   {
-       'folke/zen-mode.nvim',
-       config = function ()
-           require("zen-mode").setup ({
-               window = {
-                   options = {
-                       number = false,
-                       relativenumber = false,
-                   },
-               }
-           })
-       end
-   },
-   {
-       "iamcco/markdown-preview.nvim",
-       build = function() 
-           vim.fn["mkdp#util#install"]() 
-       end,
-   },
-   {
-       "ellisonleao/glow.nvim",
-       cmd = "Glow",
-       config = function()
-           require("glow").setup({
-                style = "dark",
-                width = 150,
-            })
-        end,
-    },
-    {
-        'stevearc/oil.nvim',
-        opts = {},
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-    },
-    {
-        'chrisbra/NrrwRgn'
-    },
-    {
-            'rose-pine/neovim',
-            name = 'rose-pine'
-    },
 }
