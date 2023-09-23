@@ -15,8 +15,9 @@ vim.g.mapleader = " "
 require("lazy").setup("plugins", opts)
 require("mappings")
 
-local set = vim.opt
+vim.cmd([[autocmd! BufEnter * if &ft ==# 'help' | wincmd L | endif]])
 
+local set = vim.opt
 set.relativenumber = true
 set.number         = true
 set.clipboard      = "unnamedplus"

@@ -11,16 +11,13 @@ keymap('n', 'gr',                    '<cmd>Telescope lsp_references<cr>')
 keymap('x', '<leader>cl', ':Commentary<cr>')
 keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
-
 -- Tabs
 keymap('n', '<C-n>', '<CMD>tab new<cr><CMD>lua MiniStarter.open()<cr>', { noremap = true, silent = true })
 keymap('n', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
 keymap('n', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
-
 keymap('t', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
 keymap('t', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
 keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
-
 keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 
@@ -59,9 +56,9 @@ keymap('v', '<C-b>', '<cmd>NibblerToggle<cr>')
 keymap('n', '<C-g>', '<cmd>NibblerToBin<cr>')
 keymap('v', '<C-g>', '<cmd>NibblerToBin<cr>')
 
--- Goto 
 keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 
+-- Move cursor when scrolling with 'j' and 'k'
 keymap('n', '<C-e>', '<C-e>j')
 keymap('n', '<C-y>', '<C-y>k')
 
@@ -81,12 +78,10 @@ wk.register({
     s = {
         name = "Search",
         s =  { '<cmd>:silent lua require("functions").grep_project()<cr>', 'Search Project' },
-        m =  { '<cmd>:lua require("functions").man_pages()<cr>', 'Man pages' },
         d =  { '<cmd>Telescope diagnostics<cr>', 'Diagnostics' },
-        k =  { '<cmd>Telescope keymaps<cr>', 'Keymaps' },
-        h =  { '<cmd>Telescope help_tags<cr>', 'Help tags (plugin)' },
         b =  { '<cmd>Telescope buffers<cr>', 'Buffers' },
         c =  { '<cmd>Telescope commands<cr>', 'Commands (Plugin)' },
+        q =  { '<cmd>Telescope quickfixhistory<cr>', 'Quickfix history' },
     },
 
     g = {
@@ -107,6 +102,14 @@ wk.register({
         u =  { '<cmd>GitGutterUndoHunk<cr>', 'Undo hunk' },
     },
 
+    h = {
+        name = "Help",
+        k =  { '<cmd>Telescope keymaps<cr>', 'Keymaps' },
+        m =  { '<cmd>:lua require("functions").man_pages()<cr>', 'Man pages' },
+        h =  { '<cmd>Telescope help_tags<cr>', 'help (manual/plugins)' },
+        o =  { '<cmd>Telescope vim_options', 'Options' },
+    },
+
     c = {
         name = "Code",
         a =   { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action"},
@@ -115,10 +118,10 @@ wk.register({
         T =  { '<cmd>TodoQuickFix<cr>', 'Todo\'s' },
         t =  { '<cmd>Trouble<cr>', 'Trouble' },
         l =  { '<cmd>Commentary<cr>', 'Comment' },
-        P =  { ':PickColor<cr>', 'Pick Color' },
-        p =  { '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', 'Preview definition' },
-        -- Comment and copy 
-        -- comment paragraph
+        c =  { ':PickColor<cr>', 'Color picker' },
+        P =  { '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', 'Preview definition' },
+        y =  { 'yypk:Commentary<cr>j', 'Comment and copy' },
+        p =  { 'vap:Commentary<cr>', 'Comment paragraph' },
     },
 
     m = {
@@ -130,11 +133,12 @@ wk.register({
     }, 
 
     b = {
-        name = Buffer,
+        name = "buffer",
         d = {'<cmd>bdelete<cr>', 'Delete buffer'},
         b = {'<cmd>Telescope buffers<cr>', 'buffers'},
     },
 
+    q = { '<cmd>:silent lua require("functions").toggle_qf()<cr>', 'Toggle quickfix list' },
     w = { '<C-W>', 'Window' },
     p = { ':Telescope neoclip<cr>', 'Paste' },
     j = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document symbols'},
