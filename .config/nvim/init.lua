@@ -63,9 +63,6 @@ vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 
-local neogit = require('neogit')
-neogit.setup {}
-
 
 cmp.setup({
   sources = {

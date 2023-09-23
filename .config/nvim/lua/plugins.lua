@@ -647,15 +647,6 @@ return {
         'chrisbra/NrrwRgn'
     },
     {
-        'NeogitOrg/neogit',
-        config = function()
-            require("neogit").setup({
-                disable_commit_confirmation = true,
-            })
-        end,
-        dependencies = 'nvim-lua/plenary.nvim',
-    },
-    {
             'rose-pine/neovim',
             name = 'rose-pine'
     },
