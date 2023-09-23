@@ -1,4 +1,6 @@
 return {
+    'DanilaMihailov/beacon.nvim',
+    'chrisbra/NrrwRgn',
     'sainnhe/everforest',
     'rmehri01/onenord.nvim',
     'anuvyklack/animation.nvim',
@@ -6,6 +8,30 @@ return {
     'AlexvZyl/nordic.nvim',
     'catppuccin/nvim',
     'rebelot/kanagawa.nvim',
+    {
+        'nvim-treesitter/nvim-treesitter',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                -- A list of parser names, or "all"
+                ensure_installed = { "c", "lua",},
+                -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+                auto_install = true,
+                highlight = {
+                    enable = true,
+                    disable = function(lang, buf)
+                        local max_filesize = 500 * 1024 -- 100 KB
+                        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                        if ok and stats and stats.size > max_filesize then
+                            return true
+                        end
+                    end,
+                    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+                    -- Instead of true it can also be a list of languages
+                    additional_vim_regex_highlighting = true,
+                },
+            }
+        end,
+    },
     {
         'rose-pine/neovim',
         name = 'rose-pine'
@@ -46,9 +72,27 @@ return {
     {
         'nvim-lualine/lualine.nvim',
         config = function ()
-            require('lualine').setup()
-        end,
-    },
+            require('lualine').setup(
+            {
+                options = {
+                    theme = 'auto',
+                    component_separators = { left = '', right = '' },
+                    section_separators = { left = '', right = '' },
+                    disabled_filetypes = {
+                    statusline = {},
+                    winbar = {},
+                },
+                globalstatus = true,
+                refresh = {
+                    statusline = 1000,
+                    tabline = 1000,
+                    winbar = 1000,
+                }
+            }
+        }
+        )
+    end,
+},
     {
         'navarasu/onedark.nvim',
         config = function()
@@ -89,7 +133,7 @@ return {
                 items = {
                     starter.sections.telescope(),
                     {name = "One", action = ":e ~/one/one.norg", section = "Doc's"},
-                    {name = "Plugins", action = ":e ~/.config/nvim/lua/plugins.lua", section = "Doc's"},
+                    {name = "Plugins", action = ":Oil ~/.config/nvim/lua/plugins", section = "Doc's"},
                     {name = "Init", action = ":e ~/.config/nvim/init.lua", section = "Doc's"},
                     starter.sections.recent_files(5, false),
                     -- starter.sections.sessions(5,false),
