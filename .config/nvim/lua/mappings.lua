@@ -138,13 +138,23 @@ wk.register({
         b = {'<cmd>Telescope buffers<cr>', 'buffers'},
     },
 
+    d = {
+        name = "Debugger",
+        b = { '<cmd>DapToggleBreakpoint<cr>', 'Breakpoint (Toggle)' },
+        c = { '<cmd>DapContinue<cr>', 'Continue' },
+        s = { '<cmd>DapStepInto<cr>', 'Step into' },
+        S = { '<cmd>DapStepOver<cr>', 'Step over' },
+        o = { '<cmd>DapStepOut<cr>', 'Step out' },
+        Q = { '<cmd>DepTerminate<cr>', 'Quit debugging' },
+    },
+
     C = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },
     q = { '<cmd>:silent lua require("functions").toggle_qf()<cr>', 'Toggle quickfix list' },
     w = { '<C-W>', 'Window' },
     p = { ':Telescope neoclip<cr>', 'Paste' },
     j = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document symbols'},
     J = { '<cmd>Telescope lsp_workspace_symbols<cr>', 'Workspace symbols' },
-    d = { ':lua toggleDarkMode()<cr>', 'Toggle dark mode' },
+    D = { ':lua toggleDarkMode()<cr>', 'Toggle dark mode' },
     ['*'] =  { '<cmd>Telescope grep_string<cr>', 'Grep under cursor' },
     ["/"] = {':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>', 'Fuzzy find in buffer'}, 
 
