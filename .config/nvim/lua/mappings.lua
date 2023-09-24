@@ -107,7 +107,7 @@ wk.register({
         k =  { '<cmd>Telescope keymaps<cr>', 'Keymaps' },
         m =  { '<cmd>:lua require("functions").man_pages()<cr>', 'Man pages' },
         h =  { '<cmd>Telescope help_tags<cr>', 'help (manual/plugins)' },
-        o =  { '<cmd>Telescope vim_options', 'Options' },
+        o =  { '<cmd>Telescope vim_options<cr>', 'Options' },
     },
 
     c = {
@@ -138,6 +138,7 @@ wk.register({
         b = {'<cmd>Telescope buffers<cr>', 'buffers'},
     },
 
+    C = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },
     q = { '<cmd>:silent lua require("functions").toggle_qf()<cr>', 'Toggle quickfix list' },
     w = { '<C-W>', 'Window' },
     p = { ':Telescope neoclip<cr>', 'Paste' },

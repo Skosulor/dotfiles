@@ -45,7 +45,7 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
 vim.g.everforest_background = 'soft'
-set.background = 'light'
+set.background = 'dark'
 set.grepprg = "rg --vimgrep --no-heading --smart-case"
 
 toggleDarkMode = function()
@@ -92,6 +92,7 @@ if vim.g.neovide then
     function()
         change_scale_factor(1/1.10)
     end)
+    change_scale_factor(1/1.10)
     vim.o.guifont = "Iosevka"
 end
 

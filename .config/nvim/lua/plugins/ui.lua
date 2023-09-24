@@ -1,5 +1,11 @@
 return {
+    'luisiacc/gruvbox-baby',
+    'projekt0n/caret.nvim',
+    'junegunn/seoul256.vim',
     'DanilaMihailov/beacon.nvim',
+    '/Th3Whit3Wolf/one-nvim',
+    'sainnhe/gruvbox-material',
+    'NTBBloodbath/doom-one.nvim',
     'chrisbra/NrrwRgn',
     'sainnhe/everforest',
     'rmehri01/onenord.nvim',
@@ -8,6 +14,15 @@ return {
     'AlexvZyl/nordic.nvim',
     'catppuccin/nvim',
     'rebelot/kanagawa.nvim',
+    {
+        'navarasu/onedark.nvim',
+        config = function()
+            require('onedark').setup {
+                style = 'warm'
+            }
+            vim.cmd([[colorscheme onedark]])
+        end,
+    },
     {
         'nvim-treesitter/nvim-treesitter',
         config = function()
@@ -93,15 +108,6 @@ return {
         )
     end,
 },
-    {
-        'navarasu/onedark.nvim',
-        config = function()
-            require('onedark').setup {
-                style = 'dark'
-            }
-            vim.cmd([[colorscheme onedark]])
-        end,
-    },
     {
         'simrat39/symbols-outline.nvim',
         config = function()

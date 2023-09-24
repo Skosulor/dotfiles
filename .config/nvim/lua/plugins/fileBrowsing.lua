@@ -10,9 +10,6 @@ return {
             local actions = require("telescope.actions")
 
             require("telescope").setup({
-
-
-                border = {},
                 extensions = {
                     fzf = {
                         fuzzy = true,
@@ -48,7 +45,6 @@ return {
                     sorting_strategy = "descending",
                     layout_config = {
                         horizontal = {
-                            prompt_position = "top",
                             preview_width = 0.55,
                             results_width = 0.8,
                         },
@@ -57,15 +53,15 @@ return {
                         },
                         width = 0.87,
                         height = 0.80,
-                        preview_cutoff = 80,
+                        preview_cutoff = 20,
                     },
                     file_sorter = require("telescope.sorters").get_fuzzy_file,
                     file_ignore_patterns = { "node_modules" },
                     generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
                     path_display = { "truncate" },
                     winblend = 0,
-                    border = {},
-                    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+                    border = true,
+                    borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
                     color_devicons = true,
                     set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
                     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
@@ -84,7 +80,7 @@ return {
                         },
                     },
 
-                    layout_strategy = "vertical",
+                    layout_strategy = "horizontal",
                 },
             })
             require("telescope").load_extension "file_browser"
