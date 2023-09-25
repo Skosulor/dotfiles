@@ -148,6 +148,7 @@ wk.register({
         Q = { '<cmd>DepTerminate<cr>', 'Quit debugging' },
     },
 
+    M = { '<cmd>Noice<cr>', 'Messages (Neovim)' },
     C = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },
     q = { '<cmd>:silent lua require("functions").toggle_qf()<cr>', 'Toggle quickfix list' },
     w = { '<C-W>', 'Window' },
