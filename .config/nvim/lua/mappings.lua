@@ -155,6 +155,7 @@ wk.register({
     j = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document symbols'},
     J = { '<cmd>Telescope lsp_workspace_symbols<cr>', 'Workspace symbols' },
     D = { ':lua toggleDarkMode()<cr>', 'Toggle dark mode' },
+    ['<space>'] = { '<cmd>Telescope buffers<cr>', 'Buffers' },
     ['*'] =  { '<cmd>Telescope grep_string<cr>', 'Grep under cursor' },
     ["/"] = {':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>', 'Fuzzy find in buffer'}, 
 
