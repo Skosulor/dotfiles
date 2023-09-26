@@ -60,20 +60,6 @@ vim.cmd([[colorscheme everforest]])
  -- Hide the tildes that denotes end of file
 vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
 
--- Fix for Cmp missing lsp completion
-local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
-
-
-cmp.setup({
-  sources = {
-    {name = 'path'},
-    {name = 'nvim_lsp'},
-    {name = 'buffer', keyword_length = 3},
-    {name = 'luasnip', keyword_length = 2},
-  },
-})
-
 if vim.g.neovide then
     vim.g.neovide_scroll_animation_length = 0.5
     vim.g.neovide_hide_mouse_when_typing = true

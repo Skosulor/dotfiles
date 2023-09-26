@@ -1,34 +1,40 @@
 return {
     'neovim/nvim-lspconfig',
-    'williamboman/mason-lspconfig.nvim',
-    'williamboman/mason.nvim',
     'hrsh7th/cmp-buffer',
     'L4MON4D3/LuaSnip',
     'hrsh7th/cmp-path',
-    'saadparwaiz1/cmp_luasnip',
+    {
+        'saadparwaiz1/cmp_luasnip',
+        build = "make install_jsregexp"
+    },
     'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-nvim-lsp',
     {
-        'VonHeikemen/lsp-zero.nvim',
+        'williamboman/mason-lspconfig.nvim',
         config = function()
-            local lsp = require('lsp-zero')
-
-            lsp.set_preferences({
-                suggest_lsp_servers = true,
-                setup_servers_on_start = true,
-                set_lsp_keymaps = false,
-                configure_diagnostics = true,
-                cmp_capabilities = true,
-                manage_nvim_cmp = true,
-                call_servers = 'local',
-                sign_icons = {
-                    error = '✘',
-                    warn = '▲',
-                    hint = '⚑',
-                    info = ''
+            local lsp_zero = require('lsp-zero')
+            require('mason-lspconfig').setup({
+                ensure_installed = {'clangd', 'rust_analyzer'},
+                handlers = {
+                    lsp_zero.default_setup,
                 }
             })
-            lsp.setup()
+        end
+    },
+    {
+        'williamboman/mason.nvim',
+        config = function()
+            require("mason").setup()
+        end
+    },
+    {
+        'VonHeikemen/lsp-zero.nvim',
+        config = function()
+            local lsp = require('lsp-zero').preset('recommended')
+            -- lsp.on_attach(function(client, bufnr)
+            --     lsp.default_keymaps({buffer = bufnr})
+            -- end)
+            require('lsp-zero').setup_servers({'clangd'})
         end,
     },
     {
@@ -54,7 +60,10 @@ return {
                             fallback()
                         end
                     end, { "i", "s" }),
-
+                    ["<CR>"] = cmp.mapping.confirm({
+                        behavior = cmp.ConfirmBehavior.Replace,
+                        select = true,
+                    }),
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_prev_item()
@@ -66,6 +75,12 @@ return {
                     end, { "i", "s" }),
                     ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item()),
                     ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item()),
+                },
+                sources = {
+                    {name = 'path'},
+                    {name = 'nvim_lsp'},
+                    {name = 'buffer', keyword_length = 3},
+                    {name = 'luasnip', keyword_length = 2},
                 },
             })
         end,
