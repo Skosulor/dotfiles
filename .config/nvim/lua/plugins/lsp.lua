@@ -1,14 +1,11 @@
 return {
     'neovim/nvim-lspconfig',
     'hrsh7th/cmp-buffer',
-    'L4MON4D3/LuaSnip',
     'hrsh7th/cmp-path',
-    {
-        'saadparwaiz1/cmp_luasnip',
-        build = "make install_jsregexp"
-    },
+    'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-nvim-lsp',
+    'L3MON4D3/LuaSnip',
     {
         'williamboman/mason-lspconfig.nvim',
         config = function()
@@ -31,9 +28,6 @@ return {
         'VonHeikemen/lsp-zero.nvim',
         config = function()
             local lsp = require('lsp-zero').preset('recommended')
-            -- lsp.on_attach(function(client, bufnr)
-            --     lsp.default_keymaps({buffer = bufnr})
-            -- end)
             require('lsp-zero').setup_servers({'clangd'})
         end,
     },
@@ -48,6 +42,11 @@ return {
             local luasnip = require("luasnip")
             local cmp = require("cmp")
             cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end,
+                },
                 mapping = {
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
