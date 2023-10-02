@@ -13,6 +13,18 @@ return {
     'tpope/vim-commentary',
     'sindrets/diffview.nvim',
     {
+        "epwalsh/obsidian.nvim",
+        -- lazy = true,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        config = function()
+            require("obsidian").setup({
+                dir = "/Users/ohman/Documents/ObsidianVault",  -- no need to call 'vim.fn.expand' here
+            })
+        end,
+    },
+    {
         "folke/neodev.nvim",
         config = function()
             require("neodev").setup({})

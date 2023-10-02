@@ -148,6 +148,16 @@ wk.register({
         Q = { '<cmd>DepTerminate<cr>', 'Quit debugging' },
     },
 
+    o = {
+        name = "Obsidian",
+        n = { '<cmd>ObsidianNew<cr>', 'New'},
+        o = { '<cmd>ObsidianQuickSwitch<cr>', 'Open'},
+        O = { '<cmd>ObsidianOpen<cr>', 'Open Obsidian'},
+        t = { '<cmd>ObsidianToday<cr>', 'Today'},
+        y = { '<cmd>ObsidianYesterday<cr>', 'Yesterday'},
+        s = { '<cmd>ObsidianSearch<cr>', 'Search'},
+    },
+
     M = { '<cmd>Noice<cr>', 'Messages (Neovim)' },
     C = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },
     q = { '<cmd>:silent lua require("functions").toggle_qf()<cr>', 'Toggle quickfix list' },
