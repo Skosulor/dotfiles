@@ -8,8 +8,11 @@ end
 M.grep_project = function()
     local fname = vim.fn.input("Search: ", "", "file")
     if fname ~= '' then
-        local derp = vim.cmd('grep! ' .. fname)
-        vim.cmd('copen')
+        vim.cmd('grep! ' .. fname)
+        local qf = vim.fn.getqflist()
+        if next(qf) ~= nil then
+            vim.cmd('copen')
+        end
     end
 end
 
