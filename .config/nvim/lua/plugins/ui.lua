@@ -138,7 +138,8 @@ return {
             starter.setup {
                 items = {
                     starter.sections.telescope(),
-                    {name = "One", action = ":e ~/one/one.norg", section = "Doc's"},
+                    {name = "Daily Notes", action = "ObsidianToday", section = "Doc's"},
+                    {name = "Yesterday's Notes", action = "ObsidianYesterday", section = "Doc's"},
                     {name = "Plugins", action = ":Oil ~/.config/nvim/lua/plugins", section = "Doc's"},
                     {name = "Init", action = ":e ~/.config/nvim/init.lua", section = "Doc's"},
                     starter.sections.recent_files(5, false),
