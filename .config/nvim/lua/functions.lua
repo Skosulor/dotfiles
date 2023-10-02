@@ -7,8 +7,10 @@ end
 
 M.grep_project = function()
     local fname = vim.fn.input("Search: ", "", "file")
-    vim.cmd('grep! ' .. fname)
-    vim.cmd('copen')
+    if fname ~= '' then
+        local derp = vim.cmd('grep! ' .. fname)
+        vim.cmd('copen')
+    end
 end
 
 M.toggle_qf = function()
