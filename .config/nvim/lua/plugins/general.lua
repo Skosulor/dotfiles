@@ -19,8 +19,16 @@ return {
             "nvim-lua/plenary.nvim",
         },
         config = function()
+
+                local vault = ''
+                if package.config:sub(1,1) == '/' then
+                    vault = "/Users/ohman/Documents/ObsidianVault"
+                elseif package.config:sub(1,1) == "\\" then
+                    vault = "C:\\Users\\AndreasOhman\\Documents\\Notes"
+                end
+
             require("obsidian").setup({
-                dir = "/Users/ohman/Documents/ObsidianVault",  -- no need to call 'vim.fn.expand' here
+                dir = vault,
             })
         end,
     },
