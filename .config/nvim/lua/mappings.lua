@@ -1,4 +1,3 @@
-local wk = require("which-key")
 
 local keymap = function(mode, lhs, rhs, opts)
     opts = opts or { noremap = true, silent = true }
@@ -53,8 +52,6 @@ keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 -- Nibbler
 keymap('n', '<C-b>', '<cmd>NibblerToggle<cr>')
 keymap('v', '<C-b>', '<cmd>NibblerToggle<cr>')
-keymap('n', '<C-g>', '<cmd>NibblerToBin<cr>')
-keymap('v', '<C-g>', '<cmd>NibblerToBin<cr>')
 
 keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 
@@ -62,7 +59,8 @@ keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR
 keymap('n', '<C-e>', '<C-e>j')
 keymap('n', '<C-y>', '<C-y>k')
 
-
+-- Lead key mappings with which key for some graphical help
+local wk = require("which-key")
 wk.register({
     f = {
         name = "File",
