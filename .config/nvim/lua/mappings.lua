@@ -156,6 +156,7 @@ wk.register({
         s = { '<cmd>ObsidianSearch<cr>', 'Search'},
     },
 
+    z = { '<cmd>ZenMode<cr>', 'Zen mode' },
     M = { '<cmd>Noice<cr>', 'Messages (Neovim)' },
     C = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },
     q = { '<cmd>:silent lua require("functions").toggle_qf()<cr>', 'Toggle quickfix list' },
