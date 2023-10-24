@@ -105,6 +105,16 @@ return {
             require('telescope').load_extension('projects')
             require("project_nvim").setup ({
                 patterns = {'.git', '.vproject'},
+                sync_root_with_cwd = true,
+                respect_buf_cwd = true,
+                detection_methods = { "pattern", "lsp" },
+                show_hidden = true,
+                silent_chdir = false,
+                scope_chdir = 'win',
+                update_focused_file = {
+                    enable = true,
+                    update_root = true
+                },
             })
         end,
 
