@@ -9,9 +9,14 @@ return {
     'MunifTanjim/nui.nvim',
     'anuvyklack/middleclass',
     'kevinhwang91/nvim-bqf',
-    'jiangmiao/auto-pairs',
     'tpope/vim-commentary',
     'sindrets/diffview.nvim',
+    {
+        'windwp/nvim-autopairs',
+        config = function()
+            require("nvim-autopairs").setup({})
+        end
+    },
     {
         "epwalsh/obsidian.nvim",
         -- lazy = true,
@@ -28,7 +33,7 @@ return {
                 end
 
             require("obsidian").setup({
-                dir = vault,
+                dir = "/Users/ohman/Documents/ObsidianVault",
             })
         end,
     },
