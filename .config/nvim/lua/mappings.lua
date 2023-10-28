@@ -4,9 +4,17 @@ local keymap = function(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
+vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+    pattern = {"quickfix",},
+    callback = function ()
+        vim.api.nvim_buf_set_keymap(0,'n', '<C-j>',':colder<cr>', { noremap = true, silent = true })
+        vim.api.nvim_buf_set_keymap(0,'n', '<C-k>',':cnew<cr>', { noremap = true, silent = true })
+    end
+})
+
 -- Non leader key bindings
-keymap('n', 'gr',                    '<nop>')
-keymap('n', 'gr',                    '<cmd>Telescope lsp_references<cr>')
+keymap('n', 'gr', '<nop>')
+keymap('n', 'gr', '<cmd>Telescope lsp_references<cr>')
 keymap('x', '<leader>cl', ':Commentary<cr>')
 keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
@@ -156,6 +164,8 @@ wk.register({
         s = { '<cmd>ObsidianSearch<cr>', 'Search'},
     },
 
+
+    q = { '<cmd>copen<cr>', 'Quickfixlist' },
     z = { '<cmd>ZenMode<cr>', 'Zen mode' },
     M = { '<cmd>Noice<cr>', 'Messages (Neovim)' },
     C = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },
