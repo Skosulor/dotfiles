@@ -140,7 +140,7 @@ wk.register({
 
     b = {
         name = "buffer",
-        d = {'<cmd>bdelete<cr>', 'Delete buffer'},
+        d = {'<cmd>bn<cr><cmd>bd #<cr>', 'Delete buffer'},
         b = {'<cmd>Telescope buffers<cr>', 'buffers'},
     },
 
