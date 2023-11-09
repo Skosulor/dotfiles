@@ -1,4 +1,4 @@
-# Learnings
+# Learnings & My setup
 
 This document consists of new things I learn for vim through various sources but things
 I dont seem to remember since i rarley use them...
@@ -15,4 +15,18 @@ I dont seem to remember since i rarley use them...
 ## Saving buffer with sudo privileges 
     
 :w !sudo tee % > /dev/nul
+
+
+## Quickfix list
+
+
+## Buffer handling
+
+
+## Project handling
+
+
+## Debugging
+
+## ANd more
 
