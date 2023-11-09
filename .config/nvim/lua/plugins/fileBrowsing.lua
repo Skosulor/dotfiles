@@ -74,6 +74,7 @@ return {
                         i = {
                             ["<C-i>"] = fb_actions.toggle_hidden,
                             ["<C-h>"] = fb_actions.goto_parent_dir,
+                            ['<c-d>'] = actions.delete_buffer,
                             ["<C-j>"] = actions.move_selection_next,
                             ["<C-k>"] = actions.move_selection_previous,
                             ["<C-l>"] = actions.select_default,
