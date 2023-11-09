@@ -151,7 +151,7 @@ wk.register({
         s = { '<cmd>DapStepInto<cr>', 'Step into' },
         S = { '<cmd>DapStepOver<cr>', 'Step over' },
         o = { '<cmd>DapStepOut<cr>', 'Step out' },
-        Q = { '<cmd>DepTerminate<cr>', 'Quit debugging' },
+        Q = { '<cmd>DapTerminate<cr>', 'Quit debugging' },
     },
 
     o = {
