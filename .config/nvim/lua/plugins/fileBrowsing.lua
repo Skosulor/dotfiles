@@ -3,7 +3,6 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         lazy = false,
-        version = '0.1.1',
         config = function()
 
             local fb_actions = require"telescope".extensions.file_browser.actions
