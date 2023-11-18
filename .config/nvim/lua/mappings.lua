@@ -15,7 +15,6 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 -- Non leader key bindings
 keymap('n', 'gr', '<nop>')
 keymap('n', 'gr', '<cmd>Telescope lsp_references<cr>')
-keymap('x', '<leader>cl', ':Commentary<cr>')
 keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
 -- Tabs
@@ -123,11 +122,11 @@ wk.register({
         s =  { ':lua vim.lsp.buf.document_symbol()<cr>', 'Document symbol' },
         T =  { '<cmd>TodoQuickFix<cr>', 'Todo\'s' },
         t =  { '<cmd>Trouble<cr>', 'Trouble' },
-        l =  { '<cmd>Commentary<cr>', 'Comment' },
         c =  { ':PickColor<cr>', 'Color picker' },
         P =  { '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', 'Preview definition' },
-        y =  { 'yypk:Commentary<cr>j', 'Comment and copy' },
-        p =  { 'vap:Commentary<cr>', 'Comment paragraph' },
+        l =  { '<Plug>(comment_toggle_linewise_current)', 'Comment' },
+        y =  { 'yypk<Plug>(comment_toggle_linewise_current)j', 'Comment and copy' },
+        p =  { '<Plug>(comment_toggle_linewise)ip', 'Comment paragraph' },
     },
 
     m = {
@@ -140,7 +139,7 @@ wk.register({
 
     b = {
         name = "buffer",
-        d = {'<cmd>bn<cr><cmd>bd #<cr>', 'Delete buffer'},
+        d = {'<cmd>lua MiniBufremove.delete(0, false)<cr>', 'Delete buffer'},
         b = {'<cmd>Telescope buffers<cr>', 'buffers'},
     },
 
@@ -165,7 +164,7 @@ wk.register({
     },
 
 
-    q = { '<cmd>copen<cr>', 'Quickfixlist' },
+    a = { '<Plug>(EasyAlign)ip', 'Align' },
     z = { '<cmd>ZenMode<cr>', 'Zen mode' },
     M = { '<cmd>Noice<cr>', 'Messages (Neovim)' },
     C = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },

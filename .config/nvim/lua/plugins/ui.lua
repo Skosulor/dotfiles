@@ -115,47 +115,6 @@ return {
         end,
     }, 
     {
-        'echasnovski/mini.nvim',
-        config = function()
-            local header_art = 
-            [[
-╭╮╭╮╭╮╱╱╭╮
-┃┃┃┃┃┃╱╱┃┃
-┃┃┃┃┃┣━━┫┃╭━━┳━━┳╮╭┳━━╮
-┃╰╯╰╯┃┃━┫┃┃╭━┫╭╮┃╰╯┃┃━┫
-╰╮╭╮╭┫┃━┫╰┫╰━┫╰╯┃┃┃┃┃━┫
-╱╰╯╰╯╰━━┻━┻━━┻━━┻┻┻┻━━╯
-]]
-            local header_art2 = 
-            [[
-            ╭╮╭┬─╮╭─╮┬  ┬┬╭┬╮
-            │││├┤ │ │╰┐┌╯││││
-            ╯╰╯╰─╯╰─╯ ╰╯ ┴┴ ┴
-            ]]
-            -- require('mini.sessions').setup()
-            --require('mini.nvim').setup({
-            local starter = require'mini.starter'
-            starter.setup {
-                items = {
-                    starter.sections.telescope(),
-                    {name = "Daily Notes", action = "ObsidianToday", section = "Doc's"},
-                    {name = "Yesterday's Notes", action = "ObsidianYesterday", section = "Doc's"},
-                    {name = "Plugins", action = ":Oil ~/.config/nvim/lua/plugins", section = "Doc's"},
-                    {name = "Init", action = ":e ~/.config/nvim/init.lua", section = "Doc's"},
-                    starter.sections.recent_files(5, false),
-                    -- starter.sections.sessions(5,false),
-                    starter.sections.builtin_actions(),
-                },
-                content_hooks = {
-                    starter.gen_hook.adding_bullet(),
-                    starter.gen_hook.aligning("center", "center"),
-                },
-                header = header_art,
-                footer = " ",
-            }
-        end,
-    },
-    {
         'folke/noice.nvim',
         config = function()
             require("noice").setup({

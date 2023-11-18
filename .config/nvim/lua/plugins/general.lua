@@ -9,7 +9,6 @@ return {
     'MunifTanjim/nui.nvim',
     'anuvyklack/middleclass',
     'kevinhwang91/nvim-bqf',
-    'tpope/vim-commentary',
     'sindrets/diffview.nvim',
     {
         'windwp/nvim-autopairs',
@@ -239,4 +238,44 @@ return {
        -- If you have a recent version of lazy.nvim, you don't need to add this!
        build = "nvim -l build/init.lua",
    },
+   {
+       'echasnovski/mini.nvim',
+       version = '*',
+       config = function()
+           require('mini.bufremove').setup({})
+           local header_art = 
+           [[
+           ╭╮╭╮╭╮╱╱╭╮
+           ┃┃┃┃┃┃╱╱┃┃
+           ┃┃┃┃┃┣━━┫┃╭━━┳━━┳╮╭┳━━╮
+           ┃╰╯╰╯┃┃━┫┃┃╭━┫╭╮┃╰╯┃┃━┫
+           ╰╮╭╮╭┫┃━┫╰┫╰━┫╰╯┃┃┃┃┃━┫
+           ╱╰╯╰╯╰━━┻━┻━━┻━━┻┻┻┻━━╯
+           ]]
+           local starter = require'mini.starter'
+           starter.setup {
+               items = {
+                   starter.sections.telescope(),
+                   {name = "Daily Notes", action = "ObsidianToday", section = "Doc's"},
+                   {name = "Yesterday's Notes", action = "ObsidianYesterday", section = "Doc's"},
+                   {name = "Plugins", action = ":Oil ~/.config/nvim/lua/plugins", section = "Doc's"},
+                   {name = "Init", action = ":e ~/.config/nvim/init.lua", section = "Doc's"},
+                   starter.sections.recent_files(5, false),
+                   -- starter.sections.sessions(5,false),
+                   starter.sections.builtin_actions(),
+               },
+               content_hooks = {
+                   starter.gen_hook.adding_bullet(),
+                   starter.gen_hook.aligning("center", "center"),
+               },
+               header = header_art,
+               footer = " ",
+           }
+       end,
+   },
+   {
+       'numToStr/Comment.nvim',
+       opts = {},
+       lazy = false,
+   }
 }
