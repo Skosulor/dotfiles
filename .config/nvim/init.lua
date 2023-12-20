@@ -17,6 +17,7 @@ require("mappings")
 
 vim.cmd([[autocmd! BufEnter * if &ft ==# 'help' | wincmd L | endif]])
 
+
 local set = vim.opt
 set.relativenumber = true
 set.number         = true
@@ -24,6 +25,7 @@ set.clipboard      = "unnamedplus"
 set.encoding       = "UTF-8"
 set.timeoutlen     = 300
 
+set.termguicolors = true
 set.tabstop     = 8
 set.expandtab   = true
 set.shiftwidth  = 4

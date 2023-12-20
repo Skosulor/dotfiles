@@ -1,5 +1,4 @@
 return {
-    'neovim/nvim-lspconfig',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'saadparwaiz1/cmp_luasnip',
@@ -26,9 +25,17 @@ return {
     },
     {
         'VonHeikemen/lsp-zero.nvim',
+
+        opts = {
+            setup = {
+                clangd = function(_, opts)
+                    opts.capabilities.offsetEncoding = { "utf-16" }
+                end,
+            },
+        },
         config = function()
             local lsp = require('lsp-zero').preset('recommended')
-            require('lsp-zero').setup_servers({'clangd'})
+            lsp.extend_lspconfig()
         end,
     },
     {
@@ -84,5 +91,18 @@ return {
             })
         end,
     },
-
+    {
+        'neovim/nvim-lspconfig',
+        config = function()
+            local cmp_nvim_lsp = require "cmp_nvim_lsp"
+            require("lspconfig").clangd.setup {
+                on_attach = on_attach,
+                capabilities = cmp_nvim_lsp.default_capabilities(),
+                cmd = {
+                    "clangd",
+                    "--offset-encoding=utf-16",
+                },
+            }
+        end,
+    },
 }

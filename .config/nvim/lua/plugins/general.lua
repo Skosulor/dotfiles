@@ -1,5 +1,7 @@
 return {
     { "folke/neoconf.nvim", cmd = "Neoconf" },
+    'ludovicchabant/vim-gutentags',
+    'https://github.com/github/copilot.vim',
     'nvim-pack/nvim-spectre',
     'nvim-treesitter/nvim-treesitter-context',
     'rhysd/clever-f.vim',
@@ -32,7 +34,7 @@ return {
                 end
 
             require("obsidian").setup({
-                dir = "/Users/ohman/Documents/ObsidianVault",
+                dir = vault,
             })
         end,
     },
@@ -277,5 +279,15 @@ return {
        'numToStr/Comment.nvim',
        opts = {},
        lazy = false,
-   }
+   },
+   {
+       "NeogitOrg/neogit",
+       dependencies = {
+           "nvim-lua/plenary.nvim",
+           "sindrets/diffview.nvim",
+           "nvim-telescope/telescope.nvim",
+           "ibhagwan/fzf-lua",
+       },
+       config = true
+   },
 }

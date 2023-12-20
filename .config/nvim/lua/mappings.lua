@@ -91,7 +91,7 @@ wk.register({
 
     g = {
         name = "Git",
-        g =  { '<cmd>vertical Git<cr>', 'Git status' },
+        g =  { '<cmd>Neogit<cr>', 'Git status' },
         b =  { '<cmd>Telescope git_branches<cr>', 'Branches' },
         B =  { '<cmd>Git blame<cr>', 'Blame' },
         c =  { '<cmd>Telescope git_commits<cr>', 'Commits' },
