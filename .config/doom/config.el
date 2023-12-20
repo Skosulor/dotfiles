@@ -1,15 +1,88 @@
-;;; .doom.d/config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;;(setq display-battery-mode t)
-;;(setq display-time-mode 1)
-
-;;(setq (unless (string-match-p "^Power N/A" (battery))
-;;  (display-battery-mode 1)))
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
 
 
-(defun get-syn (&optional b e)
-  (interactive)
-  (shell-command (concat "syn " (thing-at-point 'word))))
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets. It is optional.
+;; (setq user-full-name "John Doe"
+;;       user-mail-address "john@doe.com")
+
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
+;;
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-symbol-font' -- for symbols
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+;;
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
+
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+(setq doom-theme 'doom-one)
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
+
+
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+;;
+;;   (after! PACKAGE
+;;     (setq x y))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+
+
+
+(setq lsp-lens-enable nil)
+
+;; (after! ccls
+;;   (setq ccls-initialization-options '(:index (:comments 2) :completion (:detailedLabel t)))
+;;   (set-lsp-priority! 'ccls 2)) ; optional as ccls is the default in Doom
+
 
 (defun ocp ()
   (interactive)
@@ -62,6 +135,7 @@
 ;; (setq x-underline-at-descent-line t)
 
 ;; Fonts
+
 (setq doom-font (font-spec :family "Iosevka" :size 13))
 (setq doom-font (font-spec :family "Iosevka" :size 13))
 (setq doom-variable-pitch-font (font-spec :family "Iosevka" :size 13))
@@ -81,9 +155,9 @@
 ;; (setq lsp-ui-sideline-show-symbol 't)
 
 
-(define-globalized-minor-mode my-global-winum-mode winum-mode
-  (lambda () (winum-mode 1)))
-(my-global-winum-mode 1)
+;; (define-globalized-minor-mode my-global-winum-mode winum-mode
+;;   (lambda () (winum-mode 1)))
+;; (my-global-winum-mode 1)
 
 
 (setq doom-modeline-height 20)
@@ -140,7 +214,7 @@
       deft-extensions '("org")
       deft-recursive t)
 
-(unpin! org-mode)
+;; (unpin! org-mode)
 
 (after! org (setq org-hide-emphasis-markers t))
 
@@ -178,24 +252,24 @@
 
 (add-hook! org-mode :append #'org-appear-mode)
 
-(setq org-indent-indentation-per-level 6)
-(setq org-indent-boundary-char ?　)
+(setq org-indent-indentation-per-level 1)
+(setq org-indent-boundary-char ? )
 
 (setq org-ellipsis " ▼")
 
 (after! org-superstar
   ;; Every non-TODO headline now have no bullet
-  (setq org-superstar-headline-bullets-list '("　"))
-  (setq org-superstar-leading-bullet ?　)
+  (setq org-superstar-headline-bullets-list '(" "))
+  (setq org-superstar-leading-bullet ? )
   ;; Enable custom bullets for TODO items
   (setq org-superstar-special-todo-items t)
   (setq org-superstar-todo-bullet-alist
-        '(("TODO" "☐　")
-          ("NEXT" "✒　")
-          ("PROG" "✰　")
-          ("WAIT" "☕　")
-          ("FAIL" "✘　")
-          ("DONE" "✔　")))
+        '(("TODO" "☐ ")
+          ("NEXT" "✒ ")
+          ("PROG" "✰ ")
+          ("WAIT" "☕ ")
+          ("FAIL" "✘ ")
+          ("DONE" "✔ ")))
   (org-superstar-restart))
 
 (add-hook! 'org-mode-hook #'doom-disable-line-numbers-h)
@@ -214,3 +288,18 @@
 ;; (set-face-attribute 'org-level-2 :height "1.3")
 ;; (set-face-attribute 'org-level-3 :height "1.2")
 ;; (set-face-attribute 'org-level-4 :height "1.1")
+
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))

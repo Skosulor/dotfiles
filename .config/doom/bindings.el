@@ -1,8 +1,11 @@
+;;; bindings.el -*- lexical-binding: t; -*-
+
 ;;; ~/.doom.d/bindings.el -*- lexical-binding: t; -*-
 
+(map! :map vertico-map "C-l" #'vertico-insert)
 
 (setq x-meta-keysym 'super)
-(map! "s-;" #'counsel-M-x)
+(map! "s-;" #'execute-extended-command)
 (map! "s-j" 'evil-window-down)
 (map! "s-k" 'evil-window-up)
 (map! "s-h" 'evil-window-left)
@@ -25,8 +28,8 @@
 
 
 
-(map! :map general-override-mode-map "C-h" #'c-end-expression)
-(map! :map general-override-mode-map :n "C-h" #'c-end-expression)
+;; (map! :map general-override-mode-map "C-h" #'c-end-expression)
+;; (map! :map general-override-mode-map :n "C-h" #'c-end-expression)
 
 (map! :leader
       (:prefix ("t" . "toggle")
@@ -46,7 +49,7 @@
       :desc "window 4" "4" #'winum-select-window-4
 
       ;; M-x
-      (:desc "M-x" ";" #'counsel-M-x)
+      (:desc "M-x" ";" #'execute-extended-command)
       (:desc "shell command" ":" #'shell-command)
 
       ;; help
