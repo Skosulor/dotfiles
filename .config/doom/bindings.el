@@ -43,10 +43,6 @@
 (map! :leader
       :desc "Goto Word" "SPC" #'avy-goto-word-0
       :desc "window 0" "0" #'treemacs-select-window
-      :desc "window 1" "1" #'winum-select-window-1
-      :desc "window 2" "2" #'winum-select-window-2
-      :desc "window 3" "3" #'winum-select-window-3
-      :desc "window 4" "4" #'winum-select-window-4
 
       ;; M-x
       (:desc "M-x" ";" #'execute-extended-command)
@@ -55,10 +51,6 @@
       ;; help
       (:prefix ("h" . "help")
       :desc "Man pages" "m" #'man)
-
-      ;; op
-      (:prefix ("o" . "open")
-      :desc "Calender" "c" #'cfw:open-org-calendar)
 
       ;; files
       (:prefix ("f" . "file")
@@ -73,7 +65,6 @@
       :desc "comment & copy" "y" #'evilnc-copy-and-comment-lines
       :desc "comment paragraph" "p" #'evilnc-comment-or-uncomment-paragraphs
       :desc "rtags jump to definition" "D" #'rtags-find-symbol-at-point
-      :desc "multiedit" "m" #'evil-multiedit-match-all
       :desc "narrow buffer" "n" #'doom/toggle-narrow-buffer
       :desc "correct word at point" "s" #'flyspell-correct-at-point)
 
@@ -83,9 +74,12 @@
         :desc "buffers" "SPC" #'switch-to-buffer)
 
       ;;jump
-      (:prefix-map ("j" . "jump")
-      :desc "imenu" "i" #'imenu
-      :desc "counsel-imenu" "j" #'counsel-imenu)
+      :desc "Jump to symbol" "j" #'imenu
+
+      ;; search
+      :desc "Search project" "/" #'+vertico/project-search
+      (:prefix-map ("s" . "search")
+       :desc "Project search" "p" #'+vertico/project-search)
 
       ;; Avy
       (:prefix-map ("a" . "Avy")

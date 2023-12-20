@@ -282,7 +282,7 @@
  )
 
 ;; set default shell for vterm
-(setq vterm-shell "/opt/homebrew/bin/fish")
+;; (setq vterm-shell "/opt/homebrew/bin/fish")
 
 ;; (set-face-attribute 'org-level-1 :height "1.4")
 ;; (set-face-attribute 'org-level-2 :height "1.3")
@@ -303,3 +303,12 @@
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
+
+(after! dap-mode
+  (require 'dap-codelldb))
+
+
+(require 'dap-cpptools)
+
+(map! :mode vertico-mode
+      ("C-l" '+vertico/embark-preview))
