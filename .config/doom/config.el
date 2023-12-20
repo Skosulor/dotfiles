@@ -312,3 +312,8 @@
 
 (map! :mode vertico-mode
       ("C-l" '+vertico/embark-preview))
+
+
+(setq doom-everforest-background  "soft")  ; or hard (defaults to soft)
+(setq doom-everforest-light-background  "soft") ; or hard (defaults to soft)
+(setq doom-theme 'doom-everforest) ; dark variant
