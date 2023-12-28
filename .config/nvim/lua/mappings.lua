@@ -118,7 +118,8 @@ wk.register({
     c = {
         name = "Code",
         a =   { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action"},
-        r =  { '<cmd>Spectre<cr>', 'Replace' },
+        R =  { '<cmd>Spectre<cr>', 'Replace' },
+        r = { '<cmd>Telescope lsp_references<cr>', 'References' },
         s =  { ':lua vim.lsp.buf.document_symbol()<cr>', 'Document symbol' },
         T =  { '<cmd>TodoQuickFix<cr>', 'Todo\'s' },
         t =  { '<cmd>Trouble<cr>', 'Trouble' },
