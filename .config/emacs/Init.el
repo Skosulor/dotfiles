@@ -1,3 +1,89 @@
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(setq enable-recursive-minibuffers t)
+
+(use-package wgrep
+  :ensure t)
+
+(use-package pdf-tools)
+(pdf-tools-install)
+
+(use-package quelpa)
+(use-package quelpa-use-package)
+
+(use-package copilot
+  :quelpa (copilot :fetcher github
+                   :repo "zerolfx/copilot.el"
+                   :branch "main"
+                   :files ("dist" "*.el" "*.c" "*.rs" "*.h")))
+
+(setq truncate-lines t)
+
+(use-package pomidor
+  :config (setq pomidor-sound-tick nil
+                pomidor-sound-tack nil)
+  :hook (pomidor-mode . (lambda ()
+                          (display-line-numbers-mode -1)
+                          (setq left-fringe-width 0 right-fringe-width 0)
+                          (setq left-margin-width 2 right-margin-width 0)
+                          (set-window-buffer nil (current-buffer)))))
+
+(setq pomidor-alert (lambda () (emacs-floating-notification "\n-------Break Time!-------\n\n")))
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-set-init-info nil)
+  (setq dashboard-init-info "Welcome Hell")
+  (setq dashboard-footer-messages '("Welcome Hell"))
+  (setq dashboard-center-content t))
+
+
+(defun dashboard-insert-pomidor (list-size)
+  "Insert the custom Pomodoro widget into the dashboard."
+  (dashboard-insert-heading "Pomodoro" nil "p")  ;; 'p' is the tag for this section
+  (widget-create 'push-button
+                 :action (lambda (&rest _ignore)
+                           (pomidor))
+                 :mouse-face 'highlight
+                 :follow-link "\C-m"
+                 :button-prefix ""
+                 :button-suffix ""
+                 :format "%[%t%]"
+                 "\n     Start Timer")
+  (insert "\n"))
+
+
+
+(use-package dashboard-hackernews)
+
+(setq dashboard-items '((hackernews . 5)
+                        (recents  . 5)
+                        (projects . 5)))
+(add-to-list 'dashboard-item-generators '(pomidor . dashboard-insert-pomidor))
+(add-to-list 'dashboard-items '(pomidor) t)
+
+(use-package tab-jump-out
+  :config
+  (tab-jump-out-mode))
+(electric-pair-mode 1)
+
 (defvar efs/default-font-size 110)
 (defvar efs/default-variable-font-size 110)
 
@@ -54,9 +140,9 @@
 
   (menu-bar-mode -1)            ; Disable the menu bar
 
-  (column-number-mode)
-  (global-display-line-numbers-mode t)
+  ;; (column-number-mode)
   (setq display-line-numbers-type 'relative)
+  (setq global-display-line-numbers-mode nil)
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
@@ -64,6 +150,7 @@
                 shell-mode-hook
                 vterm-mode-hook
                 treemacs-mode-hook
+                pdf-view-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -74,11 +161,6 @@
 
 (use-package forge
   :after magit)
-
-(use-package magit-todos
-  :after magit
-  :init
-  (magit-todos-mode))
 
 (use-package vterm
   :ensure t)
@@ -115,6 +197,26 @@
   :bind (:map evil-normal-state-map
               ("gc" . evilnc-comment-operator)))
 
+(use-package hl-todo
+    :ensure t
+    :init
+    (global-hl-todo-mode))
+
+  (use-package flycheck
+    :ensure t
+    :init
+    (global-flycheck-mode 1))
+
+  (use-package flycheck-hl-todo
+    :ensure t
+    :defer 5 ; Need to be initialized after the rest of checkers
+    :config
+    (flycheck-hl-todo-setup))
+
+(use-package magit-todos
+  :after magit
+  :config (magit-todos-mode 1))
+
 (use-package tabspaces
   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
   :commands (tabspaces-switch-or-create-workspace
@@ -148,6 +250,29 @@
   "Set workspace buffer list for consult-buffer.")
 (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
+(use-package flycheck-posframe
+  :ensure t
+  :after flycheck
+  :config (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
+
+(use-package posframe
+    :ensure t)
+
+(defun emacs-floating-notification (message)
+  "Display a floating window notification in Emacs."
+  (interactive "sEnter notification message: ")
+  (posframe-show "*emacs-notification*"
+                 :string message
+                 :timeout 5
+                 :position (point)))
+
+(use-package page-break-lines
+  :config
+  (set-fontset-font "fontset-default"
+                    (cons page-break-lines-char page-break-lines-char)
+                    (face-attribute 'default :family))
+  (global-page-break-lines-mode))
+
 (use-package nerd-icons)
 
 (use-package nerd-icons-completion
@@ -159,9 +284,27 @@
   :hook
   (dired-mode . nerd-icons-dired-mode))        (use-package nerd-icons-corfu)
 
-(use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+;; (use-package doom-modeline
+;;   ;; :init (doom-modeline-mode 1)
+;;   :custom ((doom-modeline-height 15)))
+
+(setq-default mode-line-format nil) 
+
+(use-package nano-modeline)
+(nano-modeline-text-mode t)
+(add-hook 'prog-mode-hook            #'nano-modeline-prog-mode)
+(add-hook 'text-mode-hook            #'nano-modeline-text-mode)
+(add-hook 'org-mode-hook             #'nano-modeline-org-mode)
+(add-hook 'pdf-view-mode-hook        #'nano-modeline-pdf-mode)
+(add-hook 'mu4e-headers-mode-hook    #'nano-modeline-mu4e-headers-mode)
+(add-hook 'mu4e-view-mode-hook       #'nano-modeline-mu4e-message-mode)
+(add-hook 'elfeed-show-mode-hook     #'nano-modeline-elfeed-entry-mode)
+(add-hook 'elfeed-search-mode-hook   #'nano-modeline-elfeed-search-mode)
+(add-hook 'term-mode-hook            #'nano-modeline-term-mode)
+(add-hook 'xwidget-webkit-mode-hook  #'nano-modeline-xwidget-mode)
+(add-hook 'messages-buffer-mode-hook #'nano-modeline-message-mode)
+(add-hook 'org-capture-mode-hook     #'nano-modeline-org-capture-mode)
+(add-hook 'org-agenda-mode-hook      #'nano-modeline-org-agenda-mode)
 
 (use-package hydra
   :defer t)
@@ -172,8 +315,35 @@
   ("k" increase-font-size "out")
   ("f" nil "finished" :exit t))
 
-(use-package doom-themes)
- (load-theme 'doom-everforest t)
+;; (use-package doom-themes)
+      ;; (load-theme 'doom-everforest t)
+
+      (use-package nano-theme
+        :ensure nil
+        :defer t
+        :quelpa (nano-theme
+                 :fetcher github
+                 :repo "rougier/nano-theme"))
+
+      (use-package nano
+        :ensure nil
+        :defer t
+        :quelpa (nano-theme
+                 :fetcher github
+                 :repo "rougier/nano-emacs"))
+
+  (straight-use-package
+    '(nano :type git :host github :repo "rougier/nano-emacs"))
+
+  (straight-use-package
+    '(nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer"))
+
+  ;; (require 'nano)
+  (load-theme 'nano t)
+  (require 'nano-minibuffer)
+
+(with-eval-after-load 'vertico
+  (set-face-attribute 'vertico-current nil :background "dark grey"))
 
 (require 'treesit)
 (setq treesit-extra-load-path (list  (expand-file-name "tree-sitter-module/dist/" user-emacs-directory)))
@@ -203,10 +373,10 @@
   :after evil
   :config
   (general-create-definer global/leader-key
-    :keymaps '(normal insert visual emacs)
+    :keymaps '(normal insert visual emacs dashboard-mode-map)
     :prefix "SPC"
     :global-prefix "M-SPC")
-  (general-create-definer normal/goto
+  (general-create-definer normal/g
     :keymaps '(normal)
     :prefix "g"))
 
@@ -232,6 +402,8 @@
   :after evil
   :config
   (evil-collection-init))
+
+(use-package evil-numbers)
 
 (evil-set-undo-system 'undo-redo)
 
@@ -339,9 +511,6 @@
 (use-package consult-org-roam)
 (use-package consult-projectile)
 
-(use-package consult-todo)
-(hl-todo-mode)
-
 (use-package marginalia
   :after vertico
   :custom
@@ -350,22 +519,39 @@
   (marginalia-mode))
 
 (use-package embark-consult)
-(use-package embark
-  :bind (("C-S-a" . embark-act)
-         :map minibuffer-local-map
-         ("C-d" . embark-act))
-  :init
+    (use-package embark
+      :bind (("C-." . embark-act)
+             :map minibuffer-local-map
+             ("C-." . embark-act))
+      :init
 
-  ;; Show Embark actions via which-key
-  (setq embark-action-indicator
-        (lambda (map)
-          (which-key--show-keymap "Embark" map nil nil 'no-paging)
-          #'which-key--hide-popup-ignore-command)
-        embark-become-indicator embark-action-indicator))
+      ;; Show Embark actions via which-key
+      (setq embark-action-indicator
+            (lambda (map)
+              (which-key--show-keymap "Embark" map nil nil 'no-paging)
+              #'which-key--hide-popup-ignore-command)
+            embark-become-indicator embark-action-indicator))
+
+(defun my/embark-act-show-help (&rest _args)
+  "Automatically show Embark action help after invoking `embark-act'."
+  (embark-help-key))
+
+(advice-add 'embark-act :after #'my/embark-act-show-help)
 
 (use-package quickrun)
 
 (use-package rust-mode)
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . efs/lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "C-c l"))
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
 
 ;; (use-package dumb-jump)
   ;; (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
@@ -394,17 +580,6 @@
     ("i" dumb-jump-go-prompt "Prompt")
     ("l" dumb-jump-quick-look "Quick look")
     ("b" dumb-jump-back "Back"))
-
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :hook (lsp-mode . efs/lsp-mode-setup)
-  :init
-  (setq lsp-keymap-prefix "C-c l"))
-
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom))
 
 (defun efs/org-font-setup ()
   ;; Replace list hyphen with dot
@@ -529,6 +704,12 @@
 (set-face-attribute 'variable-pitch nil :family "Deja Vu Sans" :height 130)
 (set-face-attribute 'org-block nil :family "Iosevka" :height 130)
 
+(defun hell/grep-edit()
+  (interactive)
+  (when (cl-search "Ripgrep" (buffer-string))
+    (run-at-time 0 nil #'embark-export)
+    (run-at-time 0 nil #'wgrep-change-to-wgrep-mode)))
+
 (defun hell/load-my-init-file ()
   "Load the new init file."
   (interactive)
@@ -630,15 +811,24 @@ named arguments:
   (set-face-attribute 'default nil
                       :height (- (face-attribute 'default :height) 10)))
 
+(defvar hell/line-numbers-were-on nil
+  "Flag to remember if line numbers were on before toggling zen mode.")
+
 (defun hell/zen-mode ()
   "Toggle writeroom-mode and relative line numbers."
   (interactive)
+  ;; Toggle writeroom-mode
   (if (bound-and-true-p writeroom-mode)
       (progn
         (writeroom-mode -1)
-        (global-display-line-numbers-mode 1))
+        ;; Re-enable line numbers only if they were on
+        (when hell/line-numbers-were-on
+          (global-display-line-numbers-mode 1)))
     (progn
+      ;; Store the current state of line numbers
+      (setq hell/line-numbers-were-on (bound-and-true-p display-line-numbers-mode))
       (writeroom-mode 1)
+      ;; Disable line numbers
       (global-display-line-numbers-mode -1))))
 
 (defun hell/toggle-fancy-narrow ()
@@ -655,27 +845,30 @@ named arguments:
   (xref-find-references (thing-at-point 'symbol)))
 
 (defun hell/open-project()
-  "Open a new project in a new tab using Projectile. If aborted, remove the tab."
+  "Open a new project using Projectile. If in dashboard, just switch project; otherwise, open in a new tab."
   (interactive)
-  (let ((current-buffer (current-buffer)))
-    ;; Create a new tab
-    (tab-new)
-    ;; Remove the original buffer from the new tab using tabspaces
-    (tabspaces-remove-selected-buffer current-buffer)
+  (let ((current-buffer (current-buffer))
+        (in-dashboard (eq major-mode 'dashboard-mode)))
+    ;; Create a new tab if not in the dashboard
+    (unless in-dashboard
+      (tab-new)
+      (tabspaces-remove-selected-buffer current-buffer))
     ;; Try to switch to a new project using Projectile
     (condition-case nil
         (consult-projectile-switch-project)
       (quit
-       ;; If project selection is aborted, close the new tab
-       (tab-close)))
+       ;; If project selection is aborted and a new tab was created, close it
+       (unless in-dashboard
+         (tab-close))))
     ;; Rename the tab to the name of the selected project
     (let ((project-name (projectile-project-name)))
       (when (and project-name (not (equal project-name "-")))
-        (tab-rename project-name)))))
+        (unless in-dashboard
+          (tab-rename project-name))))))
 
-(setq tab-bar-new-button-show nil)
-(setq tab-bar-close-button-show nil)
-(setq tab-bar-auto-width-max '(110 10))
+  (setq tab-bar-new-button-show nil)
+  (setq tab-bar-close-button-show nil)
+  (setq tab-bar-auto-width-max '(110 10))
 
 (defun hell/what-face (pos)
   (interactive "d")
@@ -719,8 +912,29 @@ named arguments:
       ;; Decimal to hexadecimal
       (replace-regexp num-str (format "0x%X" num) nil (car bounds) (cdr bounds))))))
 
-(normal/goto "r" 'find-symbol-references
-             "d" 'xref-find-definitions)
+(defun my/org-mode-no-electric-pair-less-than ()
+  "Prevent electric pair mode from pairing '<' in org-mode."
+  (setq-local electric-pair-inhibit-predicate
+              `(lambda (c)
+                 (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))))
+
+(add-hook 'org-mode-hook #'my/org-mode-no-electric-pair-less-than)
+
+(with-eval-after-load 'consult
+  (define-key minibuffer-mode-map (kbd "C-c C-e") #'hell/grep-edit))
+  (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
+
+(general-define-key
+   :keymaps 'transient-base-map
+   "<escape>" 'transient-quit-one)
+
+(evil-define-key '(normal visual) 'global (kbd "C-a")
+  'evil-numbers/inc-at-pt)
+(evil-define-key '(normal visual) 'global (kbd "C-x")
+  'evil-numbers/dec-at-pt)
+(normal/g "r" 'find-symbol-references
+  "d" 'xref-find-definitions
+  "l" 'flycheck-)
 
 (define-key evil-normal-state-map (kbd "C-b") #'convert-number-at-point)
 
@@ -728,9 +942,12 @@ named arguments:
   (define-key vertico-map (kbd "C-h") (lambda () (interactive) (call-interactively 'backward-kill-word)))
   (define-key vertico-map (kbd "C-l") #'vertico-insert))
 
+(define-key copilot-completion-map (kbd "C-j") 'copilot-accept-completion)
+
 (global/leader-key
   "<tab>"  '(:ignore t :which-key "workspace")
   "w"  '(:ignore t :which-key "window")
+  "g"  '(:ignore t :which-key "Git")
   "t"  '(:ignore t :which-key "toggles")
   "f"  '(:ignore t :which-key "file")
   "b"  '(:ignore t :which-key "buffer")
@@ -744,7 +961,6 @@ named arguments:
   )
 
 (global/leader-key
-  "g" 'magit
   "j" 'consult-imenu
   "J" 'consult-imenu-multi
   "I" #'hell/load-my-init-file
@@ -752,6 +968,12 @@ named arguments:
 (map-key ("*" hell/search-cursor-word "Search for symbol"))
 (map-key ("/" consult-line "Search in file"))
 (map-key ("P" consult-yank-pop "Paste from kill-ring"))
+(map-key ("SPC" consult-buffer "switch buffer"))
+
+(map-key ("gg" magit "Git-status"))
+(map-key ("gb" magit-blame-addition "blame"))
+(map-key ("gl" magit-log-all "log"))
+(map-key ("gr" magit-reflog-head "reflog"))
 
 (global/leader-key
   "ts" '(hydra-text-scale/body :which-key "scale text")
@@ -801,12 +1023,12 @@ named arguments:
   "wK" 'evil-window-move-very-top
   )
 
-(map-key ("<tab>w" tabspaces-restore-session "restore session"))
-(map-key ("<tab>s" tabspaces-save-session "Save Session"))
-(map-key ("<tab><tab>" evil-switch-to-windows-last-buffer "Last buffer"))
-(map-key ("<tab>SPC" tabspaces-switch-or-create-workspace "Switch workspace"))
-(map-key ("<tab>n" tab-next "next workspace"))
-(map-key ("<tab>p" tab-previous "previous workspace"))
+(map-key ("ww" tabspaces-switch-or-create-workspace "Switch workspace"))
+(map-key ("wS" tabspaces-save-session "Save session"))
+(map-key ("wr" tabspaces-restore-session "Restore session"))
+(map-key ("wn" tab-next "next workspace"))
+(map-key ("wp" tab-previous "previous workspace"))
+(map-key ("w<tab>" evil-switch-to-windows-last-buffer "last buffer"))
 
 (global/leader-key
   "hb" 'embark-bindings
@@ -847,17 +1069,7 @@ named arguments:
 (map-key ("sf" consult-fd "Search for file"))
 (map-key ("sb" consult-line "Search in buffer"))
 (map-key ("sd" consult-dir "Search file in dir"))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
- '(package-selected-packages
-   '(consult-todo xwwp writeroom-mode which-key vterm-toggle vertico vc-use-package treesit-auto treemacs tabspaces rust-mode quickrun perspective persp-mode org-make-toc org-bullets orderless no-littering nerd-icons-dired nerd-icons-corfu nerd-icons-completion nano-theme marginalia magit-todos lsp-ui highlight-symbol helpful general forge fancy-narrow ewmctrl evil-surround evil-snipe evil-org evil-nerd-commenter evil-goggles evil-collection embark-consult dumb-jump doom-themes doom-modeline corfu consult-projectile consult-org-roam consult-dir centaur-tabs beacon auto-package-update all-the-icons-completion)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+(map-key ("op" pomidor "Pomidor"))
+(map-key ("od" dashboard-open "dashboard"))
+(map-key ("ot" projectile-run-vterm "dashboard"))
