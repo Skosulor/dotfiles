@@ -1,9 +1,121 @@
-ROPERTIES:
+PROPERTIES:
 #+PROPERTY: header-args:emacs-lisp :tangle Init.el
 #+STARTUP: overview
 :END:
 
+* Todo's
+
+- [ ] Some better org defauts (like new item in list on enter)
+- [ ] dap mode
+
+* Straight
+#+begin_src emacs-lisp
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+#+end_src
+
 * General
+** Enable Mx in minibuffers
+#+begin_src emacs-lisp
+  (setq enable-recursive-minibuffers t)
+#+end_src
+** Wgrep
+#+begin_src emacs-lisp
+    (use-package wgrep
+      :ensure t)
+#+end_src
+** PDF tools
+#+begin_src emacs-lisp
+  (use-package pdf-tools)
+  (pdf-tools-install)
+#+end_src
+** Quelpa
+#+begin_src emacs-lisp
+  (use-package quelpa)
+  (use-package quelpa-use-package)
+#+end_src
+** Copilot
+#+begin_src emacs-lisp
+    (use-package copilot
+      :quelpa (copilot :fetcher github
+                       :repo "zerolfx/copilot.el"
+                       :branch "main"
+                       :files ("dist" "*.el" "*.c" "*.rs" "*.h")))
+#+end_src
+** Turn of line wrapping
+#+begin_src emacs-lisp
+  (setq truncate-lines t)
+#+end_src
+** Pomidor
+#+begin_src emacs-lisp
+  (use-package pomidor
+    :config (setq pomidor-sound-tick nil
+                  pomidor-sound-tack nil)
+    :hook (pomidor-mode . (lambda ()
+                            (display-line-numbers-mode -1)
+                            (setq left-fringe-width 0 right-fringe-width 0)
+                            (setq left-margin-width 2 right-margin-width 0)
+                            (set-window-buffer nil (current-buffer)))))
+
+  (setq pomidor-alert (lambda () (emacs-floating-notification "\n-------Break Time!-------\n\n")))
+#+end_src
+** Dashboard
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-set-navigator t)
+    (setq dashboard-set-init-info nil)
+    (setq dashboard-init-info "Welcome Hell")
+    (setq dashboard-footer-messages '("Welcome Hell"))
+    (setq dashboard-center-content t))
+
+
+  (defun dashboard-insert-pomidor (list-size)
+    "Insert the custom Pomodoro widget into the dashboard."
+    (dashboard-insert-heading "Pomodoro" nil "p")  ;; 'p' is the tag for this section
+    (widget-create 'push-button
+                   :action (lambda (&rest _ignore)
+                             (pomidor))
+                   :mouse-face 'highlight
+                   :follow-link "\C-m"
+                   :button-prefix ""
+                   :button-suffix ""
+                   :format "%[%t%]"
+                   "\n     Start Timer")
+    (insert "\n"))
+
+
+
+  (use-package dashboard-hackernews)
+
+  (setq dashboard-items '((hackernews . 5)
+                          (recents  . 5)
+                          (projects . 5)))
+  (add-to-list 'dashboard-item-generators '(pomidor . dashboard-insert-pomidor))
+  (add-to-list 'dashboard-items '(pomidor) t)
+#+end_src
+** Auto pair
+#+begin_src emacs-lisp
+  (use-package tab-jump-out
+    :config
+    (tab-jump-out-mode))
+  (electric-pair-mode 1)
+#+end_src
 ** Font
 #+begin_src emacs-lisp
   (defvar efs/default-font-size 110)
@@ -72,9 +184,9 @@ The packet manager
 
     (menu-bar-mode -1)            ; Disable the menu bar
 
-    (column-number-mode)
-    (global-display-line-numbers-mode t)
+    ;; (column-number-mode)
     (setq display-line-numbers-type 'relative)
+    (setq global-display-line-numbers-mode nil)
 
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
@@ -82,6 +194,7 @@ The packet manager
                   shell-mode-hook
                   vterm-mode-hook
                   treemacs-mode-hook
+                  pdf-view-mode-hook
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -205,6 +318,35 @@ The packet manager
 #+end_src
 
 * UI
+** Flycheck float
+#+begin_src emacs-lisp
+  (use-package flycheck-posframe
+    :ensure t
+    :after flycheck
+    :config (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
+#+end_src
+** Notifications
+#+begin_src emacs-lisp
+    (use-package posframe
+      :ensure t)
+
+  (defun emacs-floating-notification (message)
+    "Display a floating window notification in Emacs."
+    (interactive "sEnter notification message: ")
+    (posframe-show "*emacs-notification*"
+                   :string message
+                   :timeout 5
+                   :position (point)))
+#+end_src
+** Page break lines
+#+begin_src emacs-lisp
+  (use-package page-break-lines
+    :config
+    (set-fontset-font "fontset-default"
+                      (cons page-break-lines-char page-break-lines-char)
+                      (face-attribute 'default :family))
+    (global-page-break-lines-mode))
+#+end_src
 ** All the icons
 
 Some icon fonts!
@@ -225,11 +367,33 @@ Some icon fonts!
 
     #+end_src
 ** Modeline
-Nice looking modeline from Doom
 #+begin_src emacs-lisp
-(use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+
+  ;; (use-package doom-modeline
+  ;;   ;; :init (doom-modeline-mode 1)
+  ;;   :custom ((doom-modeline-height 15)))
+
+  (setq-default mode-line-format nil) 
+
+  (use-package nano-modeline)
+  (nano-modeline-text-mode t)
+  (add-hook 'prog-mode-hook            #'nano-modeline-prog-mode)
+  (add-hook 'text-mode-hook            #'nano-modeline-text-mode)
+  (add-hook 'org-mode-hook             #'nano-modeline-org-mode)
+  (add-hook 'pdf-view-mode-hook        #'nano-modeline-pdf-mode)
+  (add-hook 'mu4e-headers-mode-hook    #'nano-modeline-mu4e-headers-mode)
+  (add-hook 'mu4e-view-mode-hook       #'nano-modeline-mu4e-message-mode)
+  (add-hook 'elfeed-show-mode-hook     #'nano-modeline-elfeed-entry-mode)
+  (add-hook 'elfeed-search-mode-hook   #'nano-modeline-elfeed-search-mode)
+  (add-hook 'term-mode-hook            #'nano-modeline-term-mode)
+  (add-hook 'xwidget-webkit-mode-hook  #'nano-modeline-xwidget-mode)
+  (add-hook 'messages-buffer-mode-hook #'nano-modeline-message-mode)
+  (add-hook 'org-capture-mode-hook     #'nano-modeline-org-capture-mode)
+  (add-hook 'org-agenda-mode-hook      #'nano-modeline-org-agenda-mode)
+
+
+
+
 #+end_src
 
 ** Hydra
@@ -246,8 +410,35 @@ Nice looking modeline from Doom
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  (use-package doom-themes)
-   (load-theme 'doom-everforest t)
+      ;; (use-package doom-themes)
+      ;; (load-theme 'doom-everforest t)
+
+      (use-package nano-theme
+        :ensure nil
+        :defer t
+        :quelpa (nano-theme
+                 :fetcher github
+                 :repo "rougier/nano-theme"))
+
+      (use-package nano
+        :ensure nil
+        :defer t
+        :quelpa (nano-theme
+                 :fetcher github
+                 :repo "rougier/nano-emacs"))
+
+  (straight-use-package
+    '(nano :type git :host github :repo "rougier/nano-emacs"))
+
+  (straight-use-package
+    '(nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer"))
+
+  ;; (require 'nano)
+  (load-theme 'nano t)
+  (require 'nano-minibuffer)
+
+(with-eval-after-load 'vertico
+  (set-face-attribute 'vertico-current nil :background "dark grey"))
 
 #+end_src
 ** Treesitter
@@ -295,10 +486,10 @@ packet for handling leader key
     :after evil
     :config
     (general-create-definer global/leader-key
-      :keymaps '(normal insert visual emacs)
+      :keymaps '(normal insert visual emacs dashboard-mode-map)
       :prefix "SPC"
       :global-prefix "M-SPC")
-    (general-create-definer normal/goto
+    (general-create-definer normal/g
       :keymaps '(normal)
       :prefix "g"))
 #+end_src
@@ -331,6 +522,7 @@ Let's turn on the VIM modal editing!
     :config
     (evil-collection-init))
 
+  (use-package evil-numbers)
 
 #+end_src
 
@@ -487,29 +679,35 @@ Seach and navigation!
 ** Marginalia
 More info when describing!
 #+begin_src emacs-lisp
-(use-package marginalia
-  :after vertico
-  :custom
-  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
-  :init
-  (marginalia-mode))
+  (use-package marginalia
+    :after vertico
+    :custom
+    (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+    :init
+    (marginalia-mode))
 #+end_src
 ** Embark
 Minibuffer actions
 #+begin_src emacs-lisp
-(use-package embark-consult)
-(use-package embark
-  :bind (("C-S-a" . embark-act)
-         :map minibuffer-local-map
-         ("C-d" . embark-act))
-  :init
+    (use-package embark-consult)
+    (use-package embark
+      :bind (("C-." . embark-act)
+             :map minibuffer-local-map
+             ("C-." . embark-act))
+      :init
 
-  ;; Show Embark actions via which-key
-  (setq embark-action-indicator
-        (lambda (map)
-          (which-key--show-keymap "Embark" map nil nil 'no-paging)
-          #'which-key--hide-popup-ignore-command)
-        embark-become-indicator embark-action-indicator))
+      ;; Show Embark actions via which-key
+      (setq embark-action-indicator
+            (lambda (map)
+              (which-key--show-keymap "Embark" map nil nil 'no-paging)
+              #'which-key--hide-popup-ignore-command)
+            embark-become-indicator embark-action-indicator))
+
+(defun my/embark-act-show-help (&rest _args)
+  "Automatically show Embark action help after invoking `embark-act'."
+  (embark-help-key))
+
+(advice-add 'embark-act :after #'my/embark-act-show-help)
 #+end_src
 
 * Languages
@@ -523,6 +721,21 @@ Minibuffer actions
 #+end_src
 
 * Lsp
+*Lsp-mode
+#+begin_src emacs-lisp
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . efs/lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "C-c l"))
+#+end_src
+*Lsp-UI
+#+begin_src emacs-lisp
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
+#+end_src
 * Dump Jump
 #+begin_src emacs-lisp
     ;; (use-package dumb-jump)
@@ -553,21 +766,6 @@ Minibuffer actions
       ("l" dumb-jump-quick-look "Quick look")
       ("b" dumb-jump-back "Back"))
 
-#+end_src
-*Lsp-mode
-#+begin_src emacs-lisp
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :hook (lsp-mode . efs/lsp-mode-setup)
-  :init
-  (setq lsp-keymap-prefix "C-c l"))
-#+end_src
-*Lsp-UI
-#+begin_src emacs-lisp
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom))
 #+end_src
 
 * Org
@@ -719,6 +917,14 @@ Lets remove all the bullets
     (set-face-attribute 'org-block nil :family "Iosevka" :height 130)
 #+end_src
 * Custom functions
+** C-c C-e to edit search results
+#+begin_src emacs-lisp
+  (defun hell/grep-edit()
+    (interactive)
+    (when (cl-search "Ripgrep" (buffer-string))
+      (run-at-time 0 nil #'embark-export)
+      (run-at-time 0 nil #'wgrep-change-to-wgrep-mode)))
+#+end_src
 ** Source init file
 #+begin_src emacs-lisp
 (defun hell/load-my-init-file ()
@@ -844,15 +1050,24 @@ Install packages from github
 #+end_src
 ** Zen-mode
 #+begin_src emacs-lisp
+(defvar hell/line-numbers-were-on nil
+  "Flag to remember if line numbers were on before toggling zen mode.")
+
 (defun hell/zen-mode ()
   "Toggle writeroom-mode and relative line numbers."
   (interactive)
+  ;; Toggle writeroom-mode
   (if (bound-and-true-p writeroom-mode)
       (progn
         (writeroom-mode -1)
-        (global-display-line-numbers-mode 1))
+        ;; Re-enable line numbers only if they were on
+        (when hell/line-numbers-were-on
+          (global-display-line-numbers-mode 1)))
     (progn
+      ;; Store the current state of line numbers
+      (setq hell/line-numbers-were-on (bound-and-true-p display-line-numbers-mode))
       (writeroom-mode 1)
+      ;; Disable line numbers
       (global-display-line-numbers-mode -1))))
 #+end_src
 ** Toggle fancy-narrow
@@ -874,24 +1089,27 @@ Install packages from github
 #+end_src
 ** Open new tab/project
 #+begin_src emacs-lisp
-  (defun hell/open-project()
-    "Open a new project in a new tab using Projectile. If aborted, remove the tab."
-    (interactive)
-    (let ((current-buffer (current-buffer)))
-      ;; Create a new tab
+(defun hell/open-project()
+  "Open a new project using Projectile. If in dashboard, just switch project; otherwise, open in a new tab."
+  (interactive)
+  (let ((current-buffer (current-buffer))
+        (in-dashboard (eq major-mode 'dashboard-mode)))
+    ;; Create a new tab if not in the dashboard
+    (unless in-dashboard
       (tab-new)
-      ;; Remove the original buffer from the new tab using tabspaces
-      (tabspaces-remove-selected-buffer current-buffer)
-      ;; Try to switch to a new project using Projectile
-      (condition-case nil
-          (consult-projectile-switch-project)
-        (quit
-         ;; If project selection is aborted, close the new tab
-         (tab-close)))
-      ;; Rename the tab to the name of the selected project
-      (let ((project-name (projectile-project-name)))
-        (when (and project-name (not (equal project-name "-")))
-          (tab-rename project-name)))))
+      (tabspaces-remove-selected-buffer current-buffer))
+    ;; Try to switch to a new project using Projectile
+    (condition-case nil
+        (consult-projectile-switch-project)
+      (quit
+       ;; If project selection is aborted and a new tab was created, close it
+       (unless in-dashboard
+         (tab-close))))
+    ;; Rename the tab to the name of the selected project
+    (let ((project-name (projectile-project-name)))
+      (when (and project-name (not (equal project-name "-")))
+        (unless in-dashboard
+          (tab-rename project-name))))))
 
   (setq tab-bar-new-button-show nil)
   (setq tab-bar-close-button-show nil)
@@ -945,7 +1163,24 @@ Install packages from github
         ;; Decimal to hexadecimal
         (replace-regexp num-str (format "0x%X" num) nil (car bounds) (cdr bounds))))))
 #+end_src
+** Disable aut-close for <> in org mode
+#+begin_src emacs-lisp
+(defun my/org-mode-no-electric-pair-less-than ()
+  "Prevent electric pair mode from pairing '<' in org-mode."
+  (setq-local electric-pair-inhibit-predicate
+              `(lambda (c)
+                 (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))))
+
+(add-hook 'org-mode-hook #'my/org-mode-no-electric-pair-less-than)
+#+end_src
 * Mappings
+** Minibuffers
+#+begin_src emacs-lisp
+
+(with-eval-after-load 'consult
+  (define-key minibuffer-mode-map (kbd "C-c C-e") #'hell/grep-edit))
+  (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
+#+end_src
 ** ESC as abort in magit
 #+begin_src emacs-lisp
 (general-define-key
@@ -955,8 +1190,13 @@ Install packages from github
 ** Evil normal mode mappings
 
 #+begin_src emacs-lisp
-  (normal/goto "r" 'find-symbol-references
-               "d" 'xref-find-definitions)
+  (evil-define-key '(normal visual) 'global (kbd "C-a")
+    'evil-numbers/inc-at-pt)
+  (evil-define-key '(normal visual) 'global (kbd "C-x")
+    'evil-numbers/dec-at-pt)
+  (normal/g "r" 'find-symbol-references
+    "d" 'xref-find-definitions
+    "l" 'flycheck-)
 #+end_src
 ** Ctrl
 *** Toggle number base
@@ -970,6 +1210,10 @@ Install packages from github
   (define-key vertico-map (kbd "C-l") #'vertico-insert))
 #+end_src
 
+*** Copilot
+#+begin_src emacs-lisp
+  (define-key copilot-completion-map (kbd "C-j") 'copilot-accept-completion)
+#+end_src
 ** Leader
 *** Prefixes
 #+begin_src emacs-lisp
@@ -1000,11 +1244,15 @@ Install packages from github
   (map-key ("*" hell/search-cursor-word "Search for symbol"))
   (map-key ("/" consult-line "Search in file"))
   (map-key ("P" consult-yank-pop "Paste from kill-ring"))
+  (map-key ("SPC" consult-buffer "switch buffer"))
 #+end_src
 
-** Git
+*** Git
 #+begin_src emacs-lisp
   (map-key ("gg" magit "Git-status"))
+  (map-key ("gb" magit-blame-addition "blame"))
+  (map-key ("gl" magit-log-all "log"))
+  (map-key ("gr" magit-reflog-head "reflog"))
 #+end_src
 
 *** Toggles
@@ -1043,17 +1291,17 @@ Install packages from github
 *** Buffers
 
 #+begin_src emacs-lisp
-   (global/leader-key
-     "be" 'eval-buffer)
+  (global/leader-key
+    "be" 'eval-buffer)
 
-   (map-key ("bp" previous-buffer "previous buffer"))
-   (map-key ("bn" next-buffer "next buffer"))
-   (map-key ("bb" consult-buffer "switch buffer"))
-   (map-key ("bd" kill-this-buffer "kill buffer"))
-   (map-key ("bD" tabspaces-clear-buffers "Kill other buffers"))
+  (map-key ("bp" previous-buffer "previous buffer"))
+  (map-key ("bn" next-buffer "next buffer"))
+  (map-key ("bb" consult-buffer "switch buffer"))
+  (map-key ("bd" kill-this-buffer "kill buffer"))
+  (map-key ("bD" tabspaces-clear-buffers "Kill other buffers"))
 #+end_src
 
-*** Windows
+*** Windows/workspave
 
 #+begin_src emacs-lisp
   (global/leader-key
@@ -1069,16 +1317,14 @@ Install packages from github
     "wJ" 'evil-window-move-very-bottom
     "wK" 'evil-window-move-very-top
     )
-#+end_src
 
-*** Workspace
-#+begin_src emacs-lisp
-  (map-key ("<tab>w" tabspaces-restore-session "restore session"))
-  (map-key ("<tab>s" tabspaces-save-session "Save Session"))
-  (map-key ("<tab><tab>" evil-switch-to-windows-last-buffer "Last buffer"))
-  (map-key ("<tab>SPC" tabspaces-switch-or-create-workspace "Switch workspace"))
-  (map-key ("<tab>n" tab-next "next workspace"))
-  (map-key ("<tab>p" tab-previous "previous workspace"))
+  (map-key ("ww" tabspaces-switch-or-create-workspace "Switch workspace"))
+  (map-key ("wS" tabspaces-save-session "Save session"))
+  (map-key ("wr" tabspaces-restore-session "Restore session"))
+  (map-key ("wn" tab-next "next workspace"))
+  (map-key ("wp" tab-previous "previous workspace"))
+  (map-key ("w<tab>" evil-switch-to-windows-last-buffer "last buffer"))
+
 #+end_src
 *** Help
 #+begin_src emacs-lisp
@@ -1133,6 +1379,12 @@ Install packages from github
   (map-key ("sd" consult-dir "Search file in dir"))
 #+end_src
 
+*** Open
+#+begin_src emacs-lisp
+  (map-key ("op" pomidor "Pomidor"))
+  (map-key ("od" dashboard-open "dashboard"))
+  (map-key ("ot" projectile-run-vterm "dashboard"))
+#+end_src
 
 
 
