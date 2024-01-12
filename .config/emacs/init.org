@@ -1,13 +1,40 @@
+
 PROPERTIES:
 #+PROPERTY: header-args:emacs-lisp :tangle Init.el
 #+STARTUP: overview
 :END:
+
 
 * Todo's
 
 - [ ] Some better org defauts (like new item in list on enter)
 - [ ] dap mode
 
+
+* Macro to detect OS
+#+begin_src emacs-lisp
+    (defmacro with-system (type &rest body)
+      "Evaluate BODY if `system-type' equals TYPE."
+      (declare (indent defun))
+      `(when (eq system-type ',type)
+         ,@body))
+
+    (with-system gnu/linux
+      (message "On linux"))
+
+  (with-system darwin
+    (message "On mac"))
+
+  (with-system cygwin
+    (message "On windows"))
+
+  (with-system windows-nt
+    (message "On windows"))
+
+  (with-system ms-dos
+    (message "On windows"))
+
+#+end_src
 * Straight
 #+begin_src emacs-lisp
 (defvar bootstrap-version)
@@ -410,35 +437,43 @@ Some icon fonts!
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-      ;; (use-package doom-themes)
-      ;; (load-theme 'doom-everforest t)
+          ;; (use-package doom-themes)
+          ;; (load-theme 'doom-everforest t)
 
-      (use-package nano-theme
-        :ensure nil
-        :defer t
-        :quelpa (nano-theme
-                 :fetcher github
-                 :repo "rougier/nano-theme"))
+          (use-package nano-theme
+            :ensure nil
+            :defer t
+            :quelpa (nano-theme
+                     :fetcher github
+                     :repo "rougier/nano-theme"))
 
-      (use-package nano
-        :ensure nil
-        :defer t
-        :quelpa (nano-theme
-                 :fetcher github
-                 :repo "rougier/nano-emacs"))
+          (use-package nano
+            :ensure nil
+            :defer t
+            :quelpa (nano-theme
+                     :fetcher github
+                     :repo "rougier/nano-emacs"))
 
-  (straight-use-package
-    '(nano :type git :host github :repo "rougier/nano-emacs"))
+      (straight-use-package
+        '(nano :type git :host github :repo "rougier/nano-emacs"))
 
-  (straight-use-package
-    '(nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer"))
+      (straight-use-package
+        '(org-margin :type git :host github :repo "rougier/org-margin"))
 
-  ;; (require 'nano)
-  (load-theme 'nano t)
-  (require 'nano-minibuffer)
+      (use-package svg-lib)
+      (straight-use-package
+        '(nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer"))
 
-(with-eval-after-load 'vertico
-  (set-face-attribute 'vertico-current nil :background "dark grey"))
+  ;; (require 'org-margin)
+  ;; (org-margin-mode 1)
+
+      ;; (require 'nano)
+      (load-theme 'nano t)
+      (require 'nano-minibuffer)
+
+
+    (with-eval-after-load 'vertico
+      (set-face-attribute 'vertico-current nil :background "dark grey"))
 
 #+end_src
 ** Treesitter
