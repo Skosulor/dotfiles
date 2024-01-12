@@ -19,26 +19,6 @@ return {
         end
     },
     {
-        "epwalsh/obsidian.nvim",
-        -- lazy = true,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        config = function()
-
-                local vault = ''
-                if package.config:sub(1,1) == '/' then
-                    vault = "/Users/ohman/Documents/ObsidianVault"
-                elseif package.config:sub(1,1) == "\\" then
-                    vault = "C:\\Users\\AndreasOhman\\Documents\\Notes"
-                end
-
-            require("obsidian").setup({
-                dir = vault,
-            })
-        end,
-    },
-    {
         "folke/neodev.nvim",
         config = function()
             require("neodev").setup({})
@@ -234,11 +214,11 @@ return {
        config = true
    },
    {
-       "sourcegraph/sg.nvim",
-       dependencies = { "nvim-lua/plenary.nvim", --[[ "nvim-telescope/telescope.nvim ]] },
-
-       -- If you have a recent version of lazy.nvim, you don't need to add this!
-       build = "nvim -l build/init.lua",
+       -- "sourcegraph/sg.nvim",
+       -- dependencies = { "nvim-lua/plenary.nvim", --[[ "nvim-telescope/telescope.nvim ]] },
+       --
+       -- -- If you have a recent version of lazy.nvim, you don't need to add this!
+       -- build = "nvim -l build/init.lua",
    },
    {
        'echasnovski/mini.nvim',
@@ -272,22 +252,131 @@ return {
                },
                header = header_art,
                footer = " ",
-           }
+       }
        end,
    },
    {
-       'numToStr/Comment.nvim',
-       opts = {},
-       lazy = false,
+	   'numToStr/Comment.nvim',
+	   opts = {},
+	   lazy = false,
    },
    {
-       "NeogitOrg/neogit",
-       dependencies = {
-           "nvim-lua/plenary.nvim",
-           "sindrets/diffview.nvim",
-           "nvim-telescope/telescope.nvim",
-           "ibhagwan/fzf-lua",
-       },
-       config = true
+	   "NeogitOrg/neogit",
+	   dependencies = {
+		   "nvim-lua/plenary.nvim",
+		   "sindrets/diffview.nvim",
+		   "nvim-telescope/telescope.nvim",
+		   "ibhagwan/fzf-lua",
+	   },
+	   config = true
    },
+   {
+   'Vigemus/iron.nvim',
+       config = function()
+           local iron = require("iron.core")
+           local view = require("iron.view")
+           iron.setup {
+               config = {
+                   scratch_repl = true,
+                   repl_definition = {
+                       sh = {
+                           command = {"cmd"}
+                       }
+                   },
+                   repl_open_cmd = view.right("20%")
+               },
+               highlight = {
+                   italic = true
+               },
+               ignore_blank_lines = true,
+           }
+       end
+   },
+   {
+       'ludovicchabant/vim-gutentags',
+       config = function()
+           -- https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
+           vim.g.gutentags_ctags_exclude = {
+               '*.git',
+               '*.svg',
+               '*.hg',
+               '*/tests/*',
+               'build',
+               'dist',
+               '*sites/*/files/*',
+               'bin',
+               'node_modules',
+               'bower_components',
+               'cache',
+               'compiled',
+               'docs',
+               'example',
+               'bundle',
+               'vendor',
+               '*.md',
+               '*-lock.json',
+               '*.lock',
+               '*bundle*.js',
+               '*build*.js',
+               '.*rc*',
+               '*.json',
+               '*.min.*',
+               '*.map',
+               '*.bak',
+               '*.zip',
+               '*.pyc',
+               '*.class',
+               '*.sln',
+               '*.Master',
+               '*.csproj',
+               '*.tmp',
+               '*.csproj.user',
+               '*.cache',
+               '*.pdb',
+               'tags*',
+               'cscope.*',
+               -- '*.css',
+               -- '*.less',
+               -- '*.scss',
+               '*.exe',
+               '*.dll',
+               '*.mp3',
+               '*.ogg',
+               '*.flac',
+               '*.swp',
+               '*.swo',
+               '*.bmp',
+               '*.gif',
+               '*.ico',
+               '*.jpg',
+               '*.png',
+               '*.rar',
+               '*.zip',
+               '*.tar',
+               '*.tar.gz',
+               '*.tar.xz',
+               '*.tar.bz2',
+               '*.pdf',
+               '*.doc',
+               '*.docx',
+               '*.ppt',
+               '*.pptx',
+           }
+
+           vim.g.gutentags_add_default_project_roots = false
+           vim.g.gutentags_project_root = { '.vproject' }
+           -- vim.g.gutentags_cache_dir = vim.fn.stdpath("data") .. '\\ctags'
+           vim.g.gutentags_generate_on_new = true
+           vim.g.gutentags_generate_on_missing = true
+           vim.g.gutentags_generate_on_write = true
+           vim.g.gutentags_generate_on_empty_buffer = true
+           vim.g.gutentags_modules = true
+           -- vim.cmd([[command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')]])
+           vim.g.gutentags_ctags_extra_args = { '--tag-relative=yes', '--fields=+ailmnS', }
+
+
+           -- custom
+           vim.g.gutentags_modules = { 'ctags' }
+       end
+   }
 }
