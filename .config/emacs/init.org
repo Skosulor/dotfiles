@@ -13,26 +13,36 @@ PROPERTIES:
 
 * Macro to detect OS
 #+begin_src emacs-lisp
-    (defmacro with-system (type &rest body)
-      "Evaluate BODY if `system-type' equals TYPE."
+        (defmacro with-system (type &rest body)
+          "Evaluate BODY if `system-type' equals TYPE."
+          (declare (indent defun))
+          `(when (eq system-type ',type)
+             ,@body))
+
+    (defmacro with-system-not (types &rest body)
+      "Evaluate BODY if `system-type' is not one of the TYPES."
       (declare (indent defun))
-      `(when (eq system-type ',type)
+      `(unless (member system-type ',types)
          ,@body))
 
+  (with-system-not (ms-dos windows-nt cygwin)
+    (message "Not windows"))
+
+
     (with-system gnu/linux
-      (message "On linux"))
+          (message "On linux"))
 
-  (with-system darwin
-    (message "On mac"))
+      (with-system darwin
+        (message "On mac"))
 
-  (with-system cygwin
-    (message "On windows"))
+      (with-system cygwin
+        (message "On windows"))
 
-  (with-system windows-nt
-    (message "On windows"))
+      (with-system windows-nt
+        (message "On windows"))
 
-  (with-system ms-dos
-    (message "On windows"))
+      (with-system ms-dos
+        (message "On windows"))
 
 #+end_src
 * Straight
@@ -66,8 +76,10 @@ PROPERTIES:
 #+end_src
 ** PDF tools
 #+begin_src emacs-lisp
-  (use-package pdf-tools)
-  (pdf-tools-install)
+
+  (with-system-not (ms-dos windows-nt cygwin)
+    (use-package pdf-tools)
+    (pdf-tools-install))
 #+end_src
 ** Quelpa
 #+begin_src emacs-lisp
@@ -177,11 +189,10 @@ The packet manager
   (require 'use-package)
   (setq use-package-always-ensure t)
 
-  ;; Auot package updating
+  ;; Auto package updating
   (use-package auto-package-update
     :custom
     (auto-package-update-interval 7)
-    (auto-package-update-prompt-before-update t)
     (auto-package-update-hide-results t)
     :config
     (auto-package-update-maybe)
@@ -240,24 +251,27 @@ The packet manager
 
 ** Vterm
 #+begin_src emacs-lisp
-  (use-package vterm
-    :ensure t)
 
-  (use-package vterm-toggle)
-  (setq vterm-toggle-fullscreen-p nil)
-  (add-to-list 'display-buffer-alist
-               '((lambda (buffer-or-name _)
-                   (let ((buffer (get-buffer buffer-or-name)))
-                     (with-current-buffer buffer
-                       (or (equal major-mode 'vterm-mode)
-                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 ;;(display-buffer-reuse-window display-buffer-in-direction)
-                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                 ;;(direction . bottom)
-                 ;;(dedicated . t) ;dedicated is supported in emacs27
-                 (reusable-frames . visible)
-                 (window-height . 0.3)))
+  (with-system-not (ms-dos windows-nt cygwin)
+
+    (use-package vterm
+      :ensure t)
+
+    (use-package vterm-toggle)
+    (setq vterm-toggle-fullscreen-p nil)
+    (add-to-list 'display-buffer-alist
+                 '((lambda (buffer-or-name _)
+                     (let ((buffer (get-buffer buffer-or-name)))
+                       (with-current-buffer buffer
+                         (or (equal major-mode 'vterm-mode)
+                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                   (display-buffer-reuse-window display-buffer-at-bottom)
+                   ;;(display-buffer-reuse-window display-buffer-in-direction)
+                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                   ;;(direction . bottom)
+                   ;;(dedicated . t) ;dedicated is supported in emacs27
+                   (reusable-frames . visible)
+                   (window-height . 0.3))))
 #+end_src
 
 ** Projectile
@@ -806,41 +820,39 @@ Minibuffer actions
 * Org
 ** Define font setup function
 #+begin_src emacs-lisp
-(defun efs/org-font-setup ()
-  ;; Replace list hyphen with dot
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (defun efs/org-font-setup ()
+    ;; Replace list hyphen with dot
+    (font-lock-add-keywords 'org-mode
+                            '(("^ *\\([-]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-  ;; Set faces for heading levels
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil  :weight 'regular :height (cdr face)))
+    ;; Set faces for heading levels
+    (dolist (face '((org-level-1 . 1.05)
+                    (org-level-2 . 1.05)
+                    (org-level-3 . 1.05)
+                    (org-level-4 . 1.05)
+                    (org-level-5 . 1.05)
+                    (org-level-6 . 1.05)
+                    (org-level-7 . 1.05)
+                    (org-level-8 . 1.05)))
+      (set-face-attribute (car face) nil  :weight 'regular :height (cdr face))))
 
-  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-   (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
-   (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
-   (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-   (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
-   (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-   (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
-   (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
-   (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
+    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+     ;; (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
+     ;; (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
+     ;; (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+     ;; (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
+     ;; (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
+     ;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+     ;; (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+     ;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+     ;; (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
+     ;; (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+     ;; (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 #+end_src
 ** Define org mode setup function
 #+begin_src emacs-lisp
 (defun efs/org-mode-setup ()
-  (org-indent-mode)
-  (variable-pitch-mode 1)
   (visual-line-mode 1))
 #+end_src
 ** Org-mode
@@ -852,26 +864,9 @@ Minibuffer actions
   :config
   (setq org-ellipsis " ▾")
 
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-log-done 'time)
-  (setq org-log-into-drawer t)
-
-  (setq org-agenda-files
-        '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"))
-
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
-
   (setq org-todo-keywords
     '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
       (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
-
-  (setq org-refile-targets
-    '(("Archive.org" :maxlevel . 1)
-      ("Tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -881,20 +876,20 @@ Minibuffer actions
 ** Org bullets
 Lets remove all the bullets
 #+begin_src emacs-lisp
-  (use-package org-bullets
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '(" " " " " " " " " " " " " ")))
+  ;; (use-package org-bullets
+  ;; :hook (org-mode . org-bullets-mode)
+  ;; :custom
+  ;; (org-bullets-bullet-list '(" " " " " " " " " " " " " ")))
 #+end_src
 ** Center org mode?
 #+begin_src emacs-lisp
-(defun efs/org-mode-visual-fill ()
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
+  (defun efs/org-mode-visual-fill ()
+    (setq visual-fill-column-width 100
+          visual-fill-column-center-text t)
+    (visual-fill-column-mode 1))
 
-(use-package visual-fill-column
-  :hook (org-mode . efs/org-mode-visual-fill))
+  (use-package visual-fill-column
+    :hook (org-mode . efs/org-mode-visual-fill))
 #+end_src
 ** Configure org babel
 #+begin_src emacs-lisp
