@@ -1,3 +1,34 @@
+(defmacro with-system (type &rest body)
+        "Evaluate BODY if `system-type' equals TYPE."
+        (declare (indent defun))
+        `(when (eq system-type ',type)
+           ,@body))
+
+  (defmacro with-system-not (types &rest body)
+    "Evaluate BODY if `system-type' is not one of the TYPES."
+    (declare (indent defun))
+    `(unless (member system-type ',types)
+       ,@body))
+
+(with-system-not (ms-dos windows-nt cygwin)
+  (message "Not windows"))
+
+
+  (with-system gnu/linux
+        (message "On linux"))
+
+    (with-system darwin
+      (message "On mac"))
+
+    (with-system cygwin
+      (message "On windows"))
+
+    (with-system windows-nt
+      (message "On windows"))
+
+    (with-system ms-dos
+      (message "On windows"))
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -14,13 +45,38 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(use-package jenkinsfile-mode)
+
+(add-to-list 'auto-mode-alist
+             '("\\.jenkins\\'" . (lambda ()
+                                   (jenkinsfile-mode)
+                                   (insert "OK")
+                                   (turn-on-orgtbl))))
+
+(use-package undo-tree)
+  (global-undo-tree-mode)
+  (setq undo-tree-auto-save-history t)
+(setq undo-tree-history-directory-alist
+      `(("." . ,(expand-file-name "undo" user-emacs-directory))))
+
+(use-package dtrt-indent
+  :ensure t
+  :config
+  (dtrt-indent-global-mode 1))
+
+(setq ring-bell-function 'ignore)
+
+(use-package org-jira)
+(setq jiralib-url "https://sdlc.electrolux.com/")
+
 (setq enable-recursive-minibuffers t)
 
 (use-package wgrep
   :ensure t)
 
-(use-package pdf-tools)
-(pdf-tools-install)
+(with-system-not (ms-dos windows-nt cygwin)
+  (use-package pdf-tools)
+  (pdf-tools-install))
 
 (use-package quelpa)
 (use-package quelpa-use-package)
@@ -110,11 +166,10 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; Auot package updating
+;; Auto package updating
 (use-package auto-package-update
   :custom
   (auto-package-update-interval 7)
-  (auto-package-update-prompt-before-update t)
   (auto-package-update-hide-results t)
   :config
   (auto-package-update-maybe)
@@ -162,24 +217,26 @@
 (use-package forge
   :after magit)
 
-(use-package vterm
-  :ensure t)
+(with-system-not (ms-dos windows-nt cygwin)
 
-(use-package vterm-toggle)
-(setq vterm-toggle-fullscreen-p nil)
-(add-to-list 'display-buffer-alist
-             '((lambda (buffer-or-name _)
-                 (let ((buffer (get-buffer buffer-or-name)))
-                   (with-current-buffer buffer
-                     (or (equal major-mode 'vterm-mode)
-                         (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-               (display-buffer-reuse-window display-buffer-at-bottom)
-               ;;(display-buffer-reuse-window display-buffer-in-direction)
-               ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-               ;;(direction . bottom)
-               ;;(dedicated . t) ;dedicated is supported in emacs27
-               (reusable-frames . visible)
-               (window-height . 0.3)))
+  (use-package vterm
+    :ensure t)
+
+  (use-package vterm-toggle)
+  (setq vterm-toggle-fullscreen-p nil)
+  (add-to-list 'display-buffer-alist
+               '((lambda (buffer-or-name _)
+                   (let ((buffer (get-buffer buffer-or-name)))
+                     (with-current-buffer buffer
+                       (or (equal major-mode 'vterm-mode)
+                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 ;;(display-buffer-reuse-window display-buffer-in-direction)
+                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                 ;;(direction . bottom)
+                 ;;(dedicated . t) ;dedicated is supported in emacs27
+                 (reusable-frames . visible)
+                 (window-height . 0.3))))
 
 (use-package projectile
   :hook
@@ -316,41 +373,60 @@
   ("f" nil "finished" :exit t))
 
 ;; (use-package doom-themes)
-      ;; (load-theme 'doom-everforest t)
+;; (load-theme 'doom-everforest t)
 
-      (use-package nano-theme
-        :ensure nil
-        :defer t
-        :quelpa (nano-theme
-                 :fetcher github
-                 :repo "rougier/nano-theme"))
+(use-package nano-theme
+  :ensure nil
+  :defer t
+  :quelpa (nano-theme
+	   :fetcher github
+	   :repo "rougier/nano-theme"))
 
-      (use-package nano
-        :ensure nil
-        :defer t
-        :quelpa (nano-theme
-                 :fetcher github
-                 :repo "rougier/nano-emacs"))
+(use-package nano
+  :ensure nil
+  :defer t
+  :quelpa (nano-theme
+	   :fetcher github
+	   :repo "rougier/nano-emacs"))
 
-  (straight-use-package
-    '(nano :type git :host github :repo "rougier/nano-emacs"))
+(straight-use-package
+ '(nano :type git :host github :repo "rougier/nano-emacs"))
 
-  (straight-use-package
-    '(nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer"))
+(straight-use-package
+ '(org-margin :type git :host github :repo "rougier/org-margin"))
 
-  ;; (require 'nano)
-  (load-theme 'nano t)
-  (require 'nano-minibuffer)
+(use-package svg-lib)
+(straight-use-package
+ '(nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer"))
+
+;; (require 'org-margin)
+;; (defun hell/org-mode-margin-setup ()
+;;   "Custom setup for org-mode, avoiding recursive activation."
+;;   (unless (bound-and-true-p org-margin-mode)
+;;     (org-margin-mode)
+;;     (window-divider-mode -1))
+;;   (unless (bound-and-true-p nano-mode)
+;;     ;; (nano-mode)
+;;     (window-divider-mode -1)))
+
+;; (add-hook 'org-mode-hook 'hell/org-mode-margin-setup)
+
+
+;; ;; (require 'nano)
+(load-theme 'nano t)
+(require 'nano-minibuffer)
+
 
 (with-eval-after-load 'vertico
   (set-face-attribute 'vertico-current nil :background "dark grey"))
 
-(require 'treesit)
-(setq treesit-extra-load-path (list  (expand-file-name "tree-sitter-module/dist/" user-emacs-directory)))
+(with-system-not (ms-dos windows-nt cygwin)
+  (require 'treesit)
+  (setq treesit-extra-load-path (list  (expand-file-name "tree-sitter-module/dist/" user-emacs-directory)))
 
-(use-package treesit-auto
-  :config
-  (global-treesit-auto-mode))
+  (use-package treesit-auto
+    :config
+    (global-treesit-auto-mode)))
 
 (use-package highlight-symbol
   :ensure t
@@ -430,7 +506,9 @@
 (when (require 'evil-collection nil t)
   (evil-collection-init))
 
-(use-package evil-org)
+(use-package evil-org
+    :ensure t)
+(evil-org-set-key-theme '(navigation insert textobjects additional calendar))
 
 (use-package which-key
       :defer 0
@@ -454,6 +532,8 @@
   :config
   (setq evil-goggles-duration 0.1) 
   (evil-goggles-mode))
+
+(window-divider-mode -1)
 
 (use-package vertico
   :bind (:map vertico-map
@@ -588,79 +668,72 @@
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
   ;; Set faces for heading levels
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
+  (dolist (face '((org-level-1 . 1.10)
+                  (org-level-2 . 1.00)
                   (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil  :weight 'regular :height (cdr face)))
+                  (org-level-4 . 1.05)
+                  (org-level-5 . 1.05)
+                  (org-level-6 . 1.05)
+                  (org-level-7 . 1.05)
+                  (org-level-8 . 1.05)))
+    (set-face-attribute (car face) nil  :weight 'semi-bold :height (cdr face))))
 
   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-   (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
-   (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
-   (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-   (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
-   (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-   (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
-   (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
-   (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
+   ;; (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
+   ;; (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
+   ;; (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+   ;; (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
+   ;; (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
+   ;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+   ;; (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+   ;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+   ;; (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
+   ;; (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+   ;; (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
-(defun efs/org-mode-setup ()
-  (org-indent-mode)
-  (variable-pitch-mode 1)
-  (visual-line-mode 1))
+(defun hell/org-mode-evil-enter ()
+  (interactive)
+  "Custom setup for org-mode."
+  (local-set-key (kbd "RET") 'evil-org-return))
+
+(add-hook 'org-mode-hook 'hell/org-mode-evil-enter)
+
+;; (defun hell/org-mode-setup ()
+;;   (hell/org-mode-evil-enter)
+;;   (org-margin-mode 1)
+;;   (org-evil-mode 1)
+;;   (visual-line-mode 1))
 
 (use-package org
   :pin org
   :commands (org-capture org-agenda)
-  :hook (org-mode . efs/org-mode-setup)
+  :hook (org-mode . visual-line-mode)
+  :hook (org-mode . org-margin-mode)
+  :hook (org-mode . evil-org-mode)
   :config
   (setq org-ellipsis " ▾")
-
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-log-done 'time)
-  (setq org-log-into-drawer t)
-
-  (setq org-agenda-files
-        '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"))
-
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
 
   (setq org-todo-keywords
     '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
       (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
-
-  (setq org-refile-targets
-    '(("Archive.org" :maxlevel . 1)
-      ("Tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
   (efs/org-font-setup))
 
-(use-package org-bullets
-:hook (org-mode . org-bullets-mode)
-:custom
-(org-bullets-bullet-list '(" " " " " " " " " " " " " ")))
+;; (use-package org-bullets
+;; :hook (org-mode . org-bullets-mode)
+;; :custom
+;; (org-bullets-bullet-list '(" " " " " " " " " " " " " ")))
 
-(defun efs/org-mode-visual-fill ()
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
+;; (defun efs/org-mode-visual-fill ()
+;;   (setq visual-fill-column-width 100
+;;         visual-fill-column-center-text t)
+;;   (visual-fill-column-mode 1))
 
-(use-package visual-fill-column
-  :hook (org-mode . efs/org-mode-visual-fill))
+;; (use-package visual-fill-column
+;;   :hook (org-mode . efs/org-mode-visual-fill))
 
 (with-eval-after-load 'org
    (org-babel-do-load-languages
@@ -678,28 +751,31 @@
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
   (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
-(use-package org-roam)
-(add-to-list 'display-buffer-alist
-             '("\\*org-roam\\*"
-               (display-buffer-in-direction)
-               (direction . right)
-               (window-width . 0.33)
-               (window-height . fit-window-to-buffer)))
+(setq org-roam-directory "~/org/roam")
+  (use-package org-roam)
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
+
+(org-roam-db-autosync-enable)
 
 (setq org-hide-emphasis-markers t)
 (setq org-insert-heading-respect-content nil)
-(setq org-roam-directory "~/org/roam")
 
 (defun hell/generate-init-el ()
+  (interactive)
   "Automatically tangle our Emacs Org config when we save the Org file."
   (let ((org-file (expand-file-name "init.org" user-emacs-directory))
-        (el-file (expand-file-name "init.el" user-emacs-directory)))
+	(el-file (expand-file-name "init.el" user-emacs-directory)))
     (when (string-equal (buffer-file-name) org-file)
       (org-babel-tangle-file org-file el-file))))
 
 (add-hook 'org-mode-hook
-          (lambda ()
-            (add-hook 'after-save-hook #'hell/generate-init-el nil 'make-it-local)))
+	  (lambda ()
+	    (add-hook 'after-save-hook #'hell/generate-init-el nil 'make-it-local)))
 
 (set-face-attribute 'variable-pitch nil :family "Deja Vu Sans" :height 130)
 (set-face-attribute 'org-block nil :family "Iosevka" :height 130)
