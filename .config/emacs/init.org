@@ -4,7 +4,6 @@ PROPERTIES:
 #+STARTUP: overview
 :END:
 
-
 * Todo's
 
 - [ ] Some better org defauts (like new item in list on enter)
@@ -75,7 +74,23 @@ PROPERTIES:
                                      (turn-on-orgtbl))))
 #+end_src
 * General
-** Turn of bell
+** Undo tree
+
+#+begin_src emacs-lisp
+  (use-package undo-tree)
+  (global-undo-tree-mode)
+  (setq undo-tree-auto-save-history t)
+(setq undo-tree-history-directory-alist
+      `(("." . ,(expand-file-name "undo" user-emacs-directory))))
+#+end_src
+** Auto Indent mode
+#+begin_src emacs-lisp
+  (use-package dtrt-indent
+    :ensure t
+    :config
+    (dtrt-indent-global-mode 1))
+#+end_src
+** Turn off bell
 #+begin_src emacs-lisp
 (setq ring-bell-function 'ignore)
 #+end_src
@@ -898,11 +913,11 @@ Minibuffer actions
 
 ** Define org mode setup function
 #+begin_src emacs-lisp
-  (defun hell/org-mode-setup ()
-    (hell/org-mode-evil-enter)
-    (org-margin-mode 1)
-    (org-evil-mode 1)
-    (visual-line-mode 1))
+  ;; (defun hell/org-mode-setup ()
+  ;;   (hell/org-mode-evil-enter)
+  ;;   (org-margin-mode 1)
+  ;;   (org-evil-mode 1)
+  ;;   (visual-line-mode 1))
 #+end_src
 #+end_src
 ** Org-mode
@@ -910,7 +925,9 @@ Minibuffer actions
   (use-package org
     :pin org
     :commands (org-capture org-agenda)
-    :hook (org-mode . hell/org-mode-setup)
+    :hook (org-mode . visual-line-mode)
+    :hook (org-mode . org-margin-mode)
+    :hook (org-mode . evil-org-mode)
     :config
     (setq org-ellipsis " ▾")
 
