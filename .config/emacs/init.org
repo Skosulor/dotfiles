@@ -283,10 +283,16 @@ The packet manager
     :after magit)
 #+end_src
 
-** Vterm
+** Terminal
 #+begin_src emacs-lisp
 
+  (use-package eshell-toggle
+    :custom
+    (eshell-toggle-use-projectile-root t)
+    (eshell-toggle-window-side 'below))
   (with-system-not (ms-dos windows-nt cygwin)
+
+  (use-package eshell-z)
 
     (use-package vterm
       :ensure t)
@@ -1360,7 +1366,7 @@ Install packages from github
 #+begin_src emacs-lisp
   (global/leader-key
     "ts" '(hydra-text-scale/body :which-key "scale text")
-    "tt" 'vterm-toggle
+    "tt" 'eshell-toggle
     "tl" 'hell/toggle-relative-line-numbers)
   (map-key ("tf" treemacs "File-tree"))
   (map-key ("tc" flyspell-mode "spell correction"))
@@ -1438,6 +1444,7 @@ Install packages from github
     "hp" 'describe-package)
   (map-key ("hm" describe-mode))
   (map-key ("hM" man "Man pages"))
+  (map-key ("hV" set-variable "set Variable"))
 #+end_src
 *** Org
 #+begin_src emacs-lisp
@@ -1484,5 +1491,5 @@ Install packages from github
 #+begin_src emacs-lisp
   (map-key ("op" pomidor "Pomidor"))
   (map-key ("od" dashboard-open "dashboard"))
-  (map-key ("ot" projectile-run-vterm "dashboard"))
+  (map-key ("ot" eshell "eshell"))
 #+end_src
