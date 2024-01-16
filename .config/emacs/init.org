@@ -601,8 +601,14 @@ Let's turn on the VIM modal editing!
   (use-package evil
     :init
     (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-delete t)
+    (setq evil-want-keybinding t)
+    (setq evil-undo-system 'undo-tree)
     (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-w-delete t)
+    (setq-default evil-kill-on-visual-paste t)
+    (setq evil-want-Y-yank-to-eol)
+    (evil-select-search-module 'evil-search-module 'evil-search)
     (setq evil-want-C-i-jump nil)
     :config
     (evil-mode 1)
@@ -1351,6 +1357,7 @@ Install packages from github
   (map-key ("*" hell/search-cursor-word "Search for symbol"))
   (map-key ("/" consult-line "Search in file"))
   (map-key ("P" consult-yank-pop "Paste from kill-ring"))
+  (map-key ("u" undo-tree-visualize "Undo tree"))
   (map-key ("SPC" consult-buffer "switch buffer"))
 #+end_src
 
