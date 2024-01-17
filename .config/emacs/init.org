@@ -131,6 +131,7 @@ PROPERTIES:
 ** Turn of line wrapping
 #+begin_src emacs-lisp
   (setq truncate-lines t)
+  (set-default 'truncate-lines t)
 #+end_src
 ** Pomidor
 #+begin_src emacs-lisp
