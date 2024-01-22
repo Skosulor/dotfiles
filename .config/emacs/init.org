@@ -74,6 +74,10 @@ PROPERTIES:
                                      (turn-on-orgtbl))))
 #+end_src
 * General
+**  Interactive align
+#+begin_src emacs-lisp
+  (use-package ialign)
+#+end_src
 ** Undo tree
 
 #+begin_src emacs-lisp
@@ -489,6 +493,14 @@ Some icon fonts!
     ("k" increase-font-size "out")
     ("f" nil "finished" :exit t))
 
+(defhydra hydra-window-resize (:color red)
+  "Resize window"
+  ("h" (shrink-window-horizontally 2) "shrink horizontally")
+  ("l" (enlarge-window-horizontally 2) "enlarge horizontally")
+  ("j" (enlarge-window 2) "enlarge vertically")
+  ("k" (shrink-window 2) "shrink vertically")
+  ("q" nil "quit" :color blue))
+
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
@@ -599,19 +611,21 @@ packet for handling leader key
 Let's turn on the VIM modal editing!
 
 #+begin_src emacs-lisp
+
+  (setq evil-want-keybinding nil)
+  (setq evil-want-integration t)
+  (setq evil-want-C-u-delete t)
+  (setq evil-undo-system 'undo-tree)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-w-delete t)
+  (setq evil-want-Y-yank-to-eol t)
+  (setq evil-want-C-i-jump nil)
+
   (use-package evil
     :init
-    (setq evil-want-integration t)
-    (setq evil-want-C-u-delete t)
-    (setq evil-want-keybinding t)
-    (setq evil-undo-system 'undo-tree)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-want-C-w-delete t)
     (setq-default evil-kill-on-visual-paste t)
-    (setq evil-want-Y-yank-to-eol)
-    (evil-select-search-module 'evil-search-module 'evil-search)
-    (setq evil-want-C-i-jump nil)
     :config
+    (evil-select-search-module 'evil-search-module 'evil-search)
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
     (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
@@ -623,6 +637,7 @@ Let's turn on the VIM modal editing!
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
 
+  (setq evil-want-keybinding nil)
   (use-package evil-collection
     :after evil
     :config
@@ -847,6 +862,55 @@ Minibuffer actions
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-doc-position 'bottom))
+#+end_src
+* Debugger
+** DAP
+Install dap
+#+begin_src emacs-lisp
+  (use-package dap-mode
+    :ensure t)
+#+end_src
+
+Auto configure some sutff
+#+begin_src emacs-lisp
+(setq dap-auto-configure-features '(sessions locals controls tooltip))
+#+end_src
+
+LLDB
+#+begin_src emacs-lisp
+(require 'dap-lldb)
+#+end_src
+
+#+begin_src emacs-lisp
+(require 'dap-gdb-lldb)
+#+end_src
+
+** RealGud
+#+begin_src emacs-lisp
+(use-package realgud)
+(use-package realgud-lldb)
+
+(defhydra hydra-realgud (:color blue :hint nil)
+  "
+^Stepping^          ^Breakpoints^        ^Evaluate^
+^^^^^^^^--------------------------------------------------
+_n_: Next           _b_: Set             _e_: Evaluate
+_s_: Step           _B_: Clear           _r_: Re-eval
+_f_: Finish         _t_: Toggle          
+_c_: Continue       _a_: Show All        
+"
+  ("n" realgud:cmd-next :exit nil)
+  ("s" realgud:cmd-step :exit nil)
+  ("f" realgud:cmd-finish :exit nil)
+  ("c" realgud:cmd-continue :exit nil)
+  ("b" realgud:cmd-break :exit nil)
+  ("B" realgud:cmd-clear :exit nil)
+  ("t" realgud:cmd-toggle-breakpoint :exit nil)
+  ("a" realgud:cmd-breakpoints :exit nil)
+  ("e" realgud:cmd-eval :exit nil)
+  ("r" realgud:cmd-reval :exit nil))
+
+(global-set-key (kbd "C-c d") 'hydra-realgud/body)
 #+end_src
 * Dump Jump
 #+begin_src emacs-lisp
@@ -1377,6 +1441,7 @@ Install packages from github
     "tt" 'eshell-toggle
     "tl" 'hell/toggle-relative-line-numbers)
   (map-key ("tf" treemacs "File-tree"))
+  (map-key ("tw" hydra-window-resize/body "Window resize"))
   (map-key ("tc" flyspell-mode "spell correction"))
   (map-key ("tz" hell/zen-mode "Zen mode"))
   (map-key ("tn" hell/toggle-fancy-narrow "Narrow region"))
@@ -1387,7 +1452,7 @@ Install packages from github
     (global/leader-key
       "aa" 'align
       "ae" 'align-entire
-      "ar" 'align-regexp)
+      "ar" 'ialign)
 #+end_src
 *** Files
 #+begin_src emacs-lisp
