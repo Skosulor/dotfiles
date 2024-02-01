@@ -4,6 +4,7 @@ PROPERTIES:
 #+STARTUP: overview
 :END:
 
+
 * Todo's
 
 - [ ] Some better org defauts (like new item in list on enter)
@@ -147,6 +148,10 @@ The packet manager
                                      (turn-on-orgtbl))))
 #+end_src
 * General
+** Chat
+#+begin_src emacs-lisp
+  (use-package ement)
+#+end_src
 **  Interactive align
 #+begin_src emacs-lisp
   (use-package ialign)
@@ -364,6 +369,11 @@ The packet manager
   :after magit
   :config (magit-todos-mode 1))
   #+end_src
+** Solaire  mode
+#+begin_src emacs-lisp
+  (use-package solaire-mode)
+  (solaire-global-mode 1)
+#+end_src
 * Workspace
 ** Tabspaces
 #+begin_src emacs-lisp
@@ -456,27 +466,27 @@ Some icon fonts!
 ** Modeline
 #+begin_src emacs-lisp
 
-  ;; (use-package doom-modeline
-  ;;   ;; :init (doom-modeline-mode 1)
-  ;;   :custom ((doom-modeline-height 15)))
-
   (setq-default mode-line-format nil) 
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1)
+    :custom ((doom-modeline-height 15)))
 
-  (use-package nano-modeline)
-  (nano-modeline-text-mode t)
-  (add-hook 'prog-mode-hook            #'nano-modeline-prog-mode)
-  (add-hook 'text-mode-hook            #'nano-modeline-text-mode)
-  (add-hook 'org-mode-hook             #'nano-modeline-org-mode)
-  (add-hook 'pdf-view-mode-hook        #'nano-modeline-pdf-mode)
-  (add-hook 'mu4e-headers-mode-hook    #'nano-modeline-mu4e-headers-mode)
-  (add-hook 'mu4e-view-mode-hook       #'nano-modeline-mu4e-message-mode)
-  (add-hook 'elfeed-show-mode-hook     #'nano-modeline-elfeed-entry-mode)
-  (add-hook 'elfeed-search-mode-hook   #'nano-modeline-elfeed-search-mode)
-  (add-hook 'term-mode-hook            #'nano-modeline-term-mode)
-  (add-hook 'xwidget-webkit-mode-hook  #'nano-modeline-xwidget-mode)
-  (add-hook 'messages-buffer-mode-hook #'nano-modeline-message-mode)
-  (add-hook 'org-capture-mode-hook     #'nano-modeline-org-capture-mode)
-  (add-hook 'org-agenda-mode-hook      #'nano-modeline-org-agenda-mode)
+
+  ;; (use-package nano-modeline)
+  ;; (nano-modeline-text-mode t)
+  ;; (add-hook 'prog-mode-hook            #'nano-modeline-prog-mode)
+  ;; (add-hook 'text-mode-hook            #'nano-modeline-text-mode)
+  ;; (add-hook 'org-mode-hook             #'nano-modeline-org-mode)
+  ;; (add-hook 'pdf-view-mode-hook        #'nano-modeline-pdf-mode)
+  ;; (add-hook 'mu4e-headers-mode-hook    #'nano-modeline-mu4e-headers-mode)
+  ;; (add-hook 'mu4e-view-mode-hook       #'nano-modeline-mu4e-message-mode)
+  ;; (add-hook 'elfeed-show-mode-hook     #'nano-modeline-elfeed-entry-mode)
+  ;; (add-hook 'elfeed-search-mode-hook   #'nano-modeline-elfeed-search-mode)
+  ;; (add-hook 'term-mode-hook            #'nano-modeline-term-mode)
+  ;; (add-hook 'xwidget-webkit-mode-hook  #'nano-modeline-xwidget-mode)
+  ;; (add-hook 'messages-buffer-mode-hook #'nano-modeline-message-mode)
+  ;; (add-hook 'org-capture-mode-hook     #'nano-modeline-org-capture-mode)
+  ;; (add-hook 'org-agenda-mode-hook      #'nano-modeline-org-agenda-mode)
 
 
 
@@ -505,54 +515,15 @@ Some icon fonts!
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  ;; (use-package doom-themes)
-  ;; (load-theme 'doom-everforest t)
+  (unless (package-installed-p 'emacs-themes)
+    (package-vc-install '(emacs-themes :url "https://github.com/skosulor/emacs-themes")))
+  (load-theme 'doom-everforest t)
+#+end_src
 
-  (use-package nano-theme
-    :ensure nil
-    :defer t
-    :quelpa (nano-theme
-	     :fetcher github
-	     :repo "rougier/nano-theme"))
-
-  (use-package nano
-    :ensure nil
-    :defer t
-    :quelpa (nano-theme
-	     :fetcher github
-	     :repo "rougier/nano-emacs"))
-
-  (straight-use-package
-   '(nano :type git :host github :repo "rougier/nano-emacs"))
-
-  (straight-use-package
-   '(org-margin :type git :host github :repo "rougier/org-margin"))
-
-  (use-package svg-lib)
-  (straight-use-package
-   '(nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer"))
-
-  ;; (require 'org-margin)
-  ;; (defun hell/org-mode-margin-setup ()
-  ;;   "Custom setup for org-mode, avoiding recursive activation."
-  ;;   (unless (bound-and-true-p org-margin-mode)
-  ;;     (org-margin-mode)
-  ;;     (window-divider-mode -1))
-  ;;   (unless (bound-and-true-p nano-mode)
-  ;;     ;; (nano-mode)
-  ;;     (window-divider-mode -1)))
-
-  ;; (add-hook 'org-mode-hook 'hell/org-mode-margin-setup)
-
-
-  ;; ;; (require 'nano)
-  (load-theme 'nano t)
-  (require 'nano-minibuffer)
-
-
-  (with-eval-after-load 'vertico
-    (set-face-attribute 'vertico-current nil :background "dark grey"))
-
+** Transparency
+#+begin_src emacs-lisp
+  (set-frame-parameter nil 'alpha-background 90)
+  (add-to-list 'default-frame-alist '(alpha-background . 90))
 #+end_src
 ** Treesitter
 #+begin_src emacs-lisp
@@ -608,6 +579,7 @@ packet for handling leader key
 #+end_src
 
 ** EVIL
+
 
 Let's turn on the VIM modal editing!
 
@@ -1080,9 +1052,12 @@ Lets remove all the bullets
     (interactive)
     "Automatically tangle our Emacs Org config when we save the Org file."
     (let ((org-file (expand-file-name "init.org" user-emacs-directory))
-	  (el-file (expand-file-name "init.el" user-emacs-directory)))
-      (when (string-equal (buffer-file-name) org-file)
-	(org-babel-tangle-file org-file el-file))))
+          (el-file (expand-file-name "init.el" user-emacs-directory)))
+      (when (string-equal (file-name-nondirectory (buffer-file-name)) "init.org")
+        (org-babel-tangle-file org-file el-file)
+        ;; Ensure the file is named 'init.el'
+        (when (file-exists-p (expand-file-name "Init.el" user-emacs-directory))
+          (rename-file (expand-file-name "Init.el" user-emacs-directory) el-file t)))))
 
   (add-hook 'org-mode-hook
 	    (lambda ()
