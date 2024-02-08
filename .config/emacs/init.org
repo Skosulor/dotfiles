@@ -148,6 +148,12 @@ The packet manager
                                      (turn-on-orgtbl))))
 #+end_src
 * General
+** Spellchecking
+#+begin_src emacs-lisp
+(setq ispell-program-name "aspell")
+(setq ispell-dictionary "english") ;; Set the default dictionary
+(setq ispell-extra-args '("--sug-mode=ultra" "--run-together" "--run-together-limit=9" "--run-together-min=2"))
+#+end_src
 ** Chat
 #+begin_src emacs-lisp
   (use-package ement)
@@ -374,6 +380,10 @@ The packet manager
   (use-package solaire-mode)
   (solaire-global-mode 1)
 #+end_src
+** devdocs
+#+begin_src emacs-lisp
+(use-package devdocs)
+#+end_src
 * Workspace
 ** Tabspaces
 #+begin_src emacs-lisp
@@ -415,6 +425,11 @@ The packet manager
 #+end_src
 
 * UI
+** Topsy/Sticky function header
+#+begin_src emacs-lisp
+  (use-package topsy)
+  (add-hook 'prog-mode-hook #'topsy-mode)
+#+end_src
 ** Flycheck float
 #+begin_src emacs-lisp
   (use-package flycheck-posframe
@@ -1390,6 +1405,7 @@ Install packages from github
     "I" #'hell/load-my-init-file
     ";" 'execute-extended-command)
   (map-key ("*" hell/search-cursor-word "Search for symbol"))
+  (map-key ("e" eval-region "Eval region"))
   (map-key ("/" consult-line "Search in file"))
   (map-key ("P" consult-yank-pop "Paste from kill-ring"))
   (map-key ("u" undo-tree-visualize "Undo tree"))
@@ -1486,6 +1502,7 @@ Install packages from github
     "hv" 'describe-variable
     "hp" 'describe-package)
   (map-key ("hm" describe-mode))
+  (map-key ("hd" devdocs-lookup))
   (map-key ("hM" man "Man pages"))
   (map-key ("hV" set-variable "set Variable"))
 #+end_src
