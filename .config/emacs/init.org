@@ -1,9 +1,8 @@
 
 PROPERTIES:
-#+PROPERTY: header-args:emacs-lisp :tangle Init.el
+#+PROPERTY: header-args:emacs-lisp :tangle init.el
 #+STARTUP: overview
 :END:
-
 
 * Todo's
 
@@ -148,6 +147,25 @@ The packet manager
                                      (turn-on-orgtbl))))
 #+end_src
 * General
+** Irc
+auto join 
+#+begin_src emacs-lisp
+    (require 'rcirc)
+    (require 'erc)
+
+    ;; Server configuration with explicit TLS for Libera Chat
+    (setq rcirc-server-alist
+          '(("irc.libera.chat" :port 6697 :encryption tls :nick "TripleO" :channels ("#c" "#emacs" "#linux"))))
+
+  
+(setq erc-server "irc.libera.chat"
+      erc-nick "DoubleTrouble"
+      erc-autojoin-channels-alist '(("libera.chat" "#emacs" "#c" "#linux"))
+      erc-interpret-mirc-color t
+      erc-hide-list '("JOIN" "PART" "QUIT"))
+#+end_src
+
+
 ** Spellchecking
 #+begin_src emacs-lisp
 (setq ispell-program-name "aspell")
@@ -313,21 +331,36 @@ The packet manager
     (use-package vterm
       :ensure t)
 
-    (use-package vterm-toggle)
-    (setq vterm-toggle-fullscreen-p nil)
-    (add-to-list 'display-buffer-alist
-                 '((lambda (buffer-or-name _)
-                     (let ((buffer (get-buffer buffer-or-name)))
-                       (with-current-buffer buffer
-                         (or (equal major-mode 'vterm-mode)
-                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                   (display-buffer-reuse-window display-buffer-at-bottom)
-                   ;;(display-buffer-reuse-window display-buffer-in-direction)
-                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                   ;;(direction . bottom)
-                   ;;(dedicated . t) ;dedicated is supported in emacs27
-                   (reusable-frames . visible)
-                   (window-height . 0.3))))
+
+      ;; (add-hook 'eshell-mode-hook
+      ;;           (lambda ()
+      ;;             (define-key eshell-mode-map (kbd "C-l") 'forward-sexp)))
+
+      (use-package eshell-toggle
+        :custom
+        (eshell-toggle-size-fraction 3)
+        (eshell-toggle-use-projectile-root t)
+        (eshell-toggle-run-command nil)
+        :quelpa
+        (eshell-toggle :repo "4DA/eshell-toggle" :fetcher github :version original))
+
+
+    (with-system-not (ms-dos windows-nt cygwin)
+      (use-package vterm-toggle)
+      (setq vterm-toggle-fullscreen-p nil)
+      (add-to-list 'display-buffer-alist
+                   '((lambda (buffer-or-name _)
+                       (let ((buffer (get-buffer buffer-or-name)))
+                         (with-current-buffer buffer
+                           (or (equal major-mode 'vterm-mode)
+                               (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                     (display-buffer-reuse-window display-buffer-at-bottom)
+                     ;;(display-buffer-reuse-window display-buffer-in-direction)
+                     ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                     ;;(direction . bottom)
+                     ;;(dedicated . t) ;dedicated is supported in emacs27
+                     (reusable-frames . visible)
+                     (window-height . 0.3)))))
 #+end_src
 
 ** Projectile
@@ -1438,6 +1471,8 @@ Install packages from github
   (map-key ("tf" treemacs "File-tree"))
   (map-key ("tw" hydra-window-resize/body "Window resize"))
   (map-key ("tc" flyspell-mode "spell correction"))
+  (with-system-not (ms-dos windows-nt cygwin)
+    (map-key ("tt" vterm-toggle "Toggle terminal")))
   (map-key ("tz" hell/zen-mode "Zen mode"))
   (map-key ("tn" hell/toggle-fancy-narrow "Narrow region"))
 #+end_src
@@ -1562,5 +1597,4 @@ Install packages from github
   (map-key ("od" dashboard-open "dashboard"))
   (map-key ("ot" eshell "eshell"))
 #+end_src
-
 
