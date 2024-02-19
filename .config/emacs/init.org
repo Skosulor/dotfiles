@@ -1452,7 +1452,8 @@ Install packages from github
 *** Git
 #+begin_src emacs-lisp
   (map-key ("gg" magit "Git-status"))
-  (map-key ("gb" magit-blame-addition "blame"))
+  (map-key ("gB" vc-annotate "blame"))
+  (map-key ("gb" magit-branch "branch"))
   (map-key ("gl" magit-log-all "log"))
   (map-key ("gr" magit-reflog-head "reflog"))
   (map-key ("gd" magit-file-dispatch "dispatch file"))
