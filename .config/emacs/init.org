@@ -564,7 +564,7 @@ Some icon fonts!
 #+begin_src emacs-lisp
   (unless (package-installed-p 'emacs-themes)
     (package-vc-install '(emacs-themes :url "https://github.com/skosulor/emacs-themes")))
-  (load-theme 'doom-everforest t)
+  (load-theme 'doom-one t)
 #+end_src
 
 ** Transparency
@@ -775,25 +775,60 @@ In buffer completion!
       (corfu-auto t)                 ;; Enable auto completion
       :init
       (global-corfu-mode))
-  
+
   (add-hook 'eshell-mode-hook
             (lambda ()
               (setq-local corfu-auto nil)
               (corfu-mode)))
 
 #+end_src
+
+** Cape
+More completion!
+#+begin_src emacs-lisp
+(use-package cape
+  ;; Bind dedicated completion commands
+  ;; Alternative prefix keys: C-c p, M-p, M-+, ...
+  :init
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.  The order of the functions matters, the
+  ;; first function returning a result wins.  Note that the list of buffer-local
+  ;; completion functions takes precedence over the global list.
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  ;;(add-to-list 'completion-at-point-functions #'cape-history)
+  ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+  ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+  ;;(add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+)
+#+end_src
+
 ** Orderless
 Fuzzy completion!
 #+begin_src emacs-lisp
-  (use-package orderless
-      :init
-      (setq completion-styles '(orderless)
-            completion-category-defaults nil
-            completion-category-overrides '((file (styles . (partial-completion))))))
+      (use-package orderless
+          :init
+          (setq completion-styles '(orderless)
+                completion-category-defaults nil
+                completion-category-overrides '((file (styles . (partial-completion))))))
 
-(defun dw/get-project-root ()
-  (when (fboundp 'projectile-project-root)
-    (projectile-project-root)))
+    (defun dw/get-project-root ()
+      (when (fboundp 'projectile-project-root)
+        (projectile-project-root)))
+
+  ;; (setq lsp-completion-provider :none)
+  ;; (defun corfu-lsp-setup ()
+  ;;   (setq-local completion-styles '(orderless)
+  ;;               completion-category-defaults nil))
+  ;; (add-hook 'lsp-mode-hook #'corfu-lsp-setup)
+
+
 #+end_src
 ** Consult
 Seach and navigation!
