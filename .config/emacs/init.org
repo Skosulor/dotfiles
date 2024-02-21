@@ -747,19 +747,24 @@ Evil for Org mode
 
 The completion manager
 #+begin_src emacs-lisp
-(use-package vertico
-  :bind (:map vertico-map
-         ("C-j" . vertico-next)
-         ("C-k" . vertico-previous)
-         ("C-f" . vertico-exit)
-         :map minibuffer-local-map
-         ("M-h" . dw/minibuffer-backward-kill))
-  :custom
-  (vertico-cycle t)
-  :custom-face
-  (vertico-current ((t (:background "#3a3f5a"))))
-  :init
-  (vertico-mode))
+  (use-package vertico
+    :bind (:map vertico-map
+           ("C-j" . vertico-next)
+           ("C-k" . vertico-previous)
+           ("C-f" . vertico-exit)
+           :map minibuffer-local-map
+           ("M-h" . dw/minibuffer-backward-kill))
+    :custom
+    (vertico-cycle t)
+    :custom-face
+    (vertico-current ((t (:background "#3a3f5a"))))
+    :init
+    (vertico-mode))
+
+
+  (use-package vertico-posframe)
+  (vertico-posframe-mode 1)
+  
 #+end_src
 ** Corfu
 In buffer completion!
