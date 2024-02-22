@@ -622,38 +622,44 @@ Let's turn on the VIM modal editing!
 
 #+begin_src emacs-lisp
 
-  (setq evil-want-keybinding nil)
-  (setq evil-want-integration t)
-  (setq evil-want-C-u-delete t)
-  (setq evil-undo-system 'undo-tree)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-w-delete t)
-  (setq evil-want-Y-yank-to-eol t)
-  (setq evil-want-C-i-jump nil)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-integration t)
+    (setq evil-want-C-u-delete t)
+    (setq evil-undo-system 'undo-tree)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-w-delete t)
+    (setq evil-want-Y-yank-to-eol t)
+    (setq evil-want-C-i-jump nil)
 
-  (use-package evil
-    :init
-    (setq-default evil-kill-on-visual-paste t)
+    (use-package evil
+      :init
+      (setq-default evil-kill-on-visual-paste t)
+      :config
+      (evil-select-search-module 'evil-search-module 'evil-search)
+      (evil-mode 1)
+      (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+      (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+      ;; Use visual line motions even outside of visual-line-mode buffers
+      ;; (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+      ;; (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+      (evil-set-initial-state 'messages-buffer-mode 'normal)
+      (evil-set-initial-state 'dashboard-mode 'normal))
+
+    (setq evil-want-keybinding nil)
+    (use-package evil-collection
+      :after evil
+      :config
+      (evil-collection-init))
+
+    (use-package evil-numbers)
+  
+  (use-package evil-lion
+    :ensure t
     :config
-    (evil-select-search-module 'evil-search-module 'evil-search)
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-    ;; Use visual line motions even outside of visual-line-mode buffers
-    ;; (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    ;; (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-    (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))
-
-  (setq evil-want-keybinding nil)
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
-
-  (use-package evil-numbers)
+    (evil-lion-mode))
+  
 
 #+end_src
 
@@ -764,7 +770,7 @@ The completion manager
 
   (use-package vertico-posframe)
   (vertico-posframe-mode 1)
-  
+  (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
 #+end_src
 ** Corfu
 In buffer completion!
@@ -865,6 +871,7 @@ More info when describing!
     :after vertico
     :custom
     (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+    (setq vertico-count 15)
     :init
     (marginalia-mode))
 #+end_src
