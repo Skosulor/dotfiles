@@ -1453,7 +1453,11 @@ A better topsy!
     :config
     (treesitter-context-mode t))
 
- 
+  (setq treesitter-context-background-color (face-attribute 'default :background))
+  (setq treesitter-context-border-color 0)
+  (setq treesitter-context-show-line-number nil)
+  (setq treesitter-context-show-context-always t)
+  (setq treesitter-context-idle-time 0.3)
 #+end_src
 
 * Mappings
