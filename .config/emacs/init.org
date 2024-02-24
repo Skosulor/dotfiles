@@ -1416,6 +1416,46 @@ Install packages from github
 
 (add-hook 'org-mode-hook #'my/org-mode-no-electric-pair-less-than)
 #+end_src
+
+* Tree-sitter
+Auto tree-sitter mode
+#+begin_src emacs-lisp
+  (use-package treesit-auto
+    :custom
+    (treesit-auto-install 'prompt)
+    :config
+    (treesit-auto-add-to-auto-mode-alist 'all)
+    (global-treesit-auto-mode))
+  
+#+end_src
+Lets add some more vim objects based on the tree-sitter!
+#+begin_src emacs-lisp
+  (use-package evil-textobj-tree-sitter :ensure t)
+  (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
+  (define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
+  (define-key evil-outer-text-objects-map "v" (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
+  (define-key evil-outer-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
+  (define-key evil-inner-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "parameter.inner"))
+  (define-key evil-outer-text-objects-map "l" (evil-textobj-tree-sitter-get-textobj "loop.outer"))
+  (define-key evil-inner-text-objects-map "l" (evil-textobj-tree-sitter-get-textobj "loop.inner"))
+  (define-key evil-inner-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "conditional.inner"))
+  (define-key evil-outer-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "conditional.outer"))
+
+
+#+end_src
+A better topsy!
+#+begin_src emacs-lisp
+  (use-package treesitter-context
+    :straight (:host github :type git :repo "zbelial/treesitter-context.el" )
+    :init
+    (use-package posframe-plus
+      :straight (:host github :type git :repo "zbelial/posframe-plus" ))
+    :config
+    (treesitter-context-mode t))
+
+ 
+#+end_src
+
 * Mappings
 ** Minibuffers
 #+begin_src emacs-lisp
@@ -1645,4 +1685,3 @@ Install packages from github
   (map-key ("od" dashboard-open "dashboard"))
   (map-key ("ot" eshell "eshell"))
 #+end_src
-
