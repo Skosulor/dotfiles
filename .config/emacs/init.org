@@ -1451,13 +1451,15 @@ A better topsy!
     (use-package posframe-plus
       :straight (:host github :type git :repo "zbelial/posframe-plus" ))
     :config
-    (treesitter-context-mode t))
-
-  (setq treesitter-context-background-color (face-attribute 'default :background))
-  (setq treesitter-context-border-color 0)
-  (setq treesitter-context-show-line-number nil)
-  (setq treesitter-context-show-context-always t)
-  (setq treesitter-context-idle-time 0.3)
+    (treesitter-context-mode t)
+    (setq treesitter-context-background-color (face-attribute 'default :background))
+    (setq treesitter-context-border-color "#FFFFFF")
+    (setq treesitter-context-border-width 1)
+    (setq treesitter-context-show-line-number nil)
+    (setq treesitter-context-show-context-always t)
+    (setq treesitter-context-idle-time 0.3)
+    (add-hook 'prog-mode-hook 'treesitter-context-mode)
+    )
 #+end_src
 
 * Mappings
