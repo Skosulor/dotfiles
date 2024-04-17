@@ -5,39 +5,10 @@ return {
     'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-nvim-lsp',
     'L3MON4D3/LuaSnip',
-    {
-        'williamboman/mason-lspconfig.nvim',
-        config = function()
-            local lsp_zero = require('lsp-zero')
-            require('mason-lspconfig').setup({
-                ensure_installed = {'clangd', 'rust_analyzer'},
-                handlers = {
-                    lsp_zero.default_setup,
-                }
-            })
-        end
-    },
-    {
-        'williamboman/mason.nvim',
-        config = function()
-            require("mason").setup()
-        end
-    },
-    {
-        'VonHeikemen/lsp-zero.nvim',
-
-        opts = {
-            setup = {
-                clangd = function(_, opts)
-                    opts.capabilities.offsetEncoding = { "utf-16" }
-                end,
-            },
-        },
-        config = function()
-            local lsp = require('lsp-zero').preset('recommended')
-            lsp.extend_lspconfig()
-        end,
-    },
+    {'williamboman/mason.nvim'},
+    {'williamboman/mason-lspconfig.nvim'},
+    {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+    {'neovim/nvim-lspconfig'},
     {
         'hrsh7th/nvim-cmp',
         config = function ()
@@ -89,20 +60,6 @@ return {
                     {name = 'luasnip', keyword_length = 2},
                 },
             })
-        end,
-    },
-    {
-        'neovim/nvim-lspconfig',
-        config = function()
-            local cmp_nvim_lsp = require "cmp_nvim_lsp"
-            require("lspconfig").clangd.setup {
-                on_attach = on_attach,
-                capabilities = cmp_nvim_lsp.default_capabilities(),
-                cmd = {
-                    "clangd",
-                    "--offset-encoding=utf-16",
-                },
-            }
         end,
     },
 }

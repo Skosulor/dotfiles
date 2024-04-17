@@ -173,7 +173,7 @@ wk.register({
     w = { '<C-W>', 'Window' },
     p = { ':Telescope neoclip<cr>', 'Paste' },
     j = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document symbols'},
-    J = { '<cmd>Telescope lsp_workspace_symbols<cr>', 'Workspace symbols' },
+    J = { '<cmd>AnyJump<cr>', 'AnyJump' },
     D = { ':lua toggleDarkMode()<cr>', 'Toggle dark mode' },
     ['<space>'] = { '<cmd>Telescope buffers<cr>', 'Buffers' },
     ['*'] =  { '<cmd>Telescope grep_string<cr>', 'Grep under cursor' },

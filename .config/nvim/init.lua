@@ -62,6 +62,10 @@ vim.cmd([[colorscheme everforest]])
  -- Hide the tildes that denotes end of file
 vim.cmd([[highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg]])
 
+-- Transparent 
+vim.cmd([[highlight Normal guibg=none]])
+
+
 if vim.g.neovide then
     vim.g.neovide_scroll_animation_length = 0.5
     vim.g.neovide_hide_mouse_when_typing = true
@@ -84,4 +88,25 @@ if vim.g.neovide then
     vim.o.guifont = "Iosevka"
 end
 
+-- Lsp
+
+local lsp_zero = require('lsp-zero')
+
+lsp_zero.on_attach(function(client, bufnr)
+  -- see :help lsp-zero-keybindings
+  -- to learn the available actions
+  lsp_zero.default_keymaps({buffer = bufnr})
+end)
+
+-- to learn how to use mason.nvim
+-- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {},
+  handlers = {
+    function(server_name)
+      require('lspconfig')[server_name].setup({})
+    end,
+  },
+})
 
