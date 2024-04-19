@@ -1,6 +1,7 @@
 return {
     { "folke/neoconf.nvim", cmd = "Neoconf" },
     'nvim-telescope/telescope-file-browser.nvim',
+    'tommcdo/vim-lion',
     'tpope/vim-fugitive',
     'pechorin/any-jump.vim',
     'junegunn/gv.vim',
@@ -69,28 +70,28 @@ return {
             require("todo-comments").setup()
         end,
     },
-    {
-        'anuvyklack/windows.nvim',
-        config = function()
-            require('windows').setup({
-                autowidth = {
-                    enable = true,
-                    winwidth = 10,
-                },
-                ignore = {
-                    buftype = { "quickfix", "Telescope", "telescope"},
-                    filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Telescope", "telescope", }
-                },
-
-                animation = {
-                    enable = false,
-                    duration = 300,
-                    fps = 60,
-                    easing = "in_out_sine"
-                }
-            })
-        end,
-    },
+    -- {
+    --     'anuvyklack/windows.nvim',
+    --     config = function()
+    --         require('windows').setup({
+    --             autowidth = {
+    --                 enable = true,
+    --                 winwidth = 10,
+    --             },
+    --             ignore = {
+    --                 buftype = { "quickfix", "Telescope", "telescope"},
+    --                 filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Telescope", "telescope", }
+    --             },
+    --
+    --             animation = {
+    --                 enable = false,
+    --                 duration = 300,
+    --                 fps = 60,
+    --                 easing = "in_out_sine"
+    --             }
+    --         })
+    --     end,
+    -- },
     {
         "folke/flash.nvim",
         event = "VeryLazy",
@@ -731,4 +732,21 @@ return {
         opts = {},
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
+    {
+        "christoomey/vim-tmux-navigator",
+        cmd = {
+            "TmuxNavigateLeft",
+            "TmuxNavigateDown",
+            "TmuxNavigateUp",
+            "TmuxNavigateRight",
+            "TmuxNavigatePrevious",
+        },
+        keys = {
+            { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+            { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+            { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+            { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+            { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+        },
+    }
 }

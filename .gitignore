@@ -5,3 +5,6 @@
 .nvim/
 .config/nvim/nvim
 
+/.config/emacs/eln-cache
+/.config/emacs/elpa
+/.config/emacs/straight
