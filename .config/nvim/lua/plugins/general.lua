@@ -433,6 +433,19 @@ return {
                     -- Instead of true it can also be a list of languages
                     additional_vim_regex_highlighting = true,
                 },
+                textobjects = {
+                    select = {
+                        enable = true,
+                        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+                        keymaps = {
+                            -- You can define your own textobjects here:
+                            ["af"] = "@function.outer",
+                            ["if"] = "@function.inner",
+                            ["av"] = "@parameter.outer",
+                            ["iv"] = "@parameter.inner",
+                        },
+                    },
+                },
             }
         end,
     },
@@ -556,13 +569,37 @@ return {
         config = function()
             local dap = require('dap')
 
-            dap.adapters.lldb = {
+            -- dap.adapters.lldb = {
+            --     type = 'server',
+            --     port = "1234",
+            --     executable = {
+            --         command = '/opt/homebrew/opt/llvm/bin/lldb-vscode',
+            --         args = {"--port", "1234"},
+            --     }
+            -- }
+
+            dap.adapters.codelldb = {
                 type = 'server',
                 port = "1234",
                 executable = {
-                    command = '/opt/homebrew/opt/llvm/bin/lldb-vscode',
+                    command = '/home/strom/.vscode-oss/extensions/vadimcn.vscode-lldb-1.10.0-universal/adapter/codelldb',
                     args = {"--port", "1234"},
                 }
+            }
+
+
+            dap.configurations.rust = {
+                {
+                    name = "Launch",
+                    type = "codelldb",
+                    request = "launch",
+                    program = function()
+                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                    end,
+                    cwd = '${workspaceFolder}',
+                    stopOnEntry = false,
+                    args = {},
+                },
             }
 
             dap.configurations.c = {
@@ -748,5 +785,10 @@ return {
             { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
             { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
         },
-    }
+    },
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        after = "nvim-treesitter",
+        requires = "nvim-treesitter/nvim-treesitter",
+    },
 }
