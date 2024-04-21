@@ -19,11 +19,11 @@ keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
 -- Tabs
 keymap('n', '<C-n>', '<CMD>tab new<cr><CMD>lua MiniStarter.open()<cr>', { noremap = true, silent = true })
-keymap('n', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
-keymap('n', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
+-- keymap('n', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
+-- keymap('n', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
+-- keymap('t', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
+-- keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
 keymap('t', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
-keymap('t', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
-keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
 keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 
@@ -113,6 +113,14 @@ wk.register({
         m =  { '<cmd>:lua require("functions").man_pages()<cr>', 'Man pages' },
         h =  { '<cmd>Telescope help_tags<cr>', 'help (manual/plugins)' },
         o =  { '<cmd>Telescope vim_options<cr>', 'Options' },
+    },
+
+    t = {
+        name = "Tab",
+        n =  { '<cmd>tabnew<cr>', 'New tab' },
+        h =  { '<cmd>tabp<cr>', 'Previous tab' },
+        l =  { '<cmd>tabn<cr>', 'Next tab' },
+        d =  { '<cmd>tabclose<cr>', 'Delete tab' },
     },
 
     c = {
