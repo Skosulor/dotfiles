@@ -7,7 +7,7 @@ return {
     'junegunn/gv.vim',
     'airblade/vim-gitgutter',
     'ludovicchabant/vim-gutentags',
-    'https://github.com/github/copilot.vim',
+    -- 'https://github.com/github/copilot.vim',
     'nvim-pack/nvim-spectre',
     'nvim-treesitter/nvim-treesitter-context',
     'rhysd/clever-f.vim',
