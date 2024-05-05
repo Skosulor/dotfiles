@@ -1,3 +1,14 @@
+  (setq evil-want-keybinding nil)
+  (setq evil-want-integration t)
+  (setq evil-want-C-u-delete t)
+  (setq evil-undo-system 'undo-tree)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-w-delete t)
+  (setq evil-want-Y-yank-to-eol t)
+  (setq evil-want-C-i-jump nil)
+
+
+
 (defmacro with-system (type &rest body)
         "Evaluate BODY if `system-type' equals TYPE."
         (declare (indent defun))
@@ -115,6 +126,20 @@
                                    (insert "OK")
                                    (turn-on-orgtbl))))
 
+(require 'rcirc)
+    (require 'erc)
+
+    ;; Server configuration with explicit TLS for Libera Chat
+    (setq rcirc-server-alist
+          '(("irc.libera.chat" :port 6697 :encryption tls :nick "TripleO" :channels ("#c" "#emacs" "#linux"))))
+
+  
+(setq erc-server "irc.libera.chat"
+      erc-nick "DoubleTrouble"
+      erc-autojoin-channels-alist '(("libera.chat" "#emacs" "#c" "#linux"))
+      erc-interpret-mirc-color t
+      erc-hide-list '("JOIN" "PART" "QUIT"))
+
 (setq ispell-program-name "aspell")
 (setq ispell-dictionary "english") ;; Set the default dictionary
 (setq ispell-extra-args '("--sug-mode=ultra" "--run-together" "--run-together-limit=9" "--run-together-min=2"))
@@ -211,13 +236,13 @@
   (tab-jump-out-mode))
 (electric-pair-mode 1)
 
-(defvar efs/default-font-size 110)
+(defvar efs/default-font-size 90)
 (defvar efs/default-variable-font-size 110)
 
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
 
-(set-face-attribute 'default nil :family "Iosevka" :height 130)
+;; (set-face-attribute 'default nil :family "Iosevka" :height 130)
 
 (use-package magit
   :commands magit-status
@@ -231,28 +256,42 @@
   :custom
   (eshell-toggle-use-projectile-root t)
   (eshell-toggle-window-side 'below))
-(with-system-not (ms-dos windows-nt cygwin)
-
 (use-package eshell-z)
 
+(with-system-not (ms-dos windows-nt cygwin)
   (use-package vterm
     :ensure t)
 
-  (use-package vterm-toggle)
-  (setq vterm-toggle-fullscreen-p nil)
-  (add-to-list 'display-buffer-alist
-               '((lambda (buffer-or-name _)
-                   (let ((buffer (get-buffer buffer-or-name)))
-                     (with-current-buffer buffer
-                       (or (equal major-mode 'vterm-mode)
-                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 ;;(display-buffer-reuse-window display-buffer-in-direction)
-                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                 ;;(direction . bottom)
-                 ;;(dedicated . t) ;dedicated is supported in emacs27
-                 (reusable-frames . visible)
-                 (window-height . 0.3))))
+
+    ;; (add-hook 'eshell-mode-hook
+    ;;           (lambda ()
+    ;;             (define-key eshell-mode-map (kbd "C-l") 'forward-sexp)))
+
+    (use-package eshell-toggle
+      :custom
+      (eshell-toggle-size-fraction 3)
+      (eshell-toggle-use-projectile-root t)
+      (eshell-toggle-run-command nil)
+      :quelpa
+      (eshell-toggle :repo "4DA/eshell-toggle" :fetcher github :version original))
+
+
+  (with-system-not (ms-dos windows-nt cygwin)
+    (use-package vterm-toggle)
+    (setq vterm-toggle-fullscreen-p t)
+    (add-to-list 'display-buffer-alist
+                 '((lambda (buffer-or-name _)
+                     (let ((buffer (get-buffer buffer-or-name)))
+                       (with-current-buffer buffer
+                         (or (equal major-mode 'vterm-mode)
+                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                   (display-buffer-reuse-window display-buffer-at-bottom)
+                   ;;(display-buffer-reuse-window display-buffer-in-direction)
+                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                   ;;(direction . bottom)
+                   ;;(dedicated . t) ;dedicated is supported in emacs27
+                   (reusable-frames . visible)
+                   (window-height . 0.3)))))
 
 (use-package projectile
   :hook
@@ -406,7 +445,7 @@
 
 (unless (package-installed-p 'emacs-themes)
   (package-vc-install '(emacs-themes :url "https://github.com/skosulor/emacs-themes")))
-(load-theme 'doom-everforest t)
+(load-theme 'doom-one t)
 
 (set-frame-parameter nil 'alpha-background 90)
 (add-to-list 'default-frame-alist '(alpha-background . 90))
@@ -439,38 +478,34 @@
     :keymaps '(normal)
     :prefix "g"))
 
-(setq evil-want-keybinding nil)
-(setq evil-want-integration t)
-(setq evil-want-C-u-delete t)
-(setq evil-undo-system 'undo-tree)
-(setq evil-want-C-u-scroll t)
-(setq evil-want-C-w-delete t)
-(setq evil-want-Y-yank-to-eol t)
-(setq evil-want-C-i-jump nil)
+  (use-package evil
+    :init
+    (setq-default evil-kill-on-visual-paste t)
+    :config
+    (evil-select-search-module 'evil-search-module 'evil-search)
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-(use-package evil
-  :init
-  (setq-default evil-kill-on-visual-paste t)
+    ;; Use visual line motions even outside of visual-line-mode buffers
+    ;; (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    ;; (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
+
+  (setq evil-want-keybinding nil)
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+
+  (use-package evil-numbers)
+
+(use-package evil-lion
+  :ensure t
   :config
-  (evil-select-search-module 'evil-search-module 'evil-search)
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  ;; (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  ;; (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
-
-(setq evil-want-keybinding nil)
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
-(use-package evil-numbers)
+  (evil-lion-mode))
 
 (evil-set-undo-system 'undo-redo)
 
@@ -540,27 +575,73 @@
   :init
   (vertico-mode))
 
+
+(use-package vertico-posframe)
+(vertico-posframe-mode 1)
+(setq vertico-posframe-poshandler #'posframe-poshandler-frame-bottom-center)
+
 (use-package corfu
-  :after vertico
-  :bind (:map corfu-map
-	      ("C-j" . corfu-next)
-	      ("C-k" . corfu-previous)
-	      ("C-f" . corfu-insert))
-  :custom
-  (corfu-cycle t)
-  (corfu-auto t)                 ;; Enable auto completion
+    :after vertico
+    :bind (:map corfu-map
+                ("C-j" . corfu-next)
+                ("C-k" . corfu-previous)
+                ("C-f" . corfu-insert))
+    :custom
+    (corfu-cycle t)
+    (corfu-auto t)                 ;; Enable auto completion
+    :init
+    (global-corfu-mode))
+
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (setq-local corfu-auto nil)
+            (corfu-mode)))
+
+(use-package cape
+  ;; Bind dedicated completion commands
+  ;; Alternative prefix keys: C-c p, M-p, M-+, ...
   :init
-  (global-corfu-mode))
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.  The order of the functions matters, the
+  ;; first function returning a result wins.  Note that the list of buffer-local
+  ;; completion functions takes precedence over the global list.
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  ;;(add-to-list 'completion-at-point-functions #'cape-history)
+  ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+  ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+  ;;(add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+)
 
 (use-package orderless
-      :init
-      (setq completion-styles '(orderless)
-            completion-category-defaults nil
-            completion-category-overrides '((file (styles . (partial-completion))))))
+        :init
+        (setq completion-styles '(orderless)
+              completion-category-defaults nil
+              completion-category-overrides '((file (styles . (partial-completion))))))
 
-(defun dw/get-project-root ()
-  (when (fboundp 'projectile-project-root)
-    (projectile-project-root)))
+  (defun dw/get-project-root ()
+    (when (fboundp 'projectile-project-root)
+      (projectile-project-root)))
+
+;; (setq lsp-completion-provider :none)
+;; (defun corfu-lsp-setup ()
+;;   (setq-local completion-styles '(orderless)
+;;               completion-category-defaults nil))
+;; (add-hook 'lsp-mode-hook #'corfu-lsp-setup)
+
+(use-package eglot
+  :hook ((rust-mode nix-mode) . eglot-ensure)
+  :config (add-to-list 'eglot-server-programs
+                       `(rust-mode . ("rust-analyzer" :initializationOptions
+                                     ( :procMacro (:enable t)
+                                       :cargo ( :buildScripts (:enable t)
+                                                :features "all"))))))
 
 (use-package consult
   :demand t
@@ -586,6 +667,7 @@
   :after vertico
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  (setq vertico-count 15)
   :init
   (marginalia-mode))
 
@@ -806,7 +888,7 @@ _c_: Continue       _a_: Show All
 	    (add-hook 'after-save-hook #'hell/generate-init-el nil 'make-it-local)))
 
 (set-face-attribute 'variable-pitch nil :family "Deja Vu Sans" :height 130)
-(set-face-attribute 'org-block nil :family "Iosevka" :height 130)
+;; (set-face-attribute 'org-block nil :family "Iosevka" :height 130)
 
 (defun hell/grep-edit()
   (interactive)
@@ -1024,6 +1106,39 @@ named arguments:
 
 (add-hook 'org-mode-hook #'my/org-mode-no-electric-pair-less-than)
 
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+(use-package evil-textobj-tree-sitter :ensure t)
+(define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
+(define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
+(define-key evil-outer-text-objects-map "v" (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
+(define-key evil-outer-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
+(define-key evil-inner-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "parameter.inner"))
+(define-key evil-outer-text-objects-map "l" (evil-textobj-tree-sitter-get-textobj "loop.outer"))
+(define-key evil-inner-text-objects-map "l" (evil-textobj-tree-sitter-get-textobj "loop.inner"))
+(define-key evil-inner-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "conditional.inner"))
+(define-key evil-outer-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "conditional.outer"))
+
+(use-package treesitter-context
+  :straight (:host github :type git :repo "zbelial/treesitter-context.el" )
+  :init
+  (use-package posframe-plus
+    :straight (:host github :type git :repo "zbelial/posframe-plus" ))
+  :config
+  (treesitter-context-mode nil)
+  (setq treesitter-context-background-color (face-attribute 'default :background))
+  (setq treesitter-context-border-color "#FFFFFF")
+  (setq treesitter-context-border-width 1)
+  (setq treesitter-context-show-line-number nil)
+  (setq treesitter-context-show-context-always t)
+  (setq treesitter-context-idle-time 0.3)
+  )
+
 (with-eval-after-load 'consult
   (define-key minibuffer-mode-map (kbd "C-c C-e") #'hell/grep-edit))
   (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
@@ -1051,6 +1166,13 @@ named arguments:
 
 (define-key copilot-completion-map (kbd "C-j") 'copilot-accept-completion)
 
+(define-key evil-normal-state-map (kbd "C-S-h") #'tab-previous)
+(define-key evil-normal-state-map (kbd "C-S-l") #'tab-next)
+(define-key evil-normal-state-map (kbd "C-S-n") #'tab-new)
+(define-key evil-insert-state-map (kbd "C-S-h") #'tab-previous)
+(define-key evil-insert-state-map (kbd "C-S-l") #'tab-next)
+(define-key evil-insert-state-map (kbd "C-S-n") #'tab-new)
+
 (global/leader-key
   "<tab>"  '(:ignore t :which-key "workspace")
   "w"  '(:ignore t :which-key "window")
@@ -1074,15 +1196,22 @@ named arguments:
   ";" 'execute-extended-command)
 (map-key ("*" hell/search-cursor-word "Search for symbol"))
 (map-key ("e" eval-region "Eval region"))
+(map-key ("<TAB>" vterm-toggle "Toggle terminal"))
 (map-key ("/" consult-line "Search in file"))
 (map-key ("P" consult-yank-pop "Paste from kill-ring"))
 (map-key ("u" undo-tree-visualize "Undo tree"))
 (map-key ("SPC" consult-buffer "switch buffer"))
 
 (map-key ("gg" magit "Git-status"))
-(map-key ("gb" magit-blame-addition "blame"))
+(map-key ("gB" vc-annotate "blame"))
+(map-key ("gb" magit-branch "branch"))
 (map-key ("gl" magit-log-all "log"))
 (map-key ("gr" magit-reflog-head "reflog"))
+(map-key ("gd" magit-file-dispatch "dispatch file"))
+(map-key ("gp" magit-push "reflog"))
+(map-key ("gP" magit-push "push"))
+(map-key ("gt" magit-log-trace-definition "trace (log) function at point"))
+(map-key ("gf" magit-log-buffer-file "Git buffer log"))
 
 (global/leader-key
   "ts" '(hydra-text-scale/body :which-key "scale text")
@@ -1091,6 +1220,8 @@ named arguments:
 (map-key ("tf" treemacs "File-tree"))
 (map-key ("tw" hydra-window-resize/body "Window resize"))
 (map-key ("tc" flyspell-mode "spell correction"))
+(with-system-not (ms-dos windows-nt cygwin)
+  (map-key ("tt" vterm-toggle "Toggle terminal")))
 (map-key ("tz" hell/zen-mode "Zen mode"))
 (map-key ("tn" hell/toggle-fancy-narrow "Narrow region"))
 
@@ -1185,3 +1316,20 @@ named arguments:
 (map-key ("op" pomidor "Pomidor"))
 (map-key ("od" dashboard-open "dashboard"))
 (map-key ("ot" eshell "eshell"))
+
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" default))
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
