@@ -1,3 +1,8 @@
+    (setq backup-directory-alist
+          `((".*" . ,temporary-file-directory)))
+    (setq auto-save-file-name-transforms
+          `((".*" ,temporary-file-directory t)))
+
   (setq evil-want-keybinding nil)
   (setq evil-want-integration t)
   (setq evil-want-C-u-delete t)
@@ -6,8 +11,6 @@
   (setq evil-want-C-w-delete t)
   (setq evil-want-Y-yank-to-eol t)
   (setq evil-want-C-i-jump nil)
-
-
 
 (defmacro with-system (type &rest body)
         "Evaluate BODY if `system-type' equals TYPE."
@@ -119,6 +122,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (use-package jenkinsfile-mode)
+(use-package lua-mode)
 
 (add-to-list 'auto-mode-alist
              '("\\.jenkins\\'" . (lambda ()
@@ -242,7 +246,7 @@
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
 
-;; (set-face-attribute 'default nil :family "Iosevka" :height 130)
+(set-face-attribute 'default nil :family "Victor Mono" :height 110)
 
 (use-package magit
   :commands magit-status
