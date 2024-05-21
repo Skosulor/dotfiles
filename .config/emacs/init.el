@@ -454,12 +454,6 @@
 (set-frame-parameter nil 'alpha-background 90)
 (add-to-list 'default-frame-alist '(alpha-background . 90))
 
-(use-package highlight-symbol
-  :ensure t
-  :init
-  (setq highlight-symbol-idle-delay 0)
-  (add-hook 'prog-mode-hook 'highlight-symbol-mode))
-
 (use-package treemacs)
 (treemacs-resize-icons 15)
 
@@ -815,6 +809,7 @@ _c_: Continue       _a_: Show All
 ;;   (org-evil-mode 1)
 ;;   (visual-line-mode 1))
 
+(defun org-margin-mode ())
 (use-package org
   :pin org
   :commands (org-capture org-agenda)
