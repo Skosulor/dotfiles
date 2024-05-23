@@ -282,7 +282,7 @@
 
   (with-system-not (ms-dos windows-nt cygwin)
     (use-package vterm-toggle)
-    (setq vterm-toggle-fullscreen-p t)
+    (setq vterm-toggle-fullscreen-p nil)
     (add-to-list 'display-buffer-alist
                  '((lambda (buffer-or-name _)
                      (let ((buffer (get-buffer buffer-or-name)))
@@ -1170,6 +1170,8 @@ named arguments:
 (define-key evil-insert-state-map (kbd "C-S-h") #'tab-previous)
 (define-key evil-insert-state-map (kbd "C-S-l") #'tab-next)
 (define-key evil-insert-state-map (kbd "C-S-n") #'tab-new)
+
+(define-key evil-normal-state-map (kbd "C-i") #'evil-jump-forward)
 
 (global/leader-key
   "<tab>"  '(:ignore t :which-key "workspace")
