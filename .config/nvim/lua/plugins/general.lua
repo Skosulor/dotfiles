@@ -1,11 +1,13 @@
 return {
     { "folke/neoconf.nvim", cmd = "Neoconf" },
     'nvim-telescope/telescope-file-browser.nvim',
+    'junegunn/fzf.vim',
     'tommcdo/vim-lion',
     'tpope/vim-fugitive',
     'pechorin/any-jump.vim',
     'junegunn/gv.vim',
     'airblade/vim-gitgutter',
+    'nvim-neotest/nvim-nio',
     'ludovicchabant/vim-gutentags',
     -- 'https://github.com/github/copilot.vim',
     'nvim-pack/nvim-spectre',
@@ -62,6 +64,13 @@ return {
                 autochdir = true,
                 direction = 'float',
             })
+        end,
+    },
+    {
+        'nvim-telescope/telescope-fzf-native.nvim', 
+        build = 'make',
+        config = function ()
+            require('telescope').load_extension('fzf')
         end,
     },
     {
@@ -727,13 +736,6 @@ return {
         'nvim-tree/nvim-tree.lua',
         config = function()
             require("nvim-tree").setup()
-        end,
-    },
-    {
-        'nvim-telescope/telescope-fzf-native.nvim', 
-        build = 'make',
-        config = function ()
-            require('telescope').load_extension('fzf')
         end,
     },
     {
