@@ -1213,6 +1213,11 @@ named arguments:
 (map-key ("gt" magit-log-trace-definition "trace (log) function at point"))
 (map-key ("gf" magit-log-buffer-file "Git buffer log"))
 
+;Switch to next vterm buffer
+(define-key vterm-mode-map (kbd "C-n")   'vterm-toggle-forward)
+;Switch to previous vterm buffer
+(define-key vterm-mode-map (kbd "C-p")   'vterm-toggle-backward)
+
 (global/leader-key
   "ts" '(hydra-text-scale/body :which-key "scale text")
   "tt" 'eshell-toggle
@@ -1221,7 +1226,7 @@ named arguments:
 (map-key ("tw" hydra-window-resize/body "Window resize"))
 (map-key ("tc" flyspell-mode "spell correction"))
 (with-system-not (ms-dos windows-nt cygwin)
-  (map-key ("tt" vterm-toggle "Toggle terminal")))
+  (map-key ("tt" vterm-toggle-cd "Toggle terminal")))
 (map-key ("tz" hell/zen-mode "Zen mode"))
 (map-key ("tn" hell/toggle-fancy-narrow "Narrow region"))
 
