@@ -39,6 +39,15 @@ return {
     'rmehri01/onenord.nvim',
     'romgrk/doom-one.vim',
     {
+      "ibhagwan/fzf-lua",
+      -- optional for icon support
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+      config = function()
+        -- calling `setup` is optional for customization
+        require("fzf-lua").setup({})
+      end
+    },
+    {
         'windwp/nvim-autopairs',
         config = function()
             require("nvim-autopairs").setup({})
@@ -249,13 +258,6 @@ return {
     {
         'willothy/flatten.nvim',
         config = true
-    },
-    {
-        -- "sourcegraph/sg.nvim",
-        -- dependencies = { "nvim-lua/plenary.nvim", --[[ "nvim-telescope/telescope.nvim ]] },
-        --
-        -- -- If you have a recent version of lazy.nvim, you don't need to add this!
-        -- build = "nvim -l build/init.lua",
     },
     {
         'echasnovski/mini.nvim',

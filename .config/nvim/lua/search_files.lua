@@ -2,11 +2,22 @@
 -- If workspace is a git directory, search git files otherwise search files
 local M = {}
 M.project_files = function()
-  local opts = {} -- define here if you want to define something
-  local ok = pcall(require"telescope.builtin".git_files, opts)
-  if not ok then require"telescope.builtin".find_files(opts) end
-end
+  local opts = {} -- define options here if you want to set something
 
+  -- Function to check if the current directory is part of a git repository
+  local function is_git_repo()
+    local handle = io.popen('git rev-parse --is-inside-work-tree 2>/dev/null')
+    local result = handle:read('*a')
+    handle:close()
+    return result:match('true') ~= nil
+  end
+
+  if is_git_repo() then
+    require'fzf-lua'.git_files(opts)
+  else
+    require'fzf-lua'.files(opts)
+  end
+end
 M.herp = function()
     print("derp")
 end

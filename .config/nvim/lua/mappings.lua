@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 
 -- Non leader key bindings
 keymap('n', 'gr', '<nop>')
-keymap('n', 'gr', '<cmd>Telescope lsp_references<cr>')
+keymap('n', 'gr', '<cmd>FzfLua lsp_references<cr>')
 keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
 -- Tabs
@@ -73,28 +73,28 @@ wk.register({
         name = "File",
         t = { '<cmd>NvimTreeToggle<cr>', "Toggle Tree" },
         s = { '<cmd>:lua require"search_files".project_files()<cr>', 'Search project files' },
-        f = { '<cmd>Telescope file_browser<cr>', 'Browse files'},
+        f = { '<cmd>FzfLua files<cr>', 'Browse files'},
         h = { ':lua MiniStarter.open()<cr>', 'Home window' },
         w = { '<cmd>write<cr>', 'Write file' },
-        r = { '<cmd>Telescope oldfiles<cr>', 'Recent files' },
+        r = { '<cmd>FzfLua oldfiles<cr>', 'Recent files' },
         o = { '<cmd>Oil<cr>', 'Oil' },
         p = { '<cmd>Telescope projects<cr>', 'Projects' },
     },
     s = {
         name = "Search",
         s =  { '<cmd>:silent lua require("functions").grep_project()<cr>', 'Search Project' },
-        d =  { '<cmd>Telescope diagnostics<cr>', 'Diagnostics' },
-        b =  { '<cmd>Telescope buffers<cr>', 'Buffers' },
-        c =  { '<cmd>Telescope commands<cr>', 'Commands (Plugin)' },
-        q =  { '<cmd>Telescope quickfixhistory<cr>', 'Quickfix history' },
+        d =  { '<cmd>FzfLua diagnostics_document<cr>', 'Diagnostics' },
+        b =  { '<cmd>FzfLua buffers<cr>', 'Buffers' },
+        c =  { '<cmd>FzfLua commands<cr>', 'Commands (Plugin)' },
+        q =  { '<cmd>FzfLua quickfix<cr>', 'quickfix list' },
     },
 
     g = {
         name = "Git",
         g =  { '<cmd>Neogit<cr>', 'Git status' },
-        b =  { '<cmd>Telescope git_branches<cr>', 'Branches' },
+        b =  { '<cmd>FzfLua git_branches<cr>', 'Branches' },
         B =  { '<cmd>Git blame<cr>', 'Blame' },
-        c =  { '<cmd>Telescope git_commits<cr>', 'Commits' },
+        c =  { '<cmd>FzfLua git_commits<cr>', 'Commits' },
         h =  { '<cmd>GitGutterPreviewHunk<cr>', 'Preview hunk' },
         s =  { '<cmd>GitGutterStageHunk<cr>', 'Stage hunk' },
         d =  { '<cmd>GitGutterDiffOrig<cr>', 'Diff' },
@@ -109,9 +109,9 @@ wk.register({
 
     h = {
         name = "Help",
-        k =  { '<cmd>Telescope keymaps<cr>', 'Keymaps' },
-        m =  { '<cmd>:lua require("functions").man_pages()<cr>', 'Man pages' },
-        h =  { '<cmd>Telescope help_tags<cr>', 'help (manual/plugins)' },
+        k =  { '<cmd>FzfLua keymaps<cr>', 'Keymaps' },
+        m =  { '<cmd>FzfLua manpages<cr>', 'Man pages' },
+        h =  { '<cmd>FzfLua help_tags<cr>', 'help (manual/plugins)' },
         o =  { '<cmd>Telescope vim_options<cr>', 'Options' },
     },
 
@@ -127,7 +127,7 @@ wk.register({
         name = "Code",
         a =   { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action"},
         R =  { '<cmd>Spectre<cr>', 'Replace' },
-        r = { '<cmd>Telescope lsp_references<cr>', 'References' },
+        r = { '<cmd>FzfLua lsp_references<cr>', 'References' },
         s =  { ':lua vim.lsp.buf.document_symbol()<cr>', 'Document symbol' },
         T =  { '<cmd>TodoQuickFix<cr>', 'Todo\'s' },
         t =  { '<cmd>Trouble<cr>', 'Trouble' },
@@ -142,14 +142,14 @@ wk.register({
         name = 'Marks/Harpoon',
         m = {':lua require("harpoon.mark").add_file()<cr>', 'HarpoonMark'},
         M = {'<cmd>mark<cr>', 'Mark'},
-        o = {'<cmd>Telescope marks<cr>'},
+        o = {'<cmd>FzfLua marks<cr>'},
         ['<leader>'] = {':lua require("harpoon.ui").toggle_quick_menu()<cr>', 'Open Marks'},
     }, 
 
     b = {
         name = "buffer",
         d = {'<cmd>lua MiniBufremove.delete(0, false)<cr>', 'Delete buffer'},
-        b = {'<cmd>Telescope buffers<cr>', 'buffers'},
+        b = {'<cmd>FzfLua buffers<cr>', 'buffers'},
     },
 
     d = {
@@ -172,20 +172,20 @@ wk.register({
         s = { '<cmd>ObsidianSearch<cr>', 'Search'},
     },
 
-
     a = { '<Plug>(EasyAlign)ip', 'Align' },
     z = { '<cmd>ZenMode<cr>', 'Zen mode' },
     M = { '<cmd>Noice<cr>', 'Messages (Neovim)' },
-    C = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },
+    C = { '<cmd>FzfLua colorschemes<cr>', 'Colorscheme' },
     q = { '<cmd>:silent lua require("functions").toggle_qf()<cr>', 'Toggle quickfix list' },
     w = { '<C-W>', 'Window' },
-    p = { ':Telescope neoclip<cr>', 'Paste' },
-    j = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document symbols'},
+    p = { ':FzfLua neoclip<cr>', 'Paste' },
+    j = { '<cmd>FzfLua lsp_document_symbols<cr>', 'Document symbols'},
     J = { '<cmd>AnyJump<cr>', 'AnyJump' },
     D = { ':lua toggleDarkMode()<cr>', 'Toggle dark mode' },
-    ['<space>'] = { '<cmd>Telescope buffers<cr>', 'Buffers' },
-    ['*'] =  { '<cmd>Telescope grep_string<cr>', 'Grep under cursor' },
-    ["/"] = {':lua require("telescope.builtin").current_buffer_fuzzy_find({ sorter = require("telescope.sorters").get_substr_matcher({})})<cr>', 'Fuzzy find in buffer'}, 
+    ['<space>'] = { '<cmd>FzfLua buffers<cr>', 'Buffers' },
+    ['*'] =  { '<cmd>FzfLua grep_cword<cr>', 'Grep under cursor' },
+    ["/"] = {'<cmd>FzfLua blines', 'Fuzzy find in buffer'}, 
+    [";"] =  { '<cmd>FzfLua commands<cr>', 'Commands (Plugin)' },
 
 }, {prefix = "<leader>" })
 
