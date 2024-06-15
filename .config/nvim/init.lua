@@ -19,6 +19,9 @@ vim.cmd([[autocmd! BufEnter * if &ft ==# 'help' | wincmd L | endif]])
 
 
 local set = vim.opt
+set.conceallevel = 2
+set.concealcursor = 'nc'
+
 set.relativenumber = true
 set.number         = true
 set.clipboard      = "unnamedplus"
