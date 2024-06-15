@@ -163,13 +163,11 @@ wk.register({
     },
 
     o = {
-        name = "Obsidian",
-        n = { '<cmd>ObsidianNew<cr>', 'New'},
-        o = { '<cmd>ObsidianQuickSwitch<cr>', 'Open'},
-        O = { '<cmd>ObsidianOpen<cr>', 'Open Obsidian'},
-        t = { '<cmd>ObsidianToday<cr>', 'Today'},
-        y = { '<cmd>ObsidianYesterday<cr>', 'Yesterday'},
-        s = { '<cmd>ObsidianSearch<cr>', 'Search'},
+        name = "Org",
+    },
+
+    n = {
+        name = "Notes/Org-Roam",
     },
 
     a = { '<Plug>(EasyAlign)ip', 'Align' },
