@@ -182,7 +182,7 @@ wk.register({
     D = { ':lua toggleDarkMode()<cr>', 'Toggle dark mode' },
     ['<space>'] = { '<cmd>FzfLua buffers<cr>', 'Buffers' },
     ['*'] =  { '<cmd>FzfLua grep_cword<cr>', 'Grep under cursor' },
-    ["/"] = {'<cmd>FzfLua blines<cmd>', 'Fuzzy find in buffer'}, 
+    ["/"] = {'<cmd>FzfLua blines<cr>', 'Fuzzy find in buffer'}, 
     [";"] =  { '<cmd>FzfLua commands<cr>', 'Commands (Plugin)' },
 
 }, {prefix = "<leader>" })
