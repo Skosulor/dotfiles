@@ -83,7 +83,7 @@ wk.register({
     s = {
         name = "Search",
         s =  { '<cmd>:silent lua require("functions").grep_project()<cr>', 'Search Project' },
-        d =  { '<cmd>FzfLua diagnostics_document<cr>', 'Diagnostics' },
+        d =  { '<cmd>FzfLua diagnostics_workspace<cr>', 'Diagnostics' },
         b =  { '<cmd>FzfLua buffers<cr>', 'Buffers' },
         c =  { '<cmd>FzfLua commands<cr>', 'Commands (Plugin)' },
         q =  { '<cmd>FzfLua quickfix<cr>', 'quickfix list' },
@@ -172,8 +172,9 @@ wk.register({
 
     a = {
         name = "AI",
-        t = { '<cmd>CodeCompanionToggle<cr>', 'Toggle chat'},
-        a = { '<cmd>CodeCompanionActions<cr>', 'Actions'},
+        t = { '<cmd>CodeCompanionToggle<cr>', 'Toggle AI'},
+        c = { '<cmd>CodeCompanionChat<cr>', 'Chat AI'},
+        a = { '<cmd>CodeCompanionActions<cr>', 'Actions AI'},
     },
 
     z = { '<cmd>ZenMode<cr>', 'Zen mode' },
@@ -187,7 +188,7 @@ wk.register({
     D = { ':lua toggleDarkMode()<cr>', 'Toggle dark mode' },
     ['<space>'] = { '<cmd>FzfLua buffers<cr>', 'Buffers' },
     ['*'] =  { '<cmd>FzfLua grep_cword<cr>', 'Grep under cursor' },
-    ["/"] = {'<cmd>FzfLua blines<cmd>', 'Fuzzy find in buffer'}, 
+    ["/"] = {'<cmd>FzfLua blines<cr>', 'Fuzzy find in buffer'}, 
     [";"] =  { '<cmd>FzfLua commands<cr>', 'Commands (Plugin)' },
 
 }, {prefix = "<leader>" })
