@@ -87,6 +87,19 @@ add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
 vterm_prompt_end() {
     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
 }
+
+  # Allow Ctrl-z to toggle between suspend and resume
+  function Resume {
+      fg
+      zle push-input
+      BUFFER=""
+      zle accept-line
+  }
+  zle -N Resume
+  bindkey "^Z" Resume
+
+
 setopt PROMPT_SUBST
 PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/repos/flutter/bin:$PATH
