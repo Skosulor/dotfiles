@@ -2,26 +2,26 @@ if exists("b:current_syntax")
     finish
 endif
 
-" Define keywords
-syn keyword mylangKeyword var
+" Define keywords (add 'if' and 'else' to the list)
+syn keyword mathematicalKeyword var if else
 
 " Define logical operators
-syn match mylangOperator /\&\&\|\|/
-syn match mylangOperator /&&/
-syn match mylangOperator /||/
-syn match mylangOperator /&/
-syn match mylangOperator /|/
+syn match mathematicalOperator /\&\&\|\|/
+syn match mathematicalOperator /or/
+syn match mathematicalOperator /and/
+syn match mathematicalOperator /&/
+syn match mathematicalOperator /|/
 
 " Define comments (// comment)
-syn match mylangComment "//.*$"
+syn match mathematicalComment "//.*$"
 
 " Define strings using double quotes
-syn match mylangString /"[^"]*"/
+syn match mathematicalString /"[^"\\]*\(\\.[^"\\]*\)*/
 
 " Highlight groups
-hi link mylangKeyword Keyword
-hi link mylangOperator Operator
-hi link mylangComment Comment
-hi link mylangString String
+hi link mathematicalKeyword Keyword
+hi link mathematicalOperator Operator
+hi link mathematicalComment Comment
+hi link mathematicalString String
 
 let b:current_syntax = "mathematical"

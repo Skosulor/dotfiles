@@ -102,4 +102,8 @@ vterm_prompt_end() {
 setopt PROMPT_SUBST
 PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 export PATH=$HOME/.local/bin:$PATH
-export PATH=$HOME/repos/flutter/bin:$PATH
+export PATH=$HOME/flutter/bin:$PATH
+
+export PATH=$HOME/Library/Android/sdk/emulator:$PATH
+alias emulate="emulator -avd pixel7pro"
+
