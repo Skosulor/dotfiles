@@ -3,7 +3,7 @@ if exists("b:current_syntax")
 endif
 
 " Define keywords (add 'if' and 'else' to the list)
-syn keyword mathematicalKeyword var if else
+syn keyword mathematicalKeyword var if else while
 
 " Define logical operators
 syn match mathematicalOperator /\&\&\|\|/

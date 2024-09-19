@@ -66,6 +66,10 @@ keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR
 keymap('n', '<C-e>', '<C-e>j')
 keymap('n', '<C-y>', '<C-y>k')
 
+
+-- vim.api.nvim_set_keymap('n', '<leader>dv', ':DiffviewOpen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>gl', ':DiffviewFileHistory<CR>', { noremap = true, silent = true })
+
 -- Lead key mappings with which key for some graphical help
 local wk = require("which-key")
 wk.register({
