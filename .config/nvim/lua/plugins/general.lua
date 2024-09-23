@@ -33,7 +33,7 @@ return {
     'catppuccin/nvim',
     'rebelot/kanagawa.nvim',
     -- '/Th3Whit3Wolf/one-nvim',
-    'RRethy/nvim-base16',
+    -- 'RRethy/nvim-base16',
     'NTBBloodbath/doom-one.nvim',
     'drewtempelmeyer/palenight.vim',
     'rmehri01/onenord.nvim',
@@ -418,15 +418,15 @@ return {
             vim.g.gutentags_modules = { 'ctags' }
         end
     },
-    {
-        'navarasu/onedark.nvim',
-        config = function()
-            require('onedark').setup {
-                style = 'warm'
-            }
-            vim.cmd([[colorscheme onedark]])
-        end,
-    },
+    -- {
+    --     'navarasu/onedark.nvim',
+    --     config = function()
+    --         require('onedark').setup {
+    --             style = 'warm'
+    --         }
+    --         vim.cmd([[colorscheme onedark]])
+    --     end,
+    -- },
     {
         'nvim-treesitter/nvim-treesitter',
         config = function()
@@ -536,6 +536,10 @@ return {
         config = function()
             require("noice").setup({
                 lsp = {
+                    progress =
+                    {
+                        enabled = false,
+                    },
                     -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
                     override = {
                         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -551,7 +555,7 @@ return {
                     cmdline_popup = {
                         position = {
                             row = 20,
-                            col = "50%",
+                            col = "60%",
                         },
                         size = {
                             width = 130,
@@ -861,5 +865,17 @@ return {
             })
 
         end
+    },
+   {
+        "OXY2DEV/markview.nvim",
+        lazy = false,      -- Recommended
+
+        dependencies = {
+            -- You will not need this if you installed the
+            -- parsers manually
+            -- Or if the parsers are in your $RUNTIMEPATH
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons"
+        }
     },
 }
