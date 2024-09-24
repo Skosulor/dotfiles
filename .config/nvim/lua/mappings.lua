@@ -19,10 +19,6 @@ keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
 -- Tabs
 keymap('n', '<C-n>', '<CMD>tab new<cr><CMD>lua MiniStarter.open()<cr>', { noremap = true, silent = true })
--- keymap('n', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
--- keymap('n', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
--- keymap('t', '<C-l>', '<CMD>tabn<cr>', { noremap = true, silent = true })
--- keymap('t', '<C-h>', '<CMD>tabp<cr>', { noremap = true, silent = true })
 keymap('t', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
 keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
@@ -71,132 +67,116 @@ keymap('n', '<C-y>', '<C-y>k')
 vim.api.nvim_set_keymap('v', '<leader>gl', ':DiffviewFileHistory<CR>', { noremap = true, silent = true })
 
 -- Lead key mappings with which key for some graphical help
+ 
 local wk = require("which-key")
-wk.register({
-    f = {
-        name = "File",
-        t = { '<cmd>NvimTreeToggle<cr>', "Toggle Tree" },
-        s = { '<cmd>:lua require"search_files".project_files()<cr>', 'Search project files' },
-        f = { '<cmd>FzfLua files<cr>', 'Browse files'},
-        h = { ':lua MiniStarter.open()<cr>', 'Home window' },
-        w = { '<cmd>write<cr>', 'Write file' },
-        r = { '<cmd>FzfLua oldfiles<cr>', 'Recent files' },
-        o = { '<cmd>Oil<cr>', 'Oil' },
-        p = { '<cmd>Telescope projects<cr>', 'Projects' },
+
+wk.setup({
+    icons = {
+        mappings = false, -- disable icons for mappings
     },
-    s = {
-        name = "Search",
-        s =  { '<cmd>:silent lua require("functions").grep_project()<cr>', 'Search Project' },
-        d =  { '<cmd>FzfLua diagnostics_workspace<cr>', 'Diagnostics' },
-        b =  { '<cmd>FzfLua buffers<cr>', 'Buffers' },
-        c =  { '<cmd>FzfLua commands<cr>', 'Commands (Plugin)' },
-        q =  { '<cmd>FzfLua quickfix<cr>', 'quickfix list' },
-    },
+})
 
-    g = {
-        name = "Git",
-        g =  { '<cmd>Neogit<cr>', 'Git status' },
-        b =  { '<cmd>FzfLua git_branches<cr>', 'Branches' },
-        B =  { '<cmd>Git blame<cr>', 'Blame' },
-        c =  { '<cmd>FzfLua git_commits<cr>', 'Commits' },
-        h =  { '<cmd>GitGutterPreviewHunk<cr>', 'Preview hunk' },
-        s =  { '<cmd>GitGutterStageHunk<cr>', 'Stage hunk' },
-        d =  { '<cmd>DiffviewOpen<cr>', 'Diff' },
-        h =  { '<cmd>DiffviewFileHistory<cr>', 'History diff' },
-        n =  { '<cmd>GitGutterNextHunk<cr>', 'Next hunk' },
-        p =  { '<cmd>GitGutterPrevHunk<cr>', 'Previous hunk' },
-        m =  { '<cmd>Git mergetool<cr>', 'Merge tool' },
-        l =  { '<cmd>GV<cr>', 'Log' },
-        L =  { '<cmd>GV --reflog<cr>', 'Reflog' },
-        f =  { '<cmd>Git fetch --all<cr>', 'Fetch all' },
-        u =  { '<cmd>GitGutterUndoHunk<cr>', 'Undo hunk' },
-    },
+wk.add({
+  { "<leader>f", group = "File" },
+  { "<leader>ft", "<cmd>NvimTreeToggle<cr>", desc = "Toggle Tree" },
+  { "<leader>fs", '<cmd>:lua require"search_files".project_files()<cr>', desc = "Search project files" },
+  { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Browse files" },
+  { "<leader>fh", ":lua MiniStarter.open()<cr>", desc = "Home window" },
+  { "<leader>fw", "<cmd>write<cr>", desc = "Write file" },
+  { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent files" },
+  { "<leader>fo", "<cmd>Oil<cr>", desc = "Oil" },
+  { "<leader>fp", "<cmd>Telescope projects<cr>", desc = "Projects" },
 
-    h = {
-        name = "Help",
-        k =  { '<cmd>FzfLua keymaps<cr>', 'Keymaps' },
-        m =  { '<cmd>FzfLua manpages<cr>', 'Man pages' },
-        h =  { '<cmd>FzfLua help_tags<cr>', 'help (manual/plugins)' },
-        o =  { '<cmd>Telescope vim_options<cr>', 'Options' },
-    },
+  { "<leader>s", group = "Search" },
+  { "<leader>ss", '<cmd>:silent lua require("functions").grep_project()<cr>', desc = "Search Project" },
+  { "<leader>sd", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Diagnostics" },
+  { "<leader>sb", "<cmd>FzfLua buffers<cr>", desc = "Buffers" },
+  { "<leader>sc", "<cmd>FzfLua commands<cr>", desc = "Commands (Plugin)" },
+  { "<leader>sq", "<cmd>FzfLua quickfix<cr>", desc = "quickfix list" },
 
-    t = {
-        name = "Tab",
-        n =  { '<cmd>tabnew<cr>', 'New tab' },
-        h =  { '<cmd>tabp<cr>', 'Previous tab' },
-        l =  { '<cmd>tabn<cr>', 'Next tab' },
-        d =  { '<cmd>tabclose<cr>', 'Delete tab' },
-    },
+  { "<leader>g", group = "Git" },
+  { "<leader>gg", "<cmd>Neogit<cr>", desc = "Git status" },
+  { "<leader>gb", "<cmd>FzfLua git_branches<cr>", desc = "Branches" },
+  { "<leader>gB", "<cmd>Git blame<cr>", desc = "Blame" },
+  { "<leader>gc", "<cmd>FzfLua git_commits<cr>", desc = "Commits" },
+  { "<leader>gh", "<cmd>GitGutterPreviewHunk<cr>", desc = "Preview hunk" },
+  { "<leader>gs", "<cmd>GitGutterStageHunk<cr>", desc = "Stage hunk" },
+  { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Diff" },
+  { "<leader>gh", "<cmd>DiffviewFileHistory<cr>", desc = "History diff" },
+  { "<leader>gn", "<cmd>GitGutterNextHunk<cr>", desc = "Next hunk" },
+  { "<leader>gp", "<cmd>GitGutterPrevHunk<cr>", desc = "Previous hunk" },
+  { "<leader>gm", "<cmd>Git mergetool<cr>", desc = "Merge tool" },
+  { "<leader>gl", "<cmd>GV<cr>", desc = "Log" },
+  { "<leader>gL", "<cmd>GV --reflog<cr>", desc = "Reflog" },
+  { "<leader>gf", "<cmd>Git fetch --all<cr>", desc = "Fetch all" },
+  { "<leader>gu", "<cmd>GitGutterUndoHunk<cr>", desc = "Undo hunk" },
 
-    c = {
-        name = "Code",
-        a =   { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action"},
-        R =  { '<cmd>Spectre<cr>', 'Replace' },
-        r = { '<cmd>FzfLua lsp_references<cr>', 'References' },
-        s =  { ':lua vim.lsp.buf.document_symbol()<cr>', 'Document symbol' },
-        T =  { '<cmd>TodoQuickFix<cr>', 'Todo\'s' },
-        t =  { '<cmd>Trouble<cr>', 'Trouble' },
-        c =  { ':PickColor<cr>', 'Color picker' },
-        P =  { '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', 'Preview definition' },
-        l =  { '<Plug>(comment_toggle_linewise_current)', 'Comment' },
-        y =  { 'yypk<Plug>(comment_toggle_linewise_current)j', 'Comment and copy' },
-        p =  { '<Plug>(comment_toggle_linewise)ip', 'Comment paragraph' },
-    },
+  { "<leader>h", group = "Help" },
+  { "<leader>hk", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps" },
+  { "<leader>hm", "<cmd>FzfLua manpages<cr>", desc = "Man pages" },
+  { "<leader>hh", "<cmd>FzfLua help_tags<cr>", desc = "help (manual/plugins)" },
+  { "<leader>ho", "<cmd>Telescope vim_options<cr>", desc = "Options" },
 
-    m = {
-        name = 'Marks/Harpoon',
-        m = {':lua require("harpoon.mark").add_file()<cr>', 'HarpoonMark'},
-        M = {'<cmd>mark<cr>', 'Mark'},
-        o = {'<cmd>FzfLua marks<cr>'},
-        ['<leader>'] = {':lua require("harpoon.ui").toggle_quick_menu()<cr>', 'Open Marks'},
-    }, 
+  { "<leader>t", group = "Tab" },
+  { "<leader>tn", "<cmd>tabnew<cr>", desc = "New tab" },
+  { "<leader>th", "<cmd>tabp<cr>", desc = "Previous tab" },
+  { "<leader>tl", "<cmd>tabn<cr>", desc = "Next tab" },
+  { "<leader>td", "<cmd>tabclose<cr>", desc = "Delete tab" },
 
-    b = {
-        name = "buffer",
-        d = {'<cmd>lua MiniBufremove.delete(0, false)<cr>', 'Delete buffer'},
-        b = {'<cmd>FzfLua buffers<cr>', 'buffers'},
-    },
+  { "<leader>c", group = "Code" },
+  { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", desc = "Code action" },
+  { "<leader>cR", "<cmd>Spectre<cr>", desc = "Replace" },
+  { "<leader>cr", "<cmd>FzfLua lsp_references<cr>", desc = "References" },
+  { "<leader>cs", ":lua vim.lsp.buf.document_symbol()<cr>", desc = "Document symbol" },
+  { "<leader>cT", "<cmd>TodoQuickFix<cr>", desc = "Todo's" },
+  { "<leader>ct", "<cmd>Trouble<cr>", desc = "Trouble" },
+  { "<leader>cc", ":PickColor<cr>", desc = "Color picker" },
+  { "<leader>cP", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", desc = "Preview definition" },
+  { "<leader>cl", "<Plug>(comment_toggle_linewise_current)", desc = "Comment" },
+  { "<leader>cy", "yypk<Plug>(comment_toggle_linewise_current)j", desc = "Comment and copy" },
+  { "<leader>cp", "<Plug>(comment_toggle_linewise)ip", desc = "Comment paragraph" },
 
-    d = {
-        name = "Debugger",
-        b = { '<cmd>DapToggleBreakpoint<cr>', 'Breakpoint (Toggle)' },
-        c = { '<cmd>DapContinue<cr>', 'Continue' },
-        s = { '<cmd>DapStepInto<cr>', 'Step into' },
-        S = { '<cmd>DapStepOver<cr>', 'Step over' },
-        o = { '<cmd>DapStepOut<cr>', 'Step out' },
-        Q = { '<cmd>DapTerminate<cr>', 'Quit debugging' },
-    },
+  { "<leader>m", group = "Marks/Harpoon" },
+  { "<leader>mm", ":lua require('harpoon.mark').add_file()<cr>", desc = "HarpoonMark" },
+  { "<leader>mM", "<cmd>mark<cr>", desc = "Mark" },
+  { "<leader>mo", "<cmd>FzfLua marks<cr>", desc = "Open marks" },
+  { "<leader>m<leader>", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Open Marks" },
 
-    o = {
-        name = "Org",
-    },
+  { "<leader>b", group = "buffer" },
+  { "<leader>bd", "<cmd>lua MiniBufremove.delete(0, false)<cr>", desc = "Delete buffer" },
+  { "<leader>bb", "<cmd>FzfLua buffers<cr>", desc = "buffers" },
 
-    n = {
-        name = "Notes/Org-Roam",
-    },
+  { "<leader>d", group = "Debugger" },
+  { "<leader>db", "<cmd>DapToggleBreakpoint<cr>", desc = "Breakpoint (Toggle)" },
+  { "<leader>dc", "<cmd>DapContinue<cr>", desc = "Continue" },
+  { "<leader>ds", "<cmd>DapStepInto<cr>", desc = "Step into" },
+  { "<leader>dS", "<cmd>DapStepOver<cr>", desc = "Step over" },
+  { "<leader>do", "<cmd>DapStepOut<cr>", desc = "Step out" },
+  { "<leader>dQ", "<cmd>DapTerminate<cr>", desc = "Quit debugging" },
 
-    a = {
-        name = "AI",
-        t = { '<cmd>CodeCompanionToggle<cr>', 'Toggle AI'},
-        c = { '<cmd>CodeCompanionChat<cr>', 'Chat AI'},
-        a = { '<cmd>CodeCompanionActions<cr>', 'Actions AI'},
-    },
+  { "<leader>o", group = "Org" },
 
-    z = { '<cmd>ZenMode<cr>', 'Zen mode' },
-    M = { '<cmd>Noice<cr>', 'Messages (Neovim)' },
-    C = { '<cmd>FzfLua colorschemes<cr>', 'Colorscheme' },
-    q = { '<cmd>:silent lua require("functions").toggle_qf()<cr>', 'Toggle quickfix list' },
-    w = { '<C-W>', 'Window' },
-    p = { ':FzfLua neoclip<cr>', 'Paste' },
-    j = { '<cmd>FzfLua lsp_document_symbols<cr>', 'Document symbols'},
-    J = { '<cmd>AnyJump<cr>', 'AnyJump' },
-    D = { ':lua toggleDarkMode()<cr>', 'Toggle dark mode' },
-    ['<space>'] = { '<cmd>FzfLua buffers<cr>', 'Buffers' },
-    ['*'] =  { '<cmd>FzfLua grep_cword<cr>', 'Grep under cursor' },
-    ["/"] = {'<cmd>FzfLua blines<cr>', 'Fuzzy find in buffer'}, 
-    [";"] =  { '<cmd>FzfLua commands<cr>', 'Commands (Plugin)' },
+  { "<leader>n", group = "Notes/Org-Roam" },
 
-}, {prefix = "<leader>" })
+  { "<leader>a", group = "AI" },
+  { "<leader>at", "<cmd>CodeCompanionToggle<cr>", desc = "Toggle AI" },
+  { "<leader>ac", "<cmd>CodeCompanionChat<cr>", desc = "Chat AI" },
+  { "<leader>aa", "<cmd>CodeCompanionActions<cr>", desc = "Actions AI" },
+
+  { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen mode" },
+  { "<leader>M", "<cmd>Noice<cr>", desc = "Messages (Neovim)" },
+  { "<leader>C", "<cmd>FzfLua colorschemes<cr>", desc = "Colorscheme" },
+  { "<leader>q", '<cmd>:silent lua require("functions").toggle_qf()<cr>', desc = "Toggle quickfix list" },
+  { "<leader>w", proxy = "<c-w>", group = "Window" },
+  { "<leader>p", ":FzfLua neoclip<cr>", desc = "Paste" },
+  { "<leader>j", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document symbols" },
+  { "<leader>J", "<cmd>AnyJump<cr>", desc = "AnyJump" },
+  { "<leader>D", ":lua toggleDarkMode()<cr>", desc = "Toggle dark mode" },
+  { "<leader><space>", "<cmd>FzfLua buffers<cr>", desc = "Buffers" },
+  { "<leader>*", "<cmd>FzfLua grep_cword<cr>", desc = "Grep under cursor" },
+  { "<leader>/", "<cmd>FzfLua blines<cr>", desc = "Fuzzy find in buffer" },
+  { "<leader>;", "<cmd>FzfLua commands<cr>", desc = "Commands (Plugin)" },
+})
 
 
 

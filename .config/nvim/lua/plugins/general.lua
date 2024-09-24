@@ -164,9 +164,6 @@ return {
     },
     {
         'folke/which-key.nvim',
-        config = function ()
-            require("which-key").setup {}
-        end,
     },
     {
         "AckslD/nvim-neoclip.lua",
@@ -817,11 +814,11 @@ return {
     },
     {
         "chipsenkbeil/org-roam.nvim",
-        -- tag = "0.1.0",
+        tag = "0.1.0",
         dependencies = {
             {
                 "nvim-orgmode/orgmode",
-                -- tag = "0.3.4",
+                tag = "0.3.4",
             },
         },
         config = function()
