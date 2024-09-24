@@ -79,7 +79,7 @@ wk.setup({
 wk.add({
   { "<leader>f", group = "File" },
   { "<leader>ft", "<cmd>NvimTreeToggle<cr>", desc = "Toggle Tree" },
-  { "<leader>fs", '<cmd>:lua require"search_files".project_files()<cr>', desc = "Search project files" },
+  { "<leader>fl", '<cmd>:lua require"search_files".project_files()<cr>', desc = "Locate project files" },
   { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Browse files" },
   { "<leader>fh", ":lua MiniStarter.open()<cr>", desc = "Home window" },
   { "<leader>fw", "<cmd>write<cr>", desc = "Write file" },
