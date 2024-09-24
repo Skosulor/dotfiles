@@ -52,9 +52,9 @@ keymap('n', '<leader>nr', '<nop>')
 -- Exit Terminal mode
 keymap('t', '<leader><Esc>', '<C-\\><C-n>')
 
-vim.g.copilot_no_tab_map = true
+-- vim.g.copilot_no_tab_map = true
 -- Uncomment to enable copilot autocompletion
-keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+-- keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 -- Nibbler
 keymap('n', '<C-b>', '<cmd>NibblerToggle<cr>')
