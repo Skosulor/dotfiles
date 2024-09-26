@@ -18,10 +18,10 @@ keymap('n', 'gr', '<cmd>FzfLua lsp_references<cr>')
 keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
 -- Tabs
-keymap('n', '<C-n>', '<CMD>tab new<cr><CMD>lua MiniStarter.open()<cr>', { noremap = true, silent = true })
-keymap('t', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
-keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
-keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
+-- keymap('n', '<C-n>', '<CMD>tab new<cr><CMD>lua MiniStarter.open()<cr>', { noremap = true, silent = true })
+-- keymap('t', '<C-n>', '<CMD>tab new<cr>', { noremap = true, silent = true })
+-- keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
+-- keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 
  -- LSP
 keymap('n', 'gd', ':lua vim.lsp.buf.definition()<cr>')
@@ -52,7 +52,7 @@ keymap('t', '<leader><Esc>', '<C-\\><C-n>')
 -- Uncomment to enable copilot autocompletion
 -- keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
--- Nibbler
+-- 
 keymap('n', '<C-b>', '<cmd>NibblerToggle<cr>')
 keymap('v', '<C-b>', '<cmd>NibblerToggle<cr>')
 
@@ -76,8 +76,19 @@ wk.setup({
     },
 })
 
+-- Window navigation with Ctrl + Arrow keys
+vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
+vim.keymap.set('n', '<C-n>', '<C-w>j', { silent = true })
+vim.keymap.set('n', '<C-e>', '<C-w>k', { silent = true })
+vim.keymap.set('n', '<C-i>', '<C-w>l', { silent = true })
+
+
+-- Improve completion experience
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+
 wk.add({
   { "<leader>f", group = "File" },
+  { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undo tree" },
   { "<leader>ft", "<cmd>NvimTreeToggle<cr>", desc = "Toggle Tree" },
   { "<leader>fl", '<cmd>:lua require"search_files".project_files()<cr>', desc = "Locate project files" },
   { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Browse files" },

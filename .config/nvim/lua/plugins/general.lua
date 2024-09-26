@@ -2,6 +2,8 @@ return {
     { "folke/neoconf.nvim", cmd = "Neoconf" },
     'nvim-telescope/telescope-file-browser.nvim',
     'junegunn/fzf.vim',
+    'RRethy/vim-illuminate',
+    'mbbill/undotree',
     'tommcdo/vim-lion',
     'tpope/vim-fugitive',
     'pechorin/any-jump.vim',
@@ -44,7 +46,15 @@ return {
       dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
         -- calling `setup` is optional for customization
-        require("fzf-lua").setup({})
+        require("fzf-lua").setup({
+            keymap = {
+                fzf = {
+                    ["ctrl-n"] = "down",
+                    ["ctrl-e"] = "up",
+                },
+            },
+
+        })
       end
     },
     {
@@ -230,12 +240,12 @@ return {
         wants = {'nvim-treesitter'}, -- or require if not used so far
         after = {'nvim-cmp'} -- if a completion plugin is using tabs load it before
     },
-    {
-        "kylechui/nvim-surround",
-        config = function()
-            require("nvim-surround").setup({})
-        end,
-    },
+    -- {
+    --     "kylechui/nvim-surround",
+    --     config = function()
+    --         require("nvim-surround").setup({})
+    --     end,
+    -- },
     {
         "folke/trouble.nvim",
         dependencies = "nvim-tree/nvim-web-devicons",
@@ -291,11 +301,11 @@ return {
             }
         end,
     },
-    {
-        'numToStr/Comment.nvim',
-        opts = {},
-        lazy = false,
-    },
+    -- {
+    --     'numToStr/Comment.nvim',
+    --     opts = {},
+    --     lazy = false,
+    -- },
     {
         "NeogitOrg/neogit",
         dependencies = {
@@ -569,7 +579,7 @@ return {
                     lsp_doc_border = false, -- add a border to hover docs and signature help
                 },
                 messages = {
-                    enabled = true, -- enables the Noice messages UI
+                    enabled = false, -- enables the Noice messages UI
                 },
                 notify = {
                     enabled = false,

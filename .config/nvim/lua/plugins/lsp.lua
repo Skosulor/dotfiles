@@ -9,30 +9,45 @@ return {
     {'williamboman/mason-lspconfig.nvim'},
     {
         'VonHeikemen/lsp-zero.nvim', 
-        branch = 'v3.x' ,
-        config = function ()
+        branch = 'v3.x',
+        config = function()
             local lsp_zero = require('lsp-zero')
+            local lspconfig = require('lspconfig')
 
             lsp_zero.on_attach(function(client, bufnr)
-                -- see :help lsp-zero-keybindings
-                -- to learn the available actions
                 lsp_zero.default_keymaps({buffer = bufnr})
             end)
 
-            -- to learn how to use mason.nvim
-            -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
-            require('mason').setup({})
+            require('mason').setup()
             require('mason-lspconfig').setup({
-                ensure_installed = {},
+                ensure_installed = {'dartls'},
                 handlers = {
-                    function(server_name)
-                        require('lspconfig')[server_name].setup({})
+                    lsp_zero.default_setup,
+                    dartls = function()
+                        lspconfig.dartls.setup({
+                            on_attach = lsp_zero.on_attach,
+                            capabilities = lsp_zero.get_capabilities(),
+                            cmd = {"dart", "language-server", "--protocol=lsp"},
+                            filetypes = {"dart"},
+                            init_options = {
+                                closingLabels = true,
+                                flutterOutline = true,
+                                onlyAnalyzeProjectsWithOpenFiles = true,
+                                outline = true,
+                                suggestFromUnimportedLibraries = true
+                            },
+                            settings = {
+                                dart = {
+                                    completeFunctionCalls = true,
+                                    showTodos = true,
+                                }
+                            }
+                        })
                     end,
                 },
             })
+            lspconfig.dartls.setup{}
         end
-        -- here yo can setup the language servers
-
     },
     {'neovim/nvim-lspconfig'},
     {
