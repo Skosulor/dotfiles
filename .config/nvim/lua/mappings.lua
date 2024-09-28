@@ -198,6 +198,8 @@ wk.add({
 
 
 
+-- Colemak remaps
+
 -- Remap navigation keys for Colemak
 vim.keymap.set('n', 'h', 'h', { noremap = true })
 vim.keymap.set('n', 'e', 'k', { noremap = true })
@@ -208,3 +210,20 @@ vim.keymap.set('n', 'i', 'l', { noremap = true })
 vim.keymap.set('n', 'l', 'i', { noremap = true })
 vim.keymap.set('n', 'k', 'n', { noremap = true })
 vim.keymap.set('n', 'j', 'e', { noremap = true })
+
+-- Visual mode keymaps
+vim.keymap.set('v', 'h', 'h', { noremap = true })
+vim.keymap.set('v', 'e', 'k', { noremap = true })
+vim.keymap.set('v', 'n', 'j', { noremap = true })
+vim.keymap.set('v', 'i', 'l', { noremap = true })
+
+-- Remap displaced commands for visual mode
+vim.keymap.set('v', 'l', 'i', { noremap = true })
+vim.keymap.set('v', 'k', 'n', { noremap = true })
+vim.keymap.set('v', 'j', 'e', { noremap = true })
+
+vim.keymap.set('o', 'n', 'j', { noremap = true })
+vim.keymap.set('o', 'e', 'k', { noremap = true })
+
+vim.keymap.set('v', 'K', 'N', { noremap = true })
+vim.keymap.set('n', 'K', 'N', { noremap = true })
