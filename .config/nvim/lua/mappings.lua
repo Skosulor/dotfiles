@@ -30,8 +30,9 @@ keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 -- keymap('n', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 -- keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 
- -- LSP
-keymap('n', 'gd', ':lua vim.lsp.buf.definition()<cr>')
+-- LSP
+keymap('n', '<C-a>', ':lua vim.lsp.buf.definition()<cr>')
+keymap('n', '<C-p>', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 keymap('n', 'gl', ':lua vim.diagnostic.open_float()<cr>')
 keymap('n', 'K', ':lua vim.lsp.buf.hover()<enter>')
 
@@ -63,7 +64,6 @@ keymap('t', '<leader><Esc>', '<C-\\><C-n>')
 keymap('n', '<C-b>', '<cmd>NibblerToggle<cr>')
 keymap('v', '<C-b>', '<cmd>NibblerToggle<cr>')
 
-keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 
 -- Move cursor when scrolling with 'j' and 'k'
 keymap('n', '<C-e>', '<C-e>j')
