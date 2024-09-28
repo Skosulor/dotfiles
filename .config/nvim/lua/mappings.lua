@@ -12,6 +12,13 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
     end
 })
 
+
+keymap('n', '<A-h>', '<C-w>h')
+keymap('n', '<A-n>', '<C-w>j')
+keymap('n', '<A-e>', '<C-w>k')
+keymap('n', '<A-i>', '<C-w>l')
+
+
 -- Non leader key bindings
 keymap('n', 'gr', '<nop>')
 keymap('n', 'gr', '<cmd>FzfLua lsp_references<cr>')
@@ -62,7 +69,6 @@ keymap('n', 'gD', "<cmd>lua require('goto-preview').goto_preview_definition()<CR
 keymap('n', '<C-e>', '<C-e>j')
 keymap('n', '<C-y>', '<C-y>k')
 
-
 -- vim.api.nvim_set_keymap('n', '<leader>dv', ':DiffviewOpen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>gl', ':DiffviewFileHistory<CR>', { noremap = true, silent = true })
 
@@ -75,13 +81,6 @@ wk.setup({
         mappings = false, -- disable icons for mappings
     },
 })
-
--- Window navigation with Ctrl + Arrow keys
-vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
-vim.keymap.set('n', '<C-n>', '<C-w>j', { silent = true })
-vim.keymap.set('n', '<C-e>', '<C-w>k', { silent = true })
-vim.keymap.set('n', '<C-i>', '<C-w>l', { silent = true })
-
 
 -- Improve completion experience
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
@@ -178,7 +177,15 @@ wk.add({
   { "<leader>M", "<cmd>Noice<cr>", desc = "Messages (Neovim)" },
   { "<leader>C", "<cmd>FzfLua colorschemes<cr>", desc = "Colorscheme" },
   { "<leader>q", '<cmd>:silent lua require("functions").toggle_qf()<cr>', desc = "Toggle quickfix list" },
-  { "<leader>w", proxy = "<c-w>", group = "Window" },
+
+  { "<leader>wh", "<C-w>h", desc = "Go to left window"},
+  { "<leader>wn", "<C-w>j", desc = "Go to lower window"},
+  { "<leader>we", "<C-w>k", desc = "Go to upper window"},
+  { "<leader>wi", "<C-w>l", desc = "Go to right window"},
+  { "<leader>wv", "<C-w>v", desc = "Split window vertically"},
+  { "<leader>ws", "<cmd>split<cr>", desc = "Split window horizontally"},
+  { "<leader>wq", "<C-w>q", desc = "Quit current window"},
+
   { "<leader>p", ":FzfLua neoclip<cr>", desc = "Paste" },
   { "<leader>j", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document symbols" },
   { "<leader>J", "<cmd>AnyJump<cr>", desc = "AnyJump" },
@@ -191,3 +198,13 @@ wk.add({
 
 
 
+-- Remap navigation keys for Colemak
+vim.keymap.set('n', 'h', 'h', { noremap = true })
+vim.keymap.set('n', 'e', 'k', { noremap = true })
+vim.keymap.set('n', 'n', 'j', { noremap = true })
+vim.keymap.set('n', 'i', 'l', { noremap = true })
+
+-- Remap displaced commands
+vim.keymap.set('n', 'l', 'i', { noremap = true })
+vim.keymap.set('n', 'k', 'n', { noremap = true })
+vim.keymap.set('n', 'j', 'e', { noremap = true })

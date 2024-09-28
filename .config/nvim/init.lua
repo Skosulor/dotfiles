@@ -113,29 +113,29 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
-vim.keymap.set('i', '<C-n>', '<C-n>', { noremap = true })
-vim.keymap.set('i', '<C-e>', '<C-p>', { noremap = true })
-
--- Make sure Ctrl+e doesn't close the completion menu
-vim.keymap.set('i', '<C-e>', function()
-    if vim.fn.pumvisible() == 1 then
-        return '<C-p>'
-    else
-        return '<C-e>'
-    end
-end, { expr = true, noremap = true })
-
-
-vim.keymap.set({'i', 'c'}, '<C-e>', function()
-    if vim.fn.pumvisible() == 1 then
-        return vim.api.nvim_replace_termcodes('<C-p>', true, true, true)
-    else
-        return vim.api.nvim_replace_termcodes('<C-e>', true, true, true)
-    end
-end, { expr = true, noremap = true })
-
--- Improve completion experience
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+-- vim.keymap.set('i', '<C-n>', '<C-n>', { noremap = true })
+-- vim.keymap.set('i', '<C-e>', '<C-p>', { noremap = true })
+--
+-- -- Make sure Ctrl+e doesn't close the completion menu
+-- vim.keymap.set('i', '<C-e>', function()
+--     if vim.fn.pumvisible() == 1 then
+--         return '<C-p>'
+--     else
+--         return '<C-e>'
+--     end
+-- end, { expr = true, noremap = true })
+--
+--
+-- vim.keymap.set({'i', 'c'}, '<C-e>', function()
+--     if vim.fn.pumvisible() == 1 then
+--         return vim.api.nvim_replace_termcodes('<C-p>', true, true, true)
+--     else
+--         return vim.api.nvim_replace_termcodes('<C-e>', true, true, true)
+--     end
+-- end, { expr = true, noremap = true })
+--
+-- -- Improve completion experience
+-- vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
@@ -144,14 +144,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.relativenumber = false
   end
 })
-
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
     vim.opt_local.textwidth = 80
   end
 })
-
 -- to learn how to use mason.nvim
 -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
 require('mason').setup({})
