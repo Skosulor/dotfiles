@@ -224,6 +224,8 @@ vim.keymap.set('v', 'j', 'e', { noremap = true })
 
 vim.keymap.set('o', 'n', 'j', { noremap = true })
 vim.keymap.set('o', 'e', 'k', { noremap = true })
+vim.keymap.set('o', 'l', 'i', { noremap = true })
+vim.keymap.set('o', 'i', 'l', { noremap = true })
 
 vim.keymap.set('v', 'K', 'N', { noremap = true })
 vim.keymap.set('n', 'K', 'N', { noremap = true })
