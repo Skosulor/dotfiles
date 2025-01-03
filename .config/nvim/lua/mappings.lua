@@ -34,7 +34,7 @@ keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 keymap('n', '<C-a>', ':lua vim.lsp.buf.definition()<cr>')
 keymap('n', '<C-p>', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 keymap('n', 'gl', ':lua vim.diagnostic.open_float()<cr>')
-keymap('n', 'K', ':lua vim.lsp.buf.hover()<enter>')
+keymap('n', 'J', ':lua vim.lsp.buf.hover()<enter>')
 
  -- Terminal
 keymap('n', '<leader><tab>', '<cmd>ToggleTerm<cr>')
@@ -200,32 +200,89 @@ wk.add({
 
 -- Colemak remaps
 
--- Remap navigation keys for Colemak
-vim.keymap.set('n', 'h', 'h', { noremap = true })
-vim.keymap.set('n', 'e', 'k', { noremap = true })
-vim.keymap.set('n', 'n', 'j', { noremap = true })
-vim.keymap.set('n', 'i', 'l', { noremap = true })
+vim.g.colemak_enabled = true
 
--- Remap displaced commands
-vim.keymap.set('n', 'l', 'i', { noremap = true })
-vim.keymap.set('n', 'k', 'n', { noremap = true })
-vim.keymap.set('n', 'j', 'e', { noremap = true })
+-- Function to set Colemak mappings
+local function enable_colemak()
+    -- Normal mode
+    vim.keymap.set('n', 'h', 'h', { noremap = true })
+    vim.keymap.set('n', 'e', 'k', { noremap = true })
+    vim.keymap.set('n', 'n', 'j', { noremap = true })
+    vim.keymap.set('n', 'i', 'l', { noremap = true })
+    vim.keymap.set('n', 'l', 'i', { noremap = true })
+    vim.keymap.set('n', 'k', 'n', { noremap = true })
+    vim.keymap.set('n', 'j', 'e', { noremap = true })
 
--- Visual mode keymaps
-vim.keymap.set('v', 'h', 'h', { noremap = true })
-vim.keymap.set('v', 'e', 'k', { noremap = true })
-vim.keymap.set('v', 'n', 'j', { noremap = true })
-vim.keymap.set('v', 'i', 'l', { noremap = true })
+    -- Visual mode
+    vim.keymap.set('v', 'h', 'h', { noremap = true })
+    vim.keymap.set('v', 'e', 'k', { noremap = true })
+    vim.keymap.set('v', 'n', 'j', { noremap = true })
+    vim.keymap.set('v', 'i', 'l', { noremap = true })
+    vim.keymap.set('v', 'l', 'i', { noremap = true })
+    vim.keymap.set('v', 'k', 'n', { noremap = true })
+    vim.keymap.set('v', 'j', 'e', { noremap = true })
 
--- Remap displaced commands for visual mode
-vim.keymap.set('v', 'l', 'i', { noremap = true })
-vim.keymap.set('v', 'k', 'n', { noremap = true })
-vim.keymap.set('v', 'j', 'e', { noremap = true })
+    -- Operator mode
+    vim.keymap.set('o', 'n', 'j', { noremap = true })
+    vim.keymap.set('o', 'e', 'k', { noremap = true })
+    vim.keymap.set('o', 'l', 'i', { noremap = true })
+    vim.keymap.set('o', 'i', 'l', { noremap = true })
 
-vim.keymap.set('o', 'n', 'j', { noremap = true })
-vim.keymap.set('o', 'e', 'k', { noremap = true })
-vim.keymap.set('o', 'l', 'i', { noremap = true })
-vim.keymap.set('o', 'i', 'l', { noremap = true })
+    -- Search
+    vim.keymap.set('v', 'K', 'N', { noremap = true })
+    vim.keymap.set('n', 'K', 'N', { noremap = true })
+end
 
-vim.keymap.set('v', 'K', 'N', { noremap = true })
-vim.keymap.set('n', 'K', 'N', { noremap = true })
+-- Function to restore default mappings
+local function disable_colemak()
+    -- Instead of deleting, we'll map keys back to their original functions
+    vim.keymap.set('n', 'h', 'h', { noremap = true })
+    vim.keymap.set('n', 'j', 'j', { noremap = true })
+    vim.keymap.set('n', 'k', 'k', { noremap = true })
+    vim.keymap.set('n', 'l', 'l', { noremap = true })
+    vim.keymap.set('n', 'i', 'i', { noremap = true })
+    vim.keymap.set('n', 'n', 'n', { noremap = true })
+    vim.keymap.set('n', 'e', 'e', { noremap = true })
+
+    vim.keymap.set('v', 'h', 'h', { noremap = true })
+    vim.keymap.set('v', 'j', 'j', { noremap = true })
+    vim.keymap.set('v', 'k', 'k', { noremap = true })
+    vim.keymap.set('v', 'l', 'l', { noremap = true })
+    vim.keymap.set('v', 'i', 'i', { noremap = true })
+    vim.keymap.set('v', 'n', 'n', { noremap = true })
+    vim.keymap.set('v', 'e', 'e', { noremap = true })
+
+    vim.keymap.set('o', 'h', 'h', { noremap = true })
+    vim.keymap.set('o', 'j', 'j', { noremap = true })
+    vim.keymap.set('o', 'k', 'k', { noremap = true })
+    vim.keymap.set('o', 'l', 'l', { noremap = true })
+    vim.keymap.set('o', 'i', 'i', { noremap = true })
+    vim.keymap.set('o', 'n', 'n', { noremap = true })
+    vim.keymap.set('o', 'e', 'e', { noremap = true })
+
+    -- Reset search keys
+    vim.keymap.set('n', 'n', 'n', { noremap = true })
+    vim.keymap.set('n', 'N', 'N', { noremap = true })
+    vim.keymap.set('v', 'n', 'n', { noremap = true })
+    vim.keymap.set('v', 'N', 'N', { noremap = true })
+end
+
+
+-- Toggle function
+function _G.toggle_colemak()
+    vim.g.colemak_enabled = not vim.g.colemak_enabled
+    if vim.g.colemak_enabled then
+        enable_colemak()
+        vim.notify("Colemak mode enabled")
+    else
+        disable_colemak()
+        vim.notify("Colemak mode disabled")
+    end
+end
+
+-- Initialize Colemak mode on startup
+enable_colemak()
+
+-- Add keybinding to toggle (you can add this to your which-key config)
+vim.api.nvim_set_keymap('n', '<leader>k', ':lua toggle_colemak()<CR>', 
+    { noremap = true, silent = true, desc = "Toggle Colemak" })
