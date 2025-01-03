@@ -1322,6 +1322,89 @@ named arguments:
 (map-key ("od" dashboard-open "dashboard"))
 (map-key ("ot" eshell "eshell"))
 
+(set-frame-font "Iosevka 12" nil t)
+
+
+
+(defun hell/enable-colemak ()
+  "Enable Colemak remappings in Evil mode."
+  (interactive)
+  ;; Normal state remaps
+  (define-key evil-normal-state-map "n" 'evil-next-line)
+  (define-key evil-normal-state-map "e" 'evil-previous-line)
+  (define-key evil-normal-state-map "i" 'evil-forward-char)
+  (define-key evil-normal-state-map "h" 'evil-backward-char)
+  (define-key evil-normal-state-map "l" 'evil-insert)
+  (define-key evil-normal-state-map "k" 'evil-ex-search-next)
+  (define-key evil-normal-state-map "K" 'evil-ex-search-previous)
+  (define-key evil-normal-state-map "j" 'evil-forward-word-end)
+
+  (define-key evil-operator-state-map "l" evil-inner-text-objects-map)
+
+  ;; Visual state remaps
+  (define-key evil-visual-state-map "n" 'evil-next-line)
+  (define-key evil-visual-state-map "e" 'evil-previous-line)
+  (define-key evil-visual-state-map "i" 'evil-forward-char)
+  (define-key evil-visual-state-map "h" 'evil-backward-char)
+  (define-key evil-visual-state-map "l" 'evil-insert)
+  (define-key evil-visual-state-map "k" 'evil-ex-search-next)
+  (define-key evil-visual-state-map "K" 'evil-ex-search-previous)
+  (define-key evil-visual-state-map "j" 'evil-forward-word-end)
+  ;; Motion state remaps (for text objects)
+  (define-key evil-motion-state-map "n" 'evil-next-line)
+  (define-key evil-motion-state-map "e" 'evil-previous-line)
+  (define-key evil-motion-state-map "i" 'evil-forward-char)
+  (define-key evil-motion-state-map "h" 'evil-backward-char)
+  (define-key evil-motion-state-map "k" 'evil-ex-search-next)
+  (define-key evil-motion-state-map "K" 'evil-ex-search-previous)
+
+  (define-key evil-motion-state-map "j" 'evil-forward-word-end)
+
+  ;; Operator state remaps
+  (define-key evil-operator-state-map "n" 'evil-next-line)
+  (define-key evil-operator-state-map "e" 'evil-previous-line)
+  (define-key evil-operator-state-map "i" 'evil-forward-char)
+  (define-key evil-operator-state-map "h" 'evil-backward-char))
+
+(defun hell/disable-colemak ()
+  "Disable Colemak remappings and restore default Evil bindings."
+  (interactive)
+  ;; Normal state restore
+  (define-key evil-normal-state-map "j" 'evil-next-line)
+  (define-key evil-normal-state-map "k" 'evil-previous-line)
+  (define-key evil-normal-state-map "l" 'evil-forward-char)
+  (define-key evil-normal-state-map "h" 'evil-backward-char)
+  (define-key evil-normal-state-map "i" 'evil-insert)
+  (define-key evil-normal-state-map "n" 'evil-ex-search-next)
+  (define-key evil-normal-state-map "N" 'evil-ex-search-previous)
+  (define-key evil-normal-state-map "e" 'evil-forward-word-end)
+
+  (define-key evil-operator-state-map "i" evil-inner-text-objects-map)
+
+  ;; Visual state remaps
+  (define-key evil-visual-state-map "j" 'evil-next-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-line)
+  (define-key evil-visual-state-map "l" 'evil-forward-char)
+  (define-key evil-visual-state-map "h" 'evil-backward-char)
+  (define-key evil-visual-state-map "i" 'evil-insert)
+  (define-key evil-visual-state-map "n" 'evil-ex-search-next)
+  (define-key evil-visual-state-map "N" 'evil-ex-search-previous)
+  (define-key evil-visual-state-map "e" 'evil-forward-word-end)
+  ;; Motion state remaps (for text objects)
+  (define-key evil-motion-state-map "j" 'evil-next-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-line)
+  (define-key evil-motion-state-map "l" 'evil-forward-char)
+  (define-key evil-motion-state-map "h" 'evil-backward-char)
+  (define-key evil-motion-state-map "n" 'evil-ex-search-next)
+  (define-key evil-motion-state-map "N" 'evil-ex-search-previous)
+
+  (define-key evil-motion-state-map "e" 'evil-forward-word-end)
+
+  ;; Operator state remaps
+  (define-key evil-operator-state-map "j" 'evil-next-line)
+  (define-key evil-operator-state-map "k" 'evil-previous-line)
+  (define-key evil-operator-state-map "k" 'evil-forward-char)
+  (define-key evil-operator-state-map "h" 'evil-backward-char))
 
 
 (custom-set-variables
@@ -1329,8 +1412,12 @@ named arguments:
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e"
+     "87adaa6ee5799b9116c2bbdcf2109efe44d9102d23ebc0ec1c3d75b95ffa50b5" default))
  '(package-vc-selected-packages
-   '((vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package"))))
+   '((vc-use-package :vc-backend Git :url
+                     "https://github.com/slotThe/vc-use-package"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
