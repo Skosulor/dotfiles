@@ -573,7 +573,7 @@
   :init
   (vertico-mode))
 
-
+(setq vertico-count 20)
 (use-package vertico-posframe)
 (vertico-posframe-mode 1)
 (setq vertico-posframe-poshandler #'posframe-poshandler-frame-bottom-center)
@@ -1165,11 +1165,11 @@ named arguments:
 (define-key copilot-completion-map (kbd "C-j") 'copilot-accept-completion)
 
 (define-key evil-normal-state-map (kbd "C-S-h") #'tab-previous)
-(define-key evil-normal-state-map (kbd "C-S-l") #'tab-next)
 (define-key evil-normal-state-map (kbd "C-S-n") #'tab-new)
 (define-key evil-insert-state-map (kbd "C-S-h") #'tab-previous)
-(define-key evil-insert-state-map (kbd "C-S-l") #'tab-next)
 (define-key evil-insert-state-map (kbd "C-S-n") #'tab-new)
+(define-key evil-normal-state-map (kbd "C-S-l") #'tab-next)
+(define-key evil-insert-state-map (kbd "C-S-l") #'tab-next)
 
 (define-key evil-normal-state-map (kbd "C-i") #'evil-jump-forward)
 
@@ -1243,7 +1243,7 @@ named arguments:
   )
 (map-key ("fP" hell/browse-package-files "open Package file"))
 (map-key ("ft" treemacs))
-(map-key ("fs" consult-projectile-find-file "Find project file"))
+(map-key ("fl" consult-projectile-find-file "Find project file"))
 (map-key ("fw" evil-write "write file"))
 
 (global/leader-key
@@ -1364,7 +1364,10 @@ named arguments:
   (define-key evil-operator-state-map "n" 'evil-next-line)
   (define-key evil-operator-state-map "e" 'evil-previous-line)
   (define-key evil-operator-state-map "i" 'evil-forward-char)
-  (define-key evil-operator-state-map "h" 'evil-backward-char))
+  (define-key evil-operator-state-map "h" 'evil-backward-char)
+
+  (define-key evil-normal-state-map (kbd "C-S-i") #'tab-next)
+  (define-key evil-insert-state-map (kbd "C-S-i") #'tab-next))
 
 (defun hell/disable-colemak ()
   "Disable Colemak remappings and restore default Evil bindings."
@@ -1404,7 +1407,9 @@ named arguments:
   (define-key evil-operator-state-map "j" 'evil-next-line)
   (define-key evil-operator-state-map "k" 'evil-previous-line)
   (define-key evil-operator-state-map "k" 'evil-forward-char)
-  (define-key evil-operator-state-map "h" 'evil-backward-char))
+  (define-key evil-operator-state-map "h" 'evil-backward-char)
+  (define-key evil-normal-state-map (kbd "C-S-l") #'tab-next)
+  (define-key evil-insert-state-map (kbd "C-S-l") #'tab-next))
 
 
 (custom-set-variables
