@@ -1252,7 +1252,7 @@ named arguments:
 (map-key ("bp" previous-buffer "previous buffer"))
 (map-key ("bn" next-buffer "next buffer"))
 (map-key ("bb" consult-buffer "switch buffer"))
-(map-key ("bd" kill-this-buffer "kill buffer"))
+(map-key ("bd" kill-current-buffer "kill buffer"))
 (map-key ("bD" tabspaces-clear-buffers "Kill other buffers"))
 
 (global/leader-key
