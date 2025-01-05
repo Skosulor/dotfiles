@@ -1272,7 +1272,6 @@ named arguments:
 (map-key ("ww" tabspaces-switch-or-create-workspace "Switch workspace"))
 (map-key ("wS" tabspaces-save-session "Save session"))
 (map-key ("wr" tabspaces-restore-session "Restore session"))
-(map-key ("wn" tab-next "next workspace"))
 (map-key ("wp" tab-previous "previous workspace"))
 (map-key ("w<tab>" evil-switch-to-windows-last-buffer "last buffer"))
 
