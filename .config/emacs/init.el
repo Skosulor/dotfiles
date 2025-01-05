@@ -1164,12 +1164,9 @@ named arguments:
 
 (define-key copilot-completion-map (kbd "C-j") 'copilot-accept-completion)
 
-(define-key evil-normal-state-map (kbd "C-S-h") #'tab-previous)
-(define-key evil-normal-state-map (kbd "C-S-n") #'tab-new)
-(define-key evil-insert-state-map (kbd "C-S-h") #'tab-previous)
-(define-key evil-insert-state-map (kbd "C-S-n") #'tab-new)
-(define-key evil-normal-state-map (kbd "C-S-l") #'tab-next)
-(define-key evil-insert-state-map (kbd "C-S-l") #'tab-next)
+(define-key evil-normal-state-map (kbd "M-h") #'tab-previous)
+(define-key evil-insert-state-map (kbd "M-n") #'tab-new)
+(define-key evil-insert-state-map (kbd "M-l") #'tab-next)
 
 (define-key evil-normal-state-map (kbd "C-i") #'evil-jump-forward)
 
@@ -1324,6 +1321,13 @@ named arguments:
 (set-frame-font "Iosevka 12" nil t)
 
 
+(straight-use-package 'gptel)
+
+(defun load-if-exists (f)
+  (if (file-exists-p (expand-file-name f))
+      (load-file (expand-file-name f))))
+
+(load-if-exists "~/.api_key.el")
 
 (defun hell/enable-colemak ()
   "Enable Colemak remappings in Evil mode."
@@ -1365,8 +1369,8 @@ named arguments:
   (define-key evil-operator-state-map "i" 'evil-forward-char)
   (define-key evil-operator-state-map "h" 'evil-backward-char)
 
-  (define-key evil-normal-state-map (kbd "C-S-i") #'tab-next)
-  (define-key evil-insert-state-map (kbd "C-S-i") #'tab-next))
+  (define-key evil-normal-state-map (kbd "M-i") #'tab-next)
+  (define-key evil-insert-state-map (kbd "M-i") #'tab-next))
 
 (defun hell/disable-colemak ()
   "Disable Colemak remappings and restore default Evil bindings."
@@ -1407,8 +1411,8 @@ named arguments:
   (define-key evil-operator-state-map "k" 'evil-previous-line)
   (define-key evil-operator-state-map "k" 'evil-forward-char)
   (define-key evil-operator-state-map "h" 'evil-backward-char)
-  (define-key evil-normal-state-map (kbd "C-S-l") #'tab-next)
-  (define-key evil-insert-state-map (kbd "C-S-l") #'tab-next))
+  (define-key evil-normal-state-map (kbd "M-l") #'tab-next)
+  (define-key evil-insert-state-map (kbd "M-l") #'tab-next))
 
 
 (custom-set-variables
