@@ -1256,10 +1256,10 @@ named arguments:
 (map-key ("bD" tabspaces-clear-buffers "Kill other buffers"))
 
 (global/leader-key
-  "wl" 'evil-window-right
+  "wi" 'evil-window-right
   "wh" 'evil-window-left
-  "wj" 'evil-window-down
-  "wk" 'evil-window-up
+  "wn" 'evil-window-down
+  "we" 'evil-window-up
   "wv" 'evil-window-vsplit
   "ws" 'evil-window-split
   "wq" 'evil-quit
