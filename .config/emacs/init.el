@@ -1254,6 +1254,8 @@ named arguments:
 
 (global/leader-key
   "aa" 'align
+  "am" 'gptel-menu
+  "ac" 'gptel
   "ae" 'align-entire
   "ar" 'ialign)
 
@@ -1347,7 +1349,10 @@ named arguments:
 (set-frame-font "Iosevka 12" nil t)
 
 
-(straight-use-package 'gptel)
+;(use-package gptel
+; :config
+; ;; default backend
+; (setq gptel-backend gptel-make-anthropic))
 
 (defun load-if-exists (f)
   (if (file-exists-p (expand-file-name f))
