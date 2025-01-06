@@ -309,6 +309,7 @@
   (projectile-enable-caching t))
 
 (use-package evil-nerd-commenter
+  :demand t
   :ensure t
   :bind (:map evil-normal-state-map
               ("gc" . evilnc-comment-operator)))
@@ -370,6 +371,8 @@
 
   "Set workspace buffer list for consult-buffer.")
 (add-to-list 'consult-buffer-sources 'consult--source-workspace))
+
+(setq consult-grep-command "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /   --smart-case --no-heading --line-number . -e ARG OPTS")
 
 (use-package topsy)
 (add-hook 'prog-mode-hook #'topsy-mode)
@@ -576,7 +579,8 @@
 (setq vertico-count 20)
 (use-package vertico-posframe)
 (vertico-posframe-mode 1)
-(setq vertico-posframe-poshandler #'posframe-poshandler-frame-bottom-center)
+;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-bottom-center)
+(setq vertico-posframe-poshandler #'posframe-poshandler-frame-center)
 
 (use-package corfu
     :after vertico
@@ -687,7 +691,10 @@
   "Automatically show Embark action help after invoking `embark-act'."
   (embark-help-key))
 
+
 (advice-add 'embark-act :after #'my/embark-act-show-help)
+
+(setq embark-prompter 'embark-completing-read-prompter)
 
 (use-package quickrun)
 
@@ -777,15 +784,15 @@ _c_: Continue       _a_: Show All
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
   ;; Set faces for heading levels
-  (dolist (face '((org-level-1 . 1.10)
-                  (org-level-2 . 1.00)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.05)
-                  (org-level-5 . 1.05)
-                  (org-level-6 . 1.05)
-                  (org-level-7 . 1.05)
-                  (org-level-8 . 1.05)))
-    (set-face-attribute (car face) nil  :weight 'semi-bold :height (cdr face))))
+(dolist (face '((org-level-1 . 1.12)
+                (org-level-2 . 1.07)
+                (org-level-3 . 1.03)
+                (org-level-4 . 1.00)
+                (org-level-5 . 1.00)
+                (org-level-6 . 1.00)
+                (org-level-7 . 1.00)
+                (org-level-8 . 1.00)))
+  (set-face-attribute (car face) nil :foreground "#a9a1e1" :weight 'semi-bold :height (cdr face)))
 
   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
    ;; (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
@@ -807,7 +814,11 @@ _c_: Continue       _a_: Show All
   "Custom setup for org-mode."
   (local-set-key (kbd "RET") 'evil-org-return))
 
+(add-hook 'org-mode-hook 'org-indent-mode)
 (add-hook 'org-mode-hook 'hell/org-mode-evil-enter)
+(setq org-src-fontify-natively t
+	  org-src-tab-acts-natively t
+      org-edit-src-content-indentation 0)
 
 ;; (defun hell/org-mode-setup ()
 ;;   (hell/org-mode-evil-enter)
@@ -1274,6 +1285,7 @@ named arguments:
   "wv" 'evil-window-vsplit
   "ws" 'evil-window-split
   "wq" 'evil-quit
+  "wt" 'tab-bar-move-window-to-tab
   "wL" 'evil-window-move-far-right
   "wH" 'evil-window-move-far-left
   "wJ" 'evil-window-move-very-bottom
@@ -1357,6 +1369,7 @@ named arguments:
   (define-key evil-normal-state-map "j" 'evil-forward-word-end)
 
   (define-key evil-operator-state-map "l" evil-inner-text-objects-map)
+  (define-key evil-visual-state-map "l" evil-inner-text-objects-map)
 
   ;; Visual state remaps
   (define-key evil-visual-state-map "n" 'evil-next-line)
@@ -1406,6 +1419,7 @@ named arguments:
   (define-key evil-normal-state-map "e" 'evil-forward-word-end)
 
   (define-key evil-operator-state-map "i" evil-inner-text-objects-map)
+  (define-key evil-visual-state-map "l" evil-inner-text-objects-map)
 
   ;; Visual state remaps
   (define-key evil-visual-state-map "j" 'evil-next-line)
