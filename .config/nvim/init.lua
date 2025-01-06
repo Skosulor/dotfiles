@@ -167,3 +167,6 @@ require('mason-lspconfig').setup({
   },
 })
 
+
+
+vim.cmd([[colorscheme everforest]])

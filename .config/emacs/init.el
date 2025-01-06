@@ -699,10 +699,14 @@
   :init
   (setq lsp-keymap-prefix "C-c l"))
 
+
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :custom
-  (lsp-ui-doc-position 'bottom))
+  (lsp-ui-doc-position 'at-point))
+
+
+(setq lsp-headerline-breadcrumb-enable nil)
 
 (use-package dap-mode
   :ensure t)
@@ -796,6 +800,8 @@ _c_: Continue       _a_: Show All
    ;; (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
    ;; (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
+
+(setq org-hide-leading-stars t)
 (defun hell/org-mode-evil-enter ()
   (interactive)
   "Custom setup for org-mode."
@@ -1164,11 +1170,18 @@ named arguments:
 
 (define-key copilot-completion-map (kbd "C-j") 'copilot-accept-completion)
 
-(define-key evil-normal-state-map (kbd "M-h") #'tab-previous)
+(define-key evil-insert-state-map (kbd "M-h") #'tab-previous)
 (define-key evil-insert-state-map (kbd "M-n") #'tab-new)
 (define-key evil-insert-state-map (kbd "M-l") #'tab-next)
 
+(define-key evil-normal-state-map (kbd "M-h") #'tab-previous)
+(define-key evil-normal-state-map (kbd "M-n") #'tab-new)
+(define-key evil-normal-state-map (kbd "M-l") #'tab-next)
+
 (define-key evil-normal-state-map (kbd "C-i") #'evil-jump-forward)
+
+
+(define-key evil-normal-state-map (kbd "J") #'lsp-ui-doc-glance)
 
 (global/leader-key
   "<tab>"  '(:ignore t :which-key "workspace")
@@ -1202,11 +1215,12 @@ named arguments:
 (map-key ("gg" magit "Git-status"))
 (map-key ("gB" vc-annotate "blame"))
 (map-key ("gb" magit-branch "branch"))
+(map-key ("gv" magit-find-file-other-window "visit file across branches"))
 (map-key ("gl" magit-log-all "log"))
 (map-key ("gr" magit-reflog-head "reflog"))
 (map-key ("gd" magit-file-dispatch "dispatch file"))
-(map-key ("gp" magit-push "reflog"))
-(map-key ("gP" magit-push "push"))
+(map-key ("gp" magit-push "push"))
+(map-key ("gP" magit-pull-or-fetch "pull"))
 (map-key ("gt" magit-log-trace-definition "trace (log) function at point"))
 (map-key ("gf" magit-log-buffer-file "Git buffer log"))
 
@@ -1363,6 +1377,12 @@ named arguments:
 
   (define-key evil-motion-state-map "j" 'evil-forward-word-end)
 
+  (evil-define-key 'normal magit-mode-map
+    "h" 'magit-section-backward
+    "n" 'magit-next-line
+    "e" 'magit-previous-line
+    "i" 'magit-section-forward)
+
   ;; Operator state remaps
   (define-key evil-operator-state-map "n" 'evil-next-line)
   (define-key evil-operator-state-map "e" 'evil-previous-line)
@@ -1406,6 +1426,12 @@ named arguments:
 
   (define-key evil-motion-state-map "e" 'evil-forward-word-end)
 
+  (evil-define-key 'normal magit-mode-map
+    "h" 'magit-section-backward
+    "j" 'magit-next-line
+    "k" 'magit-previous-line
+    "l" 'magit-section-forward)
+
   ;; Operator state remaps
   (define-key evil-operator-state-map "j" 'evil-next-line)
   (define-key evil-operator-state-map "k" 'evil-previous-line)
@@ -1421,8 +1447,17 @@ named arguments:
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e"
-     "87adaa6ee5799b9116c2bbdcf2109efe44d9102d23ebc0ec1c3d75b95ffa50b5" default))
+   '("e8bd9bbf6506afca133125b0be48b1f033b1c8647c628652ab7a2fe065c10ef0"
+     "4e2e42e9306813763e2e62f115da71b485458a36e8b4c24e17a2168c45c9cf9d"
+     "0a2168af143fb09b67e4ea2a7cef857e8a7dad0ba3726b500c6a579775129635"
+     "dccf4a8f1aaf5f24d2ab63af1aa75fd9d535c83377f8e26380162e888be0c6a9"
+     "57be445bbd705240c10b49915783b44ac05ae7ad1f710d241b9fb6a4a89dfc02"
+     "9f297216c88ca3f47e5f10f8bd884ab24ac5bc9d884f0f23589b0a46a608fe14"
+     "9013233028d9798f901e5e8efb31841c24c12444d3b6e92580080505d56fd392"
+     "48042425e84cd92184837e01d0b4fe9f912d875c43021c3bcb7eeb51f1be5710"
+     "88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e"
+     "87adaa6ee5799b9116c2bbdcf2109efe44d9102d23ebc0ec1c3d75b95ffa50b5"
+     default))
  '(package-vc-selected-packages
    '((vc-use-package :vc-backend Git :url
                      "https://github.com/slotThe/vc-use-package"))))
