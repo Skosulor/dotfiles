@@ -12,7 +12,7 @@ ZSH_THEME="agnoster"
 # zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
+DISABLE_MAGIC_FUNCTIONS="true"
 
 # Auto correction of misspelled commands
 ENABLE_CORRECTION="false"
@@ -26,12 +26,8 @@ bindkey '^O' autosuggest-accept
 
 source $ZSH/oh-my-zsh.sh
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
 # Set up fzf key bindings and fuzzy completion
-#source /usr/share/fzf/shell/key-bindings.zsh
+# source /usr/share/fzf/shell/key-bindings.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
