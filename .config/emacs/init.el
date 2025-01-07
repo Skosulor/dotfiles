@@ -792,7 +792,7 @@ _c_: Continue       _a_: Show All
                 (org-level-6 . 1.00)
                 (org-level-7 . 1.00)
                 (org-level-8 . 1.00)))
-  (set-face-attribute (car face) nil :foreground "#a9a1e1" :weight 'semi-bold :height (cdr face)))
+  (set-face-attribute (car face) nil :foreground "#a9a1e1" :weight 'semi-bold :height (cdr face))))
 
   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
    ;; (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
@@ -1349,10 +1349,7 @@ named arguments:
 (set-frame-font "Iosevka 12" nil t)
 
 
-;(use-package gptel
-; :config
-; ;; default backend
-; (setq gptel-backend gptel-make-anthropic))
+(use-package gptel)
 
 (defun load-if-exists (f)
   (if (file-exists-p (expand-file-name f))
@@ -1374,14 +1371,13 @@ named arguments:
   (define-key evil-normal-state-map "j" 'evil-forward-word-end)
 
   (define-key evil-operator-state-map "l" evil-inner-text-objects-map)
-  (define-key evil-visual-state-map "l" evil-inner-text-objects-map)
 
   ;; Visual state remaps
   (define-key evil-visual-state-map "n" 'evil-next-line)
   (define-key evil-visual-state-map "e" 'evil-previous-line)
   (define-key evil-visual-state-map "i" 'evil-forward-char)
   (define-key evil-visual-state-map "h" 'evil-backward-char)
-  (define-key evil-visual-state-map "l" 'evil-insert)
+  (define-key evil-visual-state-map "l" evil-inner-text-objects-map)
   (define-key evil-visual-state-map "k" 'evil-ex-search-next)
   (define-key evil-visual-state-map "K" 'evil-ex-search-previous)
   (define-key evil-visual-state-map "j" 'evil-forward-word-end)
