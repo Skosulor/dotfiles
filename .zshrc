@@ -103,4 +103,4 @@ export PATH=$HOME/.cargo/bin:$PATH
 
 export PATH=$HOME/Library/Android/sdk/emulator:$PATH
 alias emulate="emulator -avd pixel7pro"
-
+alias esp="source ~/projects/esp-idf/export.sh"

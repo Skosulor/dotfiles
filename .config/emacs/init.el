@@ -517,10 +517,11 @@
     ;; make evil-search-word look for symbol rather than word boundaries
     (setq-default evil-symbol-word-search t))
 
-(use-package evil-snipe)
-(evil-snipe-mode 1)
-(evil-snipe-override-mode 1)
-(setq evil-snipe-scope 'whole-visible)
+;; Using avy-goto-char-timer instead of evil-snipe
+;; (use-package evil-snipe)
+;; (evil-snipe-mode 1)
+;; (evil-snipe-override-mode 1)
+;; (setq evil-snipe-scope 'whole-visible)
 
 (use-package evil-surround
   :ensure t
@@ -1163,6 +1164,8 @@ named arguments:
    "<escape>" 'transient-quit-one)
 
 (define-key evil-normal-state-map "u" 'undo-tree-undo)
+
+(define-key evil-normal-state-map "s" 'avy-goto-char-timer)
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 
 (evil-define-key '(normal visual) 'global (kbd "C-a")
@@ -1280,10 +1283,10 @@ named arguments:
 (map-key ("bD" tabspaces-clear-buffers "Kill other buffers"))
 
 (global/leader-key
-  "wi" 'evil-window-right
+  "wl" 'evil-window-right
   "wh" 'evil-window-left
-  "wn" 'evil-window-down
-  "we" 'evil-window-up
+  "wj" 'evil-window-down
+  "wk" 'evil-window-up
   "wv" 'evil-window-vsplit
   "ws" 'evil-window-split
   "wq" 'evil-quit
@@ -1397,6 +1400,21 @@ named arguments:
     "e" 'magit-previous-line
     "i" 'magit-section-forward)
 
+  (global/leader-key
+    "wi" 'evil-window-right
+    "wh" 'evil-window-left
+    "wn" 'evil-window-down
+    "we" 'evil-window-up
+    "wv" 'evil-window-vsplit
+    "ws" 'evil-window-split
+    "wq" 'evil-quit
+    "wt" 'tab-bar-move-window-to-tab
+    "wI" 'evil-window-move-far-right
+    "wH" 'evil-window-move-far-left
+    "wN" 'evil-window-move-very-bottom
+    "wE" 'evil-window-move-very-top
+    )
+
   ;; Operator state remaps
   (define-key evil-operator-state-map "n" 'evil-next-line)
   (define-key evil-operator-state-map "e" 'evil-previous-line)
@@ -1446,6 +1464,21 @@ named arguments:
     "j" 'magit-next-line
     "k" 'magit-previous-line
     "l" 'magit-section-forward)
+
+  (global/leader-key
+    "wl" 'evil-window-right
+    "wh" 'evil-window-left
+    "wj" 'evil-window-down
+    "wk" 'evil-window-up
+    "wv" 'evil-window-vsplit
+    "ws" 'evil-window-split
+    "wq" 'evil-quit
+    "wt" 'tab-bar-move-window-to-tab
+    "wL" 'evil-window-move-far-right
+    "wH" 'evil-window-move-far-left
+    "wJ" 'evil-window-move-very-bottom
+    "wK" 'evil-window-move-very-top
+    )
 
   ;; Operator state remaps
   (define-key evil-operator-state-map "j" 'evil-next-line)
