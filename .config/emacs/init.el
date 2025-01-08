@@ -1160,17 +1160,8 @@ named arguments:
   (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
 
 
-(defun my-markdown-insert-todo-item ()
-  "Insert a new todo list item on a new line."
-  (interactive)
-  (let ((line (thing-at-point 'line t)))
-    (when (string-match "^- \\[ \\]" line)
-      (end-of-line)
-      (newline)
-      (insert "- [ ] "))))
-
 (with-eval-after-load 'markdown-mode
-  (define-key markdown-mode-map (kbd "<C-return>") 'my-markdown-insert-todo-item))
+  (define-key markdown-mode-map (kbd "<C-return>") 'markdown-insert-list-item))
 
 
 (general-define-key
@@ -1412,7 +1403,8 @@ named arguments:
     "h" 'magit-section-backward
     "n" 'magit-next-line
     "e" 'magit-previous-line
-    "i" 'magit-section-forward)
+    "i" 'magit-section-forward
+    "l" 'magit-gitignore)
 
   (global/leader-key
     "wi" 'evil-window-right
