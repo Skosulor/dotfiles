@@ -1404,7 +1404,7 @@ named arguments:
     "n" 'magit-next-line
     "e" 'magit-previous-line
     "i" 'magit-section-forward
-    "l" 'magit-gitignore)
+    "j" 'magit-gitignore)
 
   (global/leader-key
     "wi" 'evil-window-right
