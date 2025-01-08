@@ -1159,6 +1159,20 @@ named arguments:
   (define-key minibuffer-mode-map (kbd "C-c C-e") #'hell/grep-edit))
   (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
 
+
+(defun my-markdown-insert-todo-item ()
+  "Insert a new todo list item on a new line."
+  (interactive)
+  (let ((line (thing-at-point 'line t)))
+    (when (string-match "^- \\[ \\]" line)
+      (end-of-line)
+      (newline)
+      (insert "- [ ] "))))
+
+(with-eval-after-load 'markdown-mode
+  (define-key markdown-mode-map (kbd "<C-return>") 'my-markdown-insert-todo-item))
+
+
 (general-define-key
    :keymaps 'transient-base-map
    "<escape>" 'transient-quit-one)
