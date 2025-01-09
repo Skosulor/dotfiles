@@ -452,7 +452,12 @@
 
 (unless (package-installed-p 'emacs-themes)
   (package-vc-install '(emacs-themes :url "https://github.com/skosulor/emacs-themes")))
-(load-theme 'doom-one t)
+
+
+(use-package catppuccin-theme)
+(setq catppuccin-flavor 'frappe) ;; or 'latte, 'macchiato, or 'mocha
+
+(load-theme 'catppuccin t)
 
 (set-frame-parameter nil 'alpha-background 90)
 (add-to-list 'default-frame-alist '(alpha-background . 90))
@@ -1163,6 +1168,9 @@ named arguments:
 (with-eval-after-load 'markdown-mode
   (define-key markdown-mode-map (kbd "<C-return>") 'markdown-insert-list-item))
 
+(add-hook 'markdown-mdoe #'visual-line-mode)
+
+;; (package-vc-install '(ultra-scroll :vc-backend Git :url  "https://github.com/jdtsmith/ultra-scroll"))
 
 (general-define-key
    :keymaps 'transient-base-map
@@ -1421,6 +1429,15 @@ named arguments:
     "wE" 'evil-window-move-very-top
     )
 
+(with-eval-after-load 'evil
+  (with-eval-after-load 'dired
+    ;; Define the remapping for 'normal' state in Dired mode
+    (evil-define-key 'normal dired-mode-map
+      (kbd "h") 'left-char
+      (kbd "i") 'right-char
+      (kbd "n") 'dired-next-line
+      (kbd "e") 'dired-previous-line)))
+
   ;; Operator state remaps
   (define-key evil-operator-state-map "n" 'evil-next-line)
   (define-key evil-operator-state-map "e" 'evil-previous-line)
@@ -1486,6 +1503,15 @@ named arguments:
     "wK" 'evil-window-move-very-top
     )
 
+(with-eval-after-load 'evil
+  (with-eval-after-load 'dired
+    ;; Define the remapping for 'normal' state in Dired mode
+    (evil-define-key 'normal dired-mode-map
+      (kbd "h") 'left-char
+      (kbd "j") 'right-char
+      (kbd "k") 'dired-next-line
+      (kbd "l") 'dired-previous-line)))
+
   ;; Operator state remaps
   (define-key evil-operator-state-map "j" 'evil-next-line)
   (define-key evil-operator-state-map "k" 'evil-previous-line)
@@ -1501,7 +1527,9 @@ named arguments:
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e8bd9bbf6506afca133125b0be48b1f033b1c8647c628652ab7a2fe065c10ef0"
+   '("94bed81ca0be98f58d2cfa2676221c492c8fd5f76b40abd9d73ac00c0d0c9711"
+     "4594d6b9753691142f02e67b8eb0fda7d12f6cc9f1299a49b819312d6addad1d"
+     "e8bd9bbf6506afca133125b0be48b1f033b1c8647c628652ab7a2fe065c10ef0"
      "4e2e42e9306813763e2e62f115da71b485458a36e8b4c24e17a2168c45c9cf9d"
      "0a2168af143fb09b67e4ea2a7cef857e8a7dad0ba3726b500c6a579775129635"
      "dccf4a8f1aaf5f24d2ab63af1aa75fd9d535c83377f8e26380162e888be0c6a9"
@@ -1513,7 +1541,9 @@ named arguments:
      "87adaa6ee5799b9116c2bbdcf2109efe44d9102d23ebc0ec1c3d75b95ffa50b5"
      default))
  '(package-vc-selected-packages
-   '((vc-use-package :vc-backend Git :url
+   '((ultra-scroll :vc-backend Git :url
+                   "https://github.com/jdtsmith/ultra-scroll")
+     (vc-use-package :vc-backend Git :url
                      "https://github.com/slotThe/vc-use-package"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
