@@ -324,6 +324,8 @@
     :init
     (global-flycheck-mode 1))
 
+(use-package consult-flycheck)
+
   (use-package flycheck-hl-todo
     :ensure t
     :defer 5 ; Need to be initialized after the rest of checkers
@@ -1207,6 +1209,7 @@ named arguments:
 
 (define-key evil-normal-state-map (kbd "C-i") #'evil-jump-forward)
 
+(define-key evil-visual-state-map (kbd "ga") #'evil-lion-left)
 
 (define-key evil-normal-state-map (kbd "J") #'lsp-ui-doc-glance)
 
@@ -1336,7 +1339,7 @@ named arguments:
 (map-key ("ne" hell/toggle-org-src-mode "Edit source block"))
 
 (global/leader-key
-  "cx" '(consult-flymake :which-key "Errors/diagnostics")
+  "cx" '(consult-flycheck :which-key "Errors/diagnostics")
   "ca" 'eglot-code-action
   "cc" 'evilnc-comment-or-uncomment-lines
   "cC" 'compile
