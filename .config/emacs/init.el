@@ -165,8 +165,6 @@
 
 (setq ring-bell-function 'ignore)
 
-(use-package org-jira)
-(setq jiralib-url "https://sdlc.electrolux.com/")
 
 (setq enable-recursive-minibuffers t)
 
@@ -177,63 +175,50 @@
   (use-package pdf-tools)
   (pdf-tools-install))
 
-(use-package quelpa)
-(use-package quelpa-use-package)
 
-(use-package copilot
-  :quelpa (copilot :fetcher github
-                   :repo "zerolfx/copilot.el"
-                   :branch "main"
-                   :files ("dist" "*.el" "*.c" "*.rs" "*.h")))
+(use-package quelpa)
+;(use-package quelpa-use-package)
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (add-to-list 'load-path "<path where use-package is installed>")
+  (require 'use-package))
 
 (setq truncate-lines t)
 (set-default 'truncate-lines t)
 
-(use-package pomidor
-  :config (setq pomidor-sound-tick nil
-                pomidor-sound-tack nil)
-  :hook (pomidor-mode . (lambda ()
-                          (display-line-numbers-mode -1)
-                          (setq left-fringe-width 0 right-fringe-width 0)
-                          (setq left-margin-width 2 right-margin-width 0)
-                          (set-window-buffer nil (current-buffer)))))
-
-(setq pomidor-alert (lambda () (emacs-floating-notification "\n-------Break Time!-------\n\n")))
 
 (use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-set-navigator t)
-  (setq dashboard-set-init-info nil)
-  (setq dashboard-init-info "Welcome Hell")
-  (setq dashboard-footer-messages '("Welcome Hell"))
-  (setq dashboard-center-content t))
+ :ensure t
+ :config
+ (dashboard-setup-startup-hook)
+ (setq dashboard-set-navigator t)
+ (setq dashboard-set-init-info nil)
+ (setq dashboard-init-info "Welcome Hell")
+ (setq dashboard-footer-messages '("Welcome Hell"))
+ (setq dashboard-center-content t))
 
 
 (defun dashboard-insert-pomidor (list-size)
-  "Insert the custom Pomodoro widget into the dashboard."
-  (dashboard-insert-heading "Pomodoro" nil "p")  ;; 'p' is the tag for this section
-  (widget-create 'push-button
-                 :action (lambda (&rest _ignore)
-                           (pomidor))
-                 :mouse-face 'highlight
-                 :follow-link "\C-m"
-                 :button-prefix ""
-                 :button-suffix ""
-                 :format "%[%t%]"
-                 "\n     Start Timer")
-  (insert "\n"))
+ "Insert the custom Pomodoro widget into the dashboard."
+ (dashboard-insert-heading "Pomodoro" nil "p")  ;; 'p' is the tag for this section
+ (widget-create 'push-button
+                :action (lambda (&rest _ignore)
+                          (pomidor))
+                :mouse-face 'highlight
+                :follow-link "\C-m"
+                :button-prefix ""
+                :button-suffix ""
+                :format "%[%t%]"
+                "\n     Start Timer")
+ (insert "\n"))
 
 
+(setq dashboard-items '((recents  . 10)
+                        (projects . 10)))
 
-(use-package dashboard-hackernews)
+(setq dashboard-startup-banner 'logo)
 
-(setq dashboard-items '((hackernews . 5)
-                        (recents  . 5)
-                        (projects . 5)))
-(add-to-list 'dashboard-item-generators '(pomidor . dashboard-insert-pomidor))
-(add-to-list 'dashboard-items '(pomidor) t)
 
 (use-package tab-jump-out
   :config
@@ -256,29 +241,15 @@
 (use-package forge
   :after magit)
 
-(use-package eshell-toggle
-  :custom
-  (eshell-toggle-use-projectile-root t)
-  (eshell-toggle-window-side 'below))
-(use-package eshell-z)
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 
 (with-system-not (ms-dos windows-nt cygwin)
   (use-package vterm
     :ensure t)
-
-
-    ;; (add-hook 'eshell-mode-hook
-    ;;           (lambda ()
-    ;;             (define-key eshell-mode-map (kbd "C-l") 'forward-sexp)))
-
-    (use-package eshell-toggle
-      :custom
-      (eshell-toggle-size-fraction 3)
-      (eshell-toggle-use-projectile-root t)
-      (eshell-toggle-run-command nil)
-      :quelpa
-      (eshell-toggle :repo "4DA/eshell-toggle" :fetcher github :version original))
-
 
   (with-system-not (ms-dos windows-nt cygwin)
     (use-package vterm-toggle)
@@ -418,23 +389,6 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
-
-;; (use-package nano-modeline)
-;; (nano-modeline-text-mode t)
-;; (add-hook 'prog-mode-hook            #'nano-modeline-prog-mode)
-;; (add-hook 'text-mode-hook            #'nano-modeline-text-mode)
-;; (add-hook 'org-mode-hook             #'nano-modeline-org-mode)
-;; (add-hook 'pdf-view-mode-hook        #'nano-modeline-pdf-mode)
-;; (add-hook 'mu4e-headers-mode-hook    #'nano-modeline-mu4e-headers-mode)
-;; (add-hook 'mu4e-view-mode-hook       #'nano-modeline-mu4e-message-mode)
-;; (add-hook 'elfeed-show-mode-hook     #'nano-modeline-elfeed-entry-mode)
-;; (add-hook 'elfeed-search-mode-hook   #'nano-modeline-elfeed-search-mode)
-;; (add-hook 'term-mode-hook            #'nano-modeline-term-mode)
-;; (add-hook 'xwidget-webkit-mode-hook  #'nano-modeline-xwidget-mode)
-;; (add-hook 'messages-buffer-mode-hook #'nano-modeline-message-mode)
-;; (add-hook 'org-capture-mode-hook     #'nano-modeline-org-capture-mode)
-;; (add-hook 'org-agenda-mode-hook      #'nano-modeline-org-agenda-mode)
-
 (use-package hydra
     :defer t)
 
@@ -524,6 +478,7 @@
     ;; make evil-search-word look for symbol rather than word boundaries
     (setq-default evil-symbol-word-search t))
 
+(setq avy-timeout-seconds 0.3)
 ;; Using avy-goto-char-timer instead of evil-snipe
 ;; (use-package evil-snipe)
 ;; (evil-snipe-mode 1)
@@ -714,6 +669,13 @@
   :init
   (setq lsp-keymap-prefix "C-c l"))
 
+;; (require 'lsp)
+(require 'lsp-haskell)
+;; Hooks so haskell and literate haskell major modes trigger LSP setup
+;; (add-hook 'haskell-mode-hook #'lsp)
+;; (add-hook 'haskell-literate-mode-hook #'lsp)
+
+
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
@@ -823,6 +785,12 @@ _c_: Continue       _a_: Show All
   (local-set-key (kbd "RET") 'evil-org-return))
 
 (add-hook 'org-mode-hook 'org-indent-mode)
+
+(add-hook 'org-mode-hook (lambda ()
+  (push '("[ ]" . "□") prettify-symbols-alist)
+  (push '("[X]" . "■") prettify-symbols-alist)
+  (prettify-symbols-mode 1)))
+
 (add-hook 'org-mode-hook 'hell/org-mode-evil-enter)
 (setq org-src-fontify-natively t
 	  org-src-tab-acts-natively t
@@ -1129,6 +1097,7 @@ named arguments:
 
 (add-hook 'org-mode-hook #'my/org-mode-no-electric-pair-less-than)
 
+
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
@@ -1172,6 +1141,20 @@ named arguments:
 
 (add-hook 'markdown-mdoe #'visual-line-mode)
 
+
+(push '("[ ]" . "☐") prettify-symbols-alist)
+(push '("[X]" . "☒") prettify-symbols-alist)
+(push '("[x]" . "☒") prettify-symbols-alist)
+(push '("[-]" . "▣") prettify-symbols-alist)
+(prettify-symbols-mode 1)
+
+(add-hook 'markdown-mode-hook (lambda ()
+  (push '("[ ]" . "□") prettify-symbols-alist)
+  (push '("[x]" . "☒") prettify-symbols-alist)
+  (push '("[X]" . "■") prettify-symbols-alist)
+  (prettify-symbols-mode 1)))
+
+
 ;; (package-vc-install '(ultra-scroll :vc-backend Git :url  "https://github.com/jdtsmith/ultra-scroll"))
 
 (general-define-key
@@ -1197,7 +1180,7 @@ named arguments:
   (define-key vertico-map (kbd "C-h") (lambda () (interactive) (call-interactively 'backward-kill-word)))
   (define-key vertico-map (kbd "C-l") #'vertico-insert))
 
-(define-key copilot-completion-map (kbd "C-j") 'copilot-accept-completion)
+;(define-key copilot-completion-map (kbd "C-j") 'copilot-accept-completion)
 
 (define-key evil-insert-state-map (kbd "M-h") #'tab-previous)
 (define-key evil-insert-state-map (kbd "M-n") #'tab-new)
@@ -1211,7 +1194,7 @@ named arguments:
 
 (define-key evil-visual-state-map (kbd "ga") #'evil-lion-left)
 
-(define-key evil-normal-state-map (kbd "J") #'lsp-ui-doc-glance)
+(define-key evil-normal-state-map (kbd "J") #'lsp-describe-thing-at-point)
 
 (global/leader-key
   "<tab>"  '(:ignore t :which-key "workspace")
@@ -1322,6 +1305,7 @@ named arguments:
 (global/leader-key
   "hb" 'embark-bindings
   "hf" 'describe-function
+  "hK" 'describe-key
   "hk" 'describe-keymap
   "hi" 'info
   "hv" 'describe-variable
@@ -1375,6 +1359,8 @@ named arguments:
       (load-file (expand-file-name f))))
 
 (load-if-exists "~/.api_key.el")
+
+(message "Enable colemak")
 
 (defun hell/enable-colemak ()
   "Enable Colemak remappings in Evil mode."
@@ -1524,13 +1510,17 @@ named arguments:
   (define-key evil-insert-state-map (kbd "M-l") #'tab-next))
 
 
+(message "Custom-set-variables")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("94bed81ca0be98f58d2cfa2676221c492c8fd5f76b40abd9d73ac00c0d0c9711"
+   '("15466a777080bcd4f71fea193fd7e4988552919c0e8a09621883aa19166b5099"
+     "0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
+     "94bed81ca0be98f58d2cfa2676221c492c8fd5f76b40abd9d73ac00c0d0c9711"
      "4594d6b9753691142f02e67b8eb0fda7d12f6cc9f1299a49b819312d6addad1d"
      "e8bd9bbf6506afca133125b0be48b1f033b1c8647c628652ab7a2fe065c10ef0"
      "4e2e42e9306813763e2e62f115da71b485458a36e8b4c24e17a2168c45c9cf9d"
