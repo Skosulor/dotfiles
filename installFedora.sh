@@ -76,6 +76,20 @@ else
   echo "Nerd Fonts repository already exists at $NERDFONTS_DIR"
 fi
 
+# Set SDDM as the display manager
+echo "Switching to SDDM as the display manager..."
+sudo dnf install -y sddm
+
+# Disable GDM and enable SDDM
+echo "Disabling GDM..."
+sudo systemctl disable gdm.service
+
+echo "Enabling SDDM..."
+sudo systemctl enable sddm.service
+sudo systemctl restart sddm.service
+
+
+
 echo "Installing Nerd Fonts..."
 bash "$NERDFONTS_DIR/install.sh"
 

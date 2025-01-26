@@ -108,6 +108,7 @@
   nixpkgs.config.allowUnfree = true;
   programs.zsh.enable = true;
 
+  virtualisation.virtualbox.host.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -154,7 +155,6 @@
     libGLU
     autobuild
     gnumake
-
     libtool
     cmake
     ghostty
