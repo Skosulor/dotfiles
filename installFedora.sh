@@ -43,7 +43,7 @@ mkdir -p "$CONFIG_DIR"
 
 # Symlink individual files and directories
 ln -sf "$DOTFILES_DIR/.config/nvim" "$CONFIG_DIR/nvim"
-ln -sf "$DOTFILES_DIR/.config/emacs/init.el" "$CONFIG_DIR/emacs/init.el"
+ln -sf "$DOTFILES_DIR/.config/emacs" "$CONFIG_DIR/emacs"
 ln -sf "$DOTFILES_DIR/.config/wofi" "$CONFIG_DIR/wofi"
 ln -sf "$DOTFILES_DIR/.config/hypr" "$CONFIG_DIR/hypr"
 ln -sf "$DOTFILES_DIR/.config/waybar" "$CONFIG_DIR/waybar"
@@ -77,15 +77,15 @@ fi
 # fi
 
 # Set SDDM as the display manager
-echo "Switching to SDDM as the display manager..."
-sudo dnf install -y sddm
+# echo "Switching to SDDM as the display manager..."
+# sudo dnf install -y sddm
 
-# Disable GDM and enable SDDM
-echo "Disabling GDM..."
-sudo systemctl disable gdm.service
+# # Disable GDM and enable SDDM
+# echo "Disabling GDM..."
+# sudo systemctl disable gdm.service
 
-echo "Enabling SDDM..."
-sudo systemctl enable sddm.service
+# echo "Enabling SDDM..."
+# sudo systemctl enable sddm.service
 # sudo systemctl restart sddm.service
 
 
