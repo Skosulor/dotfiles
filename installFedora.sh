@@ -4,8 +4,10 @@
 DOTFILES_REPO="https://github.com/your-username/dotfiles.git" # Replace with your dotfiles repository
 DOTFILES_DIR="$HOME/dotfiles"
 CONFIG_DIR="$HOME/.config"
-APPS_TO_INSTALL=("git" "unzip" "git" "clang" "xz" "mesa-libGLU" "cmake" "ninja-build" "pkg-config" "zsh" "neovim" "curl" "htop" "gnome-tweaks" "tmux" "waybar" "hyprland" "wofi" "kitty" "direnv" "imagemagick" "ripgrep" "fd" "emacs" "ghostty") 
-GRPOUPS_TO_INSTALL=("c-development" "development-tools")
+NERDFONTS_REPO="https://github.com/ryanoasis/nerd-fonts.git"
+NERDFONTS_DIR="$HOME/nerd-fonts"
+APPS_TO_INSTALL=("git" "unzip" "clang" "xz" "mesa-libGLU" "cmake" "ninja-build" "pkg-config" "zsh" "neovim" "curl" "htop" "gnome-tweaks" "tmux" "waybar" "hyprland" "wofi" "kitty" "direnv" "imagemagick" "ripgrep" "fd" "emacs" "ghostty")
+GROUPS_TO_INSTALL=("c-development" "development-tools")
 
 # Ensure sudo is available
 if ! command -v sudo &> /dev/null; then
@@ -20,6 +22,12 @@ sudo dnf update -y && sudo dnf upgrade -y
 # Install essential applications
 echo "Installing essential applications..."
 sudo dnf install -y "${APPS_TO_INSTALL[@]}"
+
+# Install additional groups
+echo "Installing additional package groups..."
+for group in "${GROUPS_TO_INSTALL[@]}"; do
+  sudo dnf groupinstall -y "$group"
+done
 
 # Clone dotfiles repository
 if [ ! -d "$DOTFILES_DIR" ]; then
@@ -41,7 +49,7 @@ ln -sf "$DOTFILES_DIR/.config/hypr" "$CONFIG_DIR/hypr"
 ln -sf "$DOTFILES_DIR/.config/waybar" "$CONFIG_DIR/waybar"
 ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 ln -sf "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
-cp "$DOTFILES_DIR/.config/wallpaper.jpg" "$HOME/.tmux.conf"
+cp "$DOTFILES_DIR/.config/wallpaper.jpg" "$HOME/wallpaper.jpg"
 
 # Set Zsh as the default shell
 echo "Setting Zsh as the default shell..."
@@ -59,6 +67,17 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 else
   echo "Oh My Zsh is already installed."
 fi
+
+# Install Nerd Fonts (shallow clone)
+if [ ! -d "$NERDFONTS_DIR" ]; then
+  echo "Cloning Nerd Fonts repository (shallow)..."
+  git clone --depth 1 "$NERDFONTS_REPO" "$NERDFONTS_DIR"
+else
+  echo "Nerd Fonts repository already exists at $NERDFONTS_DIR"
+fi
+
+echo "Installing Nerd Fonts..."
+bash "$NERDFONTS_DIR/install.sh"
 
 # Final message
 echo "Setup complete! Log out and log back in to apply changes."
