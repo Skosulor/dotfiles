@@ -483,6 +483,7 @@
     (setq-default evil-symbol-word-search t))
 
 (setq avy-timeout-seconds 0.3)
+(setq avy-keys '(?a ?r ?s ?s ?t ?n ?e ?i ?o))
 ;; Using avy-goto-char-timer instead of evil-snipe
 ;; (use-package evil-snipe)
 ;; (evil-snipe-mode 1)
