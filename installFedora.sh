@@ -25,9 +25,9 @@ if ! command -v sudo &> /dev/null; then
   exit 1
 fi
 
-# Update and upgrade system
-# echo "Updating and upgrading system..."
-# sudo dnf update -y && sudo dnf upgrade -y
+Update and upgrade system
+echo "Updating and upgrading system..."
+sudo dnf update -y && sudo dnf upgrade -y
 
 # Install essential applications
 echo "Installing essential applications..."

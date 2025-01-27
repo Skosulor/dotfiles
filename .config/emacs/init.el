@@ -493,7 +493,7 @@
 (use-package evil-surround
   :ensure t
   :config
-  (global-evil-surround-mode 1))
+  (global-evil-surround-mode 0))
 
 (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
 (setq evil-want-keybinding nil)
@@ -1168,7 +1168,11 @@ named arguments:
 (define-key evil-normal-state-map "u" 'undo-tree-undo)
 
 (define-key evil-normal-state-map "s" 'avy-goto-char-timer)
-(define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
+(define-key evil-normal-state-mep (kbd "C-r") 'undo-tree-redo)
+
+(define-key evil-operator-state-map "s" nil)
+(evil-define-key 'operator evil-operator-state-map
+  "s" 'evil-avy-goto-char-timer)
 
 (evil-define-key '(normal visual) 'global (kbd "C-a")
   'evil-numbers/inc-at-pt)
@@ -1365,6 +1369,8 @@ named arguments:
 (load-if-exists "~/.api_key.el")
 
 (message "Enable colemak")
+
+
 
 (defun hell/enable-colemak ()
   "Enable Colemak remappings in Evil mode."
