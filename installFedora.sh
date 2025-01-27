@@ -6,7 +6,7 @@ DOTFILES_DIR="$HOME/dotfiles"
 CONFIG_DIR="$HOME/.config"
 NERDFONTS_REPO="https://github.com/ryanoasis/nerd-fonts.git"
 NERDFONTS_DIR="$HOME/nerd-fonts"
-APPS_TO_INSTALL=("git" "unzip" "clang" "xz" "mesa-libGLU" "cmake" "ninja-build" "pkg-config" "zsh" "neovim" "curl" "htop" "gnome-tweaks" "tmux" "waybar" "hyprland" "wofi" "kitty" "direnv" "ImageMagick" "ripgrep" "fd" "emacs")
+APPS_TO_INSTALL=("git" "unzip" "clang" "xz" "mesa-libGLU" "cmake" "ninja-build" "pkg-config" "zsh" "neovim" "curl" "htop" "gnome-tweaks" "tmux" "waybar" "hyprland" "wofi" "kitty" "direnv" "ImageMagick" "ripgrep" "fd" "emacs" "libtool")
 GROUPS_TO_INSTALL=("c-development" "development-tools")
 
 # Ensure sudo is available
