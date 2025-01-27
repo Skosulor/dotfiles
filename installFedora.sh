@@ -23,12 +23,6 @@ fi
 echo "Installing essential applications..."
 sudo dnf install -y "${APPS_TO_INSTALL[@]}"
 
-# # Install additional groups
-# echo "Installing additional package groups..."
-# for group in "${GROUPS_TO_INSTALL[@]}"; do
-#   sudo dnf groupinstall -y "$group"
-# done
-
 # Clone dotfiles repository
 if [ ! -d "$DOTFILES_DIR" ]; then
   echo "Cloning dotfiles repository..."
@@ -69,29 +63,15 @@ else
 fi
 
 # Install Nerd Fonts (shallow clone)
-# if [ ! -d "$NERDFONTS_DIR" ]; then
-#   echo "Cloning Nerd Fonts repository (shallow)..."
-#   git clone --depth 1 "$NERDFONTS_REPO" "$NERDFONTS_DIR"
-# else
-#   echo "Nerd Fonts repository already exists at $NERDFONTS_DIR"
-# fi
+if [ ! -d "$NERDFONTS_DIR" ]; then
+  echo "Cloning Nerd Fonts repository (shallow)..."
+  git clone --depth 1 "$NERDFONTS_REPO" "$NERDFONTS_DIR"
+else
+  echo "Nerd Fonts repository already exists at $NERDFONTS_DIR"
+fi
 
-# Set SDDM as the display manager
-# echo "Switching to SDDM as the display manager..."
-# sudo dnf install -y sddm
-
-# # Disable GDM and enable SDDM
-# echo "Disabling GDM..."
-# sudo systemctl disable gdm.service
-
-# echo "Enabling SDDM..."
-# sudo systemctl enable sddm.service
-# sudo systemctl restart sddm.service
-
-
-
-# echo "Installing Nerd Fonts..."
-# bash "$NERDFONTS_DIR/install.sh"
+echo "Installing Nerd Fonts..."
+bash "$NERDFONTS_DIR/install.sh"
 
 # Final message
 echo "Setup complete! Log out and log back in to apply changes."
