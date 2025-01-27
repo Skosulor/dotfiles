@@ -5,6 +5,11 @@ IOSEVKA_URL="https://github.com/be5invis/Iosevka/releases/download/v32.4.0/PkgTT
 FONT_DIR="$HOME/.local/share/fonts"
 TMP_DIR="/tmp/iosevka"
 
+is_iosevka_installed() {
+  fc-list | grep -i "iosevka" &> /dev/null
+  return $?
+}
+
 # Ensure curl and unzip are installed
 echo "Checking for required tools..."
 if ! command -v curl &> /dev/null || ! command -v unzip &> /dev/null; then
