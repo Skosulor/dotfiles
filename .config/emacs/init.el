@@ -692,12 +692,11 @@
 
 (setq dap-auto-configure-features '(sessions locals controls tooltip))
 
-(require 'dap-lldb)
+;; (require 'dap-lldb)
+;; (require 'dap-gdb-lldb)
 
-(require 'dap-gdb-lldb)
-
-(use-package realgud)
-(use-package realgud-lldb)
+;; (use-package realgud)
+;; (use-package realgud-lldb)
 
 (defhydra hydra-realgud (:color blue :hint nil)
   "
