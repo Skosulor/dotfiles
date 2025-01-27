@@ -64,25 +64,6 @@ else
   exit 1
 fi
 
-# Install Oh My Zsh
-echo "Installing Oh My Zsh..."
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
-else
-  echo "Oh My Zsh is already installed."
-fi
-
-# Install Nerd Fonts (shallow clone)
-if [ ! -d "$NERDFONTS_DIR" ]; then
-  echo "Cloning Nerd Fonts repository (shallow)..."
-  git clone --depth 1 "$NERDFONTS_REPO" "$NERDFONTS_DIR"
-else
-  echo "Nerd Fonts repository already exists at $NERDFONTS_DIR"
-fi
-
-echo "Installing Nerd Fonts..."
-bash "$NERDFONTS_DIR/install.sh"
-
 if is_iosevka_installed; then
   echo "Iosevka is already installed. Skipping installation."
 else
@@ -112,5 +93,27 @@ else
 
   echo "Iosevka fonts installed successfully!"
 fi
+
+# Install Nerd Fonts (shallow clone)
+if [ ! -d "$NERDFONTS_DIR" ]; then
+  echo "Cloning Nerd Fonts repository (shallow)..."
+  git clone --depth 1 "$NERDFONTS_REPO" "$NERDFONTS_DIR"
+else
+  echo "Nerd Fonts repository already exists at $NERDFONTS_DIR"
+fi
+
+echo "Installing Nerd Fonts..."
+bash "$NERDFONTS_DIR/install.sh"
+
+
+# Install Oh My Zsh
+echo "Installing Oh My Zsh..."
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+else
+  echo "Oh My Zsh is already installed."
+fi
+
+
 
 echo "Setup complete! Log out and log back in to apply changes."
