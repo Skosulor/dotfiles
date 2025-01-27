@@ -6,11 +6,12 @@ DOTFILES_DIR="$HOME/dotfiles"
 CONFIG_DIR="$HOME/.config"
 NERDFONTS_REPO="https://github.com/ryanoasis/nerd-fonts.git"
 NERDFONTS_DIR="$HOME/nerd-fonts"
-APPS_TO_INSTALL=("git" "unzip" "curl" "clang" "xz" "mesa-libGLU" "cmake" "ninja-build" "pkg-config" "zsh" "neovim" "curl" "htop" "gnome-tweaks" "tmux" "waybar" "hyprland" "wofi" "kitty" "direnv" "ImageMagick" "ripgrep" "fd" "emacs" "libtool")
+APPS_TO_INSTALL=("git" "unzip" "curl" "clang" "xz" "mesa-libGLU" "cmake" "ninja-build" "pkg-config" "zsh" "neovim" "curl" "htop" "gnome-tweaks" "tmux" "waybar" "hyprland" "wofi" "kitty" "direnv" "ImageMagick" "ripgrep" "fd" "emacs" "libtool" "swaybg")
 GROUPS_TO_INSTALL=("c-development" "development-tools")
 IOSEVKA_URL="https://github.com/be5invis/Iosevka/releases/download/v32.4.0/PkgTTC-Iosevka-32.4.0.zip"
 FONT_DIR="$HOME/.local/share/fonts"
 TMP_DIR="/tmp/iosevka"
+
 
 # Function to check if Iosevka is installed
 is_iosevka_installed() {
@@ -45,14 +46,14 @@ echo "Creating symbolic links for dotfiles..."
 mkdir -p "$CONFIG_DIR"
 
 # Symlink individual files and directories
-ln -sf "$DOTFILES_DIR/.config/nvim" "$CONFIG_DIR/nvim"
-ln -sf "$DOTFILES_DIR/.config/emacs" "$CONFIG_DIR/emacs"
-ln -sf "$DOTFILES_DIR/.config/wofi" "$CONFIG_DIR/wofi"
-ln -sf "$DOTFILES_DIR/.config/hypr" "$CONFIG_DIR/hypr"
-ln -sf "$DOTFILES_DIR/.config/waybar" "$CONFIG_DIR/waybar"
+ln -sf "$DOTFILES_DIR/.config/nvim" "$CONFIG_DIR"
+ln -sf "$DOTFILES_DIR/.config/emacs" "$CONFIG_DIR"
+ln -sf "$DOTFILES_DIR/.config/wofi" "$CONFIG_DIR"
+ln -sf "$DOTFILES_DIR/.config/hypr" "$CONFIG_DIR"
+ln -sf "$DOTFILES_DIR/.config/waybar" "$CONFIG_DIR"
 ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 ln -sf "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
-cp "$DOTFILES_DIR/.config/wallpaper.jpg" "$HOME/wallpaper.jpg"
+cp "$DOTFILES_DIR/.config/wallpaper.jpg" "$HOME/Pictures/wallpaper.jpg"
 
 # Set Zsh as the default shell
 echo "Setting Zsh as the default shell..."
