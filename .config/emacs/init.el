@@ -1168,7 +1168,7 @@ named arguments:
 (define-key evil-normal-state-map "u" 'undo-tree-undo)
 
 (define-key evil-normal-state-map "s" 'avy-goto-char-timer)
-(define-key evil-normal-state-mep (kbd "C-r") 'undo-tree-redo)
+(define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 
 (define-key evil-operator-state-map "s" nil)
 (evil-define-key 'operator evil-operator-state-map
@@ -1528,7 +1528,9 @@ named arguments:
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-vc-selected-packages
-   '((vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package"))))
+   '((vc-use-package :vc-backend Git :url
+		     "https://github.com/slotThe/vc-use-package")
+     (emacs-themes :url "https://github.com/skosulor/emacs-themes"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
