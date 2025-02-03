@@ -484,11 +484,12 @@
 
 (setq avy-timeout-seconds 0.3)
 (setq avy-keys '(?a ?r ?s ?s ?t ?n ?e ?i ?o))
+
 ;; Using avy-goto-char-timer instead of evil-snipe
-;; (use-package evil-snipe)
-;; (evil-snipe-mode 1)
-;; (evil-snipe-override-mode 1)
-;; (setq evil-snipe-scope 'whole-visible)
+(use-package evil-snipe)
+(evil-snipe-mode 1)
+(evil-snipe-override-mode 1)
+(setq evil-snipe-scope 'whole-visible)
 
 (use-package evil-surround
   :ensure t
@@ -673,6 +674,15 @@
   :hook (lsp-mode . efs/lsp-mode-setup)
   :init
   (setq lsp-keymap-prefix "C-c l"))
+
+;; (setq lsp-clients-clangd-args '("--header-insertion=never"))
+
+;; load the pathnames to custom lisp files
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(load "ob-C.el")
+(require 'ob-C)
+
+
 
 ;; (require 'lsp)
 ;(require 'lsp-haskell)
@@ -1109,6 +1119,18 @@ named arguments:
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
+
+
+(use-package c-ts-mode
+  :ensure nil
+  :init
+  (add-hook 'c-ts-mode-hook
+            (lambda ()
+              (setq-local c-ts-mode-indent-style 'linux)
+              (setq-local c-ts-mode-indent-offset 4)
+              (c-ts-mode-toggle-comment-style 1))))
+
+
 (use-package evil-textobj-tree-sitter :ensure t)
 (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
 (define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
@@ -1158,8 +1180,28 @@ named arguments:
   (push '("[X]" . "■") prettify-symbols-alist)
   (prettify-symbols-mode 1)))
 
+(gptel-make-ollama "Ollama"             ;Any name of your choosing
+  :host "localhost:11434"               ;Where it's running
+  :stream t                             ;Stream responses
+  :models '(deepseek-r1:7b
+            deepseek-r1:1.5b
+            deepseek-coder:6.7b))          ;List of models
 
-;; (package-vc-install '(ultra-scroll :vc-backend Git :url  "https://github.com/jdtsmith/ultra-scroll"))
+
+(defun hell/toggle-catppuccin ()
+  "Toggle Catppuccin themes."
+  (interactive)
+  (if (equal catppuccin-flavor 'frappe)
+      (progn
+        (setq catppuccin-flavor 'latte)
+        (catppuccin-reload))
+    (progn
+      (setq catppuccin-flavor 'frappe)
+      (catppuccin-reload))))
+
+
+
+;; Mappings
 
 (general-define-key
    :keymaps 'transient-base-map
@@ -1222,6 +1264,7 @@ named arguments:
 
 (global/leader-key
   "j" 'consult-imenu
+  "d" 'hell/toggle-ca
   "J" 'consult-imenu-multi
   "I" #'hell/load-my-init-file
   ";" 'execute-extended-command)
