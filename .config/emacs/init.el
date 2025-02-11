@@ -1180,6 +1180,7 @@ named arguments:
   (push '("[X]" . "■") prettify-symbols-alist)
   (prettify-symbols-mode 1)))
 
+(use-package gptel)
 (gptel-make-ollama "Ollama"             ;Any name of your choosing
   :host "localhost:11434"               ;Where it's running
   :stream t                             ;Stream responses
@@ -1571,8 +1572,7 @@ named arguments:
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-vc-selected-packages
-   '((vc-use-package :vc-backend Git :url
-		     "https://github.com/slotThe/vc-use-package")
+   '((vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package")
      (emacs-themes :url "https://github.com/skosulor/emacs-themes"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
