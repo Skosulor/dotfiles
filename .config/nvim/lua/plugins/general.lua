@@ -41,6 +41,19 @@ return {
     'rmehri01/onenord.nvim',
     'romgrk/doom-one.vim',
     {
+       "folke/snacks.nvim",
+       ---@type snacks.Config
+       opts = {
+
+	  picker = {
+          layout = { preset = "ivy"},
+	     -- your picker configuration comes here
+	     -- or leave it empty to use the default settings
+	     -- refer to the configuration section below
+	  }
+       }
+    },
+    {
       "ibhagwan/fzf-lua",
       -- optional for icon support
       dependencies = { "nvim-tree/nvim-web-devicons" },

@@ -413,11 +413,16 @@
 (unless (package-installed-p 'emacs-themes)
   (package-vc-install '(emacs-themes :url "https://github.com/skosulor/emacs-themes")))
 
+(use-package everforest-theme
+  :straight (:host github :type git :repo "Theory-of-Everything/everforest-emacs" ))
 
 (use-package catppuccin-theme)
 (setq catppuccin-flavor 'frappe) ;; or 'latte, 'macchiato, or 'mocha
 
-(load-theme 'catppuccin t)
+;; (load-theme 'everforest-hard-dark t)
+;; (load-theme 'catppuccin t)
+(load-theme 'modus-vivendi t)
+(setq nerd-icons-font-family "JetBrainsMono Nerd Font")
 
 (set-frame-parameter nil 'alpha-background 90)
 (add-to-list 'default-frame-alist '(alpha-background . 90))
@@ -1571,8 +1576,11 @@ named arguments:
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("57be445bbd705240c10b49915783b44ac05ae7ad1f710d241b9fb6a4a89dfc02" "9f1c593abc996917c24f563e68f44bb4175d4419925577014757f6ba2dfe2850" "7faf118c5f84a233f63dfafddfe04cd1cfb011728589192f29ced2bdc465b527" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "87adaa6ee5799b9116c2bbdcf2109efe44d9102d23ebc0ec1c3d75b95ffa50b5" "23ee873f9287867e371f4215536e3a83436c732db44e271ab51c9333c2add543" "d2ab3d4f005a9ad4fb789a8f65606c72f30ce9d281a9e42da55f7f4b9ef5bfc6" "c20728f5c0cb50972b50c929b004a7496d3f2e2ded387bf870f89da25793bb44" "daa27dcbe26a280a9425ee90dc7458d85bd540482b93e9fa94d4f43327128077" default))
  '(package-vc-selected-packages
-   '((vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package")
+   '((everforest-theme :vc-backend Git :url "https://git.sr.ht/~theorytoe/everforest-theme")
+     (vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package")
      (emacs-themes :url "https://github.com/skosulor/emacs-themes"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

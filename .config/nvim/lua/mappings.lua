@@ -21,7 +21,7 @@ keymap('n', '<A-i>', '<C-w>l')
 
 -- Non leader key bindings
 keymap('n', 'gr', '<nop>')
-keymap('n', 'gr', '<cmd>FzfLua lsp_references<cr>')
+keymap('n', 'gr', '<cmd>lua Snacks.picker. lsp_references<cr>')
 keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 
 -- Tabs
@@ -90,25 +90,25 @@ wk.add({
   { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undo tree" },
   { "<leader>ft", "<cmd>NvimTreeToggle<cr>", desc = "Toggle Tree" },
   { "<leader>fl", '<cmd>:lua require"search_files".project_files()<cr>', desc = "Locate project files" },
-  { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Browse files" },
+  { "<leader>ff", "<cmd>lua Snacks.picker.files()<cr>", desc = "Browse files" },
   { "<leader>fh", ":lua MiniStarter.open()<cr>", desc = "Home window" },
   { "<leader>fw", "<cmd>write<cr>", desc = "Write file" },
-  { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent files" },
+  { "<leader>fr", "<cmd>lua Snacks.picker.recent()<cr>", desc = "Recent files" },
   { "<leader>fo", "<cmd>Oil<cr>", desc = "Oil" },
-  { "<leader>fp", "<cmd>Telescope projects<cr>", desc = "Projects" },
+  { "<leader>fp", "<cmd>lua Snacks.picker.projects()cr>", desc = "Projects" },
 
   { "<leader>s", group = "Search" },
   { "<leader>ss", '<cmd>:silent lua require("functions").grep_project()<cr>', desc = "Search Project" },
-  { "<leader>sd", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Diagnostics" },
-  { "<leader>sb", "<cmd>FzfLua buffers<cr>", desc = "Buffers" },
-  { "<leader>sc", "<cmd>FzfLua commands<cr>", desc = "Commands (Plugin)" },
-  { "<leader>sq", "<cmd>FzfLua quickfix<cr>", desc = "quickfix list" },
+  { "<leader>sd", "<cmd>lua Snacks.picker.diagnostics()<cr>", desc = "Diagnostics" },
+  { "<leader>sb", "<cmd>lua Snacks.picker.buffers()<cr>", desc = "Buffers" },
+  { "<leader>sc", "<cmd>lua Snacks.picker.commands()<cr>", desc = "Commands (Plugin)" },
+  { "<leader>sq", "<cmd>lua Snacks.picker.qflist()<cr>", desc = "quickfix list" },
 
   { "<leader>g", group = "Git" },
   { "<leader>gg", "<cmd>Neogit<cr>", desc = "Git status" },
-  { "<leader>gb", "<cmd>FzfLua git_branches<cr>", desc = "Branches" },
+  { "<leader>gb", "<cmd>lua Snacks.picker.git_branches()<cr>", desc = "Branches" },
   { "<leader>gB", "<cmd>Git blame<cr>", desc = "Blame" },
-  { "<leader>gc", "<cmd>FzfLua git_commits<cr>", desc = "Commits" },
+  { "<leader>gc", "<cmd>lua Snacks.picker.git_log()<cr>", desc = "Commits" },
   { "<leader>gh", "<cmd>GitGutterPreviewHunk<cr>", desc = "Preview hunk" },
   { "<leader>gs", "<cmd>GitGutterStageHunk<cr>", desc = "Stage hunk" },
   { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Diff" },
@@ -119,12 +119,13 @@ wk.add({
   { "<leader>gl", "<cmd>GV<cr>", desc = "Log" },
   { "<leader>gL", "<cmd>GV --reflog<cr>", desc = "Reflog" },
   { "<leader>gf", "<cmd>Git fetch --all<cr>", desc = "Fetch all" },
+  { "<leader>gf", '<cmd>:lua require"search_files".checkout_blob()<cr>', desc = "view blob/file" },
   { "<leader>gu", "<cmd>GitGutterUndoHunk<cr>", desc = "Undo hunk" },
 
   { "<leader>h", group = "Help" },
-  { "<leader>hk", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps" },
-  { "<leader>hm", "<cmd>FzfLua manpages<cr>", desc = "Man pages" },
-  { "<leader>hh", "<cmd>FzfLua help_tags<cr>", desc = "help (manual/plugins)" },
+  { "<leader>hk", "<cmd>lua Snacks.picker.keymaps()<cr>", desc = "Keymaps" },
+  { "<leader>hm", "<cmd>lua Snacks.picker.man()<cr>", desc = "Man pages" },
+  { "<leader>hh", "<cmd>lua Snacks.picker.help()<cr>", desc = "help (manual/plugins)" },
   { "<leader>ho", "<cmd>Telescope vim_options<cr>", desc = "Options" },
 
   { "<leader>t", group = "Tab" },
@@ -136,7 +137,7 @@ wk.add({
   { "<leader>c", group = "Code" },
   { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", desc = "Code action" },
   { "<leader>cR", "<cmd>Spectre<cr>", desc = "Replace" },
-  { "<leader>cr", "<cmd>FzfLua lsp_references<cr>", desc = "References" },
+  { "<leader>cr", "<cmd>lua Snacks.picker.lsp_references()<cr>", desc = "References" },
   { "<leader>cs", ":lua vim.lsp.buf.document_symbol()<cr>", desc = "Document symbol" },
   { "<leader>cT", "<cmd>TodoQuickFix<cr>", desc = "Todo's" },
   { "<leader>ct", "<cmd>Trouble<cr>", desc = "Trouble" },
@@ -149,12 +150,12 @@ wk.add({
   { "<leader>m", group = "Marks/Harpoon" },
   { "<leader>mm", ":lua require('harpoon.mark').add_file()<cr>", desc = "HarpoonMark" },
   { "<leader>mM", "<cmd>mark<cr>", desc = "Mark" },
-  { "<leader>mo", "<cmd>FzfLua marks<cr>", desc = "Open marks" },
+  { "<leader>mo", "<cmd>lua Snacks.picker.marks()<cr>", desc = "Open marks" },
   { "<leader>m<leader>", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Open Marks" },
 
   { "<leader>b", group = "buffer" },
   { "<leader>bd", "<cmd>lua MiniBufremove.delete(0, false)<cr>", desc = "Delete buffer" },
-  { "<leader>bb", "<cmd>FzfLua buffers<cr>", desc = "buffers" },
+  { "<leader>bb", "<cmd>lua Snacks.picker.buffers()<cr>", desc = "buffers" },
 
   { "<leader>d", group = "Debugger" },
   { "<leader>db", "<cmd>DapToggleBreakpoint<cr>", desc = "Breakpoint (Toggle)" },
@@ -175,7 +176,7 @@ wk.add({
 
   { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen mode" },
   { "<leader>M", "<cmd>Noice<cr>", desc = "Messages (Neovim)" },
-  { "<leader>C", "<cmd>FzfLua colorschemes<cr>", desc = "Colorscheme" },
+  { "<leader>C", "<cmd>lua Snacks.picker.colorschemes()<cr>", desc = "Colorscheme" },
   { "<leader>q", '<cmd>:silent lua require("functions").toggle_qf()<cr>', desc = "Toggle quickfix list" },
 
   { "<leader>wh", "<C-w>h", desc = "Go to left window"},
@@ -187,13 +188,13 @@ wk.add({
   { "<leader>wq", "<C-w>q", desc = "Quit current window"},
 
   { "<leader>p", ":FzfLua neoclip<cr>", desc = "Paste" },
-  { "<leader>j", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document symbols" },
+  { "<leader>j", "<cmd>lua Snacks.picker.lsp_symbols()<cr>", desc = "Document symbols" },
   { "<leader>J", "<cmd>AnyJump<cr>", desc = "AnyJump" },
   { "<leader>D", ":lua toggleDarkMode()<cr>", desc = "Toggle dark mode" },
-  { "<leader><space>", "<cmd>FzfLua buffers<cr>", desc = "Buffers" },
-  { "<leader>*", "<cmd>FzfLua grep_cword<cr>", desc = "Grep under cursor" },
-  { "<leader>/", "<cmd>FzfLua blines<cr>", desc = "Fuzzy find in buffer" },
-  { "<leader>;", "<cmd>FzfLua commands<cr>", desc = "Commands (Plugin)" },
+  { "<leader><space>", "<cmd>lua Snacks.picker.buffers()<cr>", desc = "Buffers" },
+  { "<leader>*", "<cmd>lua Snacks.picker.grep_word()<cr>", desc = "Grep under cursor" },
+  { "<leader>/", "<cmd>lua Snacks.picker.lines()<cr>", desc = "Fuzzy find in buffer" },
+  { "<leader>;", "<cmd>lua Snacks.picker.commands()<cr>", desc = "Commands (Plugin)" },
 })
 
 
