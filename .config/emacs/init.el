@@ -1193,6 +1193,13 @@ named arguments:
             deepseek-r1:1.5b
             deepseek-coder:6.7b))          ;List of models
 
+(defun my-markdown-mode-hook ()
+  "Enable visual line wrapping in Markdown mode."
+  (visual-line-mode 1))
+
+(add-hook 'markdown-mode-hook #'my-markdown-mode-hook)
+
+
 
 (defun hell/toggle-catppuccin ()
   "Toggle Catppuccin themes."
