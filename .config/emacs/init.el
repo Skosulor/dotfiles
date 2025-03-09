@@ -1212,7 +1212,7 @@ named arguments:
       (setq catppuccin-flavor 'frappe)
       (catppuccin-reload))))
 
-
+(setq vterm-max-scrollback 30000)
 
 ;; Mappings
 
