@@ -1214,6 +1214,17 @@ named arguments:
 
 (setq vterm-max-scrollback 30000)
 
+(use-package multi-vterm)
+
+(setq vterm-timer-delay 0.01)
+
+(defun hell/new-tab-vterm ()
+  "Create a new tab and open a new vterm using multi-vterm."
+  (interactive)
+  (tab-new)  ; Create a new tab
+  (multi-vterm))  ; Open a new vterm
+
+
 ;; Mappings
 
 (general-define-key
@@ -1224,6 +1235,8 @@ named arguments:
 
 (define-key evil-normal-state-map "s" 'avy-goto-char-timer)
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
+
+(define-key evil-normal-state-map (kbd "C-t") 'hell/new-tab-vterm)
 
 (define-key evil-operator-state-map "s" nil)
 (evil-define-key 'operator evil-operator-state-map
