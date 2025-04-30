@@ -449,32 +449,33 @@ return {
     --     end,
     -- },
     {
-        'nvim-treesitter/nvim-treesitter',
+    'nvim-treesitter/nvim-treesitter',
         config = function()
             require'nvim-treesitter.configs'.setup {
-                -- A list of parser names, or "all"
-                ensure_installed = { "c", "lua",},
-                -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+                ensure_installed = { "c", "lua" }, -- Add "org" here if you have it installed
                 auto_install = true,
                 highlight = {
                     enable = true,
                     disable = function(lang, buf)
-                        local max_filesize = 500 * 1024 -- 100 KB
+                        -- Disable for Org files
+                        if lang == 'org' then
+                            return true
+                        end
+
+                        -- Your existing logic to disable for large files
+                        local max_filesize = 500 * 1024 -- 500 KB
                         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
                         if ok and stats and stats.size > max_filesize then
                             return true
                         end
                     end,
-                    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-                    -- Instead of true it can also be a list of languages
                     additional_vim_regex_highlighting = true,
                 },
                 textobjects = {
                     select = {
                         enable = true,
-                        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+                        lookahead = true,
                         keymaps = {
-                            -- You can define your own textobjects here:
                             ["af"] = "@function.outer",
                             ["if"] = "@function.inner",
                             ["av"] = "@parameter.outer",
@@ -483,8 +484,7 @@ return {
                     },
                 },
             }
-        end,
-    },
+        end,    },
     {
         'rose-pine/neovim',
         name = 'rose-pine'
@@ -837,11 +837,11 @@ return {
     },
     {
         "chipsenkbeil/org-roam.nvim",
-        tag = "0.1.0",
+        -- tag = "0.1.1",
         dependencies = {
             {
                 "nvim-orgmode/orgmode",
-                tag = "0.3.4",
+                -- tag = "0.3.4",
             },
         },
         config = function()
@@ -849,6 +849,7 @@ return {
                 directory = "~/org/roam",
             })
         end
+
     },
     {
         "olimorris/codecompanion.nvim",
