@@ -13,6 +13,25 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 })
 
 
+function Snacks.picker.document_symbols_with_fallback()
+  local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+  local has_document_symbol_provider = false
+
+  for _, client in ipairs(clients) do
+    if client.server_capabilities.documentSymbolProvider then
+      has_document_symbol_provider = true
+      break
+    end
+  end
+
+  if has_document_symbol_provider then
+    Snacks.picker.lsp_symbols()
+  else
+    vim.notify("Falling back to Tree-sitter symbols", vim.log.levels.INFO)
+    Snacks.picker.treesitter()
+  end
+end
+
 keymap('n', '<A-h>', '<C-w>h')
 keymap('n', '<A-n>', '<C-w>j')
 keymap('n', '<A-e>', '<C-w>k')
@@ -31,7 +50,7 @@ keymap('x', '<leader>ch', ':ClangdSwitchSourceHeader<cr>')
 -- keymap('t', '<C-t>', '<CMD>tab new<cr><CMD>term<cr>', { noremap = true, silent = true })
 
 -- LSP
-keymap('n', '<C-a>', ':lua vim.lsp.buf.definition()<cr>')
+-- keymap('n', '<C-a>', ':lua vim.lsp.buf.definition()<cr>')
 keymap('n', '<C-p>', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true, silent = true })
 keymap('n', 'gl', ':lua vim.diagnostic.open_float()<cr>')
 keymap('n', 'J', ':lua vim.lsp.buf.hover()<enter>')
@@ -61,8 +80,8 @@ keymap('t', '<leader><Esc>', '<C-\\><C-n>')
 -- keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 -- 
-keymap('n', '<C-b>', '<cmd>NibblerToggle<cr>')
-keymap('v', '<C-b>', '<cmd>NibblerToggle<cr>')
+keymap('n', '<C-a>', '<cmd>NibblerToggle<cr>')
+keymap('v', '<C-a>', '<cmd>NibblerToggle<cr>')
 
 
 -- Move cursor when scrolling with 'j' and 'k'
@@ -107,7 +126,7 @@ wk.add({
   { "<leader>g", group = "Git" },
   { "<leader>gg", "<cmd>Neogit<cr>", desc = "Git status" },
   { "<leader>gb", "<cmd>lua Snacks.picker.git_branches()<cr>", desc = "Branches" },
-  { "<leader>gB", "<cmd>Git blame<cr>", desc = "Blame" },
+  { "<leader>gB", "<cmd>Git blame -m -M -w<cr>", desc = "Blame" },
   { "<leader>gc", "<cmd>lua Snacks.picker.git_log()<cr>", desc = "Commits" },
   { "<leader>gh", "<cmd>GitGutterPreviewHunk<cr>", desc = "Preview hunk" },
   { "<leader>gs", "<cmd>GitGutterStageHunk<cr>", desc = "Stage hunk" },
@@ -180,15 +199,16 @@ wk.add({
   { "<leader>q", '<cmd>:silent lua require("functions").toggle_qf()<cr>', desc = "Toggle quickfix list" },
 
   { "<leader>wh", "<C-w>h", desc = "Go to left window"},
-  { "<leader>wn", "<C-w>j", desc = "Go to lower window"},
-  { "<leader>we", "<C-w>k", desc = "Go to upper window"},
-  { "<leader>wi", "<C-w>l", desc = "Go to right window"},
+  { "<leader>wj", "<C-w>j", desc = "Go to lower window"},
+  { "<leader>wk", "<C-w>k", desc = "Go to upper window"},
+  { "<leader>wl", "<C-w>l", desc = "Go to right window"},
   { "<leader>wv", "<C-w>v", desc = "Split window vertically"},
   { "<leader>ws", "<cmd>split<cr>", desc = "Split window horizontally"},
   { "<leader>wq", "<C-w>q", desc = "Quit current window"},
 
   { "<leader>p", ":FzfLua neoclip<cr>", desc = "Paste" },
-  { "<leader>j", "<cmd>lua Snacks.picker.lsp_symbols()<cr>", desc = "Document symbols" },
+  { "<leader>j", "<cmd>lua Snacks.picker.document_symbols_with_fallback()<cr>", desc = "Document symbols" },
+  -- { "<leader>j", "<cmd>lua Snacks.picker.lsp_symbols()<cr>", desc = "Document symbols" },
   { "<leader>J", "<cmd>AnyJump<cr>", desc = "AnyJump" },
   { "<leader>D", ":lua toggleDarkMode()<cr>", desc = "Toggle dark mode" },
   { "<leader><space>", "<cmd>lua Snacks.picker.buffers()<cr>", desc = "Buffers" },
@@ -282,7 +302,7 @@ function _G.toggle_colemak()
 end
 
 -- Initialize Colemak mode on startup
-enable_colemak()
+-- enable_colemak()
 
 -- Add keybinding to toggle (you can add this to your which-key config)
 vim.api.nvim_set_keymap('n', '<leader>k', ':lua toggle_colemak()<CR>', 

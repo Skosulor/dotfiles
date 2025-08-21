@@ -101,7 +101,11 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/flutter/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.ghcup/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
 
 export PATH=$HOME/Library/Android/sdk/emulator:$PATH
 alias emulate="emulator -avd pixel7pro"
 alias esp="source ~/projects/esp-idf/export.sh"
+export EDITOR="nvim"
+export STARSHIP_CONFIG=~/.config/starship.toml
+eval "$(starship init zsh)"
