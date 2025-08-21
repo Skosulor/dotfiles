@@ -1,6 +1,9 @@
 *.DS_Store
 .config/nvim/backupfiles/
 .config/nvim/undo/
+.config/emacs/tree-sitter/
+.config/emacs/undo/
+.config/emacs/var/
 .config/nvim/lazy-lock.json
 .nvim/
 .config/nvim/nvim
@@ -8,3 +11,13 @@
 /.config/emacs/eln-cache
 /.config/emacs/elpa
 /.config/emacs/straight
+.config/emacs/%backup%~
+.config/emacs/.last-package-update-day
+.config/emacs/.projectile-bookmarks
+.config/emacs/dap-ui-repl-python-history
+.config/emacs/transient/history.el
+.config/emacs/tree-sitter/libtree-sitter-bash.so
+.config/emacs/tree-sitter/libtree-sitter-c.so
+.config/emacs/var/auto-save/sessions/631602-sto585.prevas.se~
+.config/emacs/tree-sitter/libtree-sitter-css.so
+.config/emacs/tree-sitter/libtree-sitter-dockerfile.so
